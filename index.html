@@ -79,7 +79,7 @@ svg{display:block;max-width:100%}
 .hi{padding:10px 12px}.tabs{padding:0 12px}.lg{font-size:16px}.big{font-size:27px}}
 </style></head><body>
 <div class="hd"><div class="hi">
-<div class="lg">CONTROL ROOM<s id="ver">v65 · 26 September 2026</s></div>
+<div class="lg">CONTROL ROOM<s id="ver">v67 · 28 September 2026, close</s></div>
 <div class="st" id="stamps"></div></div>
 <div class="tabs" id="tabs">
 <div class="tab on" data-t="rp"><i>●</i>DAILY REPORT</div>
@@ -169,10 +169,10 @@ function line(series,o={}){
 $("#c-rp").innerHTML=`
 <div class="c h" style="border-color:var(--l2)">
  <div class="ct"><div>
-  <div style="font:600 10px/1 'IBM Plex Mono';letter-spacing:1.6px;color:var(--t2)">SATURDAY 26 SEPTEMBER 2026 · THE SUMMIT ENDED WITH TEA, THE WAR MAY BE ENDING WITH A DEAL</div>
+  <div style="font:600 10px/1 'IBM Plex Mono';letter-spacing:1.6px;color:var(--t2)">TUESDAY 29 SEPTEMBER 2026 · SAUDI OIL IS FLOWING AGAIN, THE RBA JOINS THE HIKING CLUB, GOLD DROPS 4%</div>
   <div style="font-size:21px;font-weight:600;margin-top:8px;line-height:1.35;max-width:820px">
-   Trump-Xi wrapped with pageantry and few concrete announcements. The bigger story broke Friday: <b>the US and Iran moved toward lifting the Gulf naval blockades</b> — Brent fell below $98 and the 10-year's spike to <b>5.18%, the highest since the 2008 crisis</b>, reversed the same day. Stocks closed their first winning week in three</div></div>
-  <span class="g p">OIL SUB-$98 · 10Y HIT 5.18% THEN EASED · SUMMIT LOW ON SUBSTANCE</span></div>
+   Saudi Arabia resumed exports through its repaired East-West pipeline overnight (~3.5m bbl/day) — but oil stayed elevated because Trump denied offering Iran sanctions relief. Monday's confirmed close: S&P −0.77% to 7,683.69, Nasdaq −0.92%. The <b>10-year touched ~5.26%</b>, gold fell to a <b>seven-week low</b>, and Australia's central bank became the <b>fifth</b> to hike this cycle</div></div>
+  <span class="g n">PIPELINE PARTIALLY BACK · 10Y ~5.26% · RBA HIKES TO 4.60%</span></div>
 </div>
 
 <h2><b>1</b> · THE ONE NUMBER</h2>
@@ -189,32 +189,32 @@ $("#c-rp").innerHTML=`
 
 <h2><b>2</b> · WHERE THINGS STAND</h2>
 <div class="gr g2">
-<div class="c"><div class="cl" style="margin-bottom:9px">Markets<s>Friday close — first winning week in three, oil breaks $98</s></div>
+<div class="c"><div class="cl" style="margin-bottom:9px">Markets<s>Monday's confirmed settle + Tuesday morning in Asia</s></div>
 <div class="t"><table><tbody>
-${[["S&P 500, Fri","7,743.41 (+0.51%)","Within 0.7% of its all-time high set last month","p"],
-["<b>Dow Jones, Fri</b>","<b>51,828.62 (+478.64, +0.93%)</b>","<b>Snapped a three-week losing streak</b>","p"],
-["Nasdaq Composite, Fri","27,068.72 (+0.5%)","Closed out its first winning week in three","p"],
-["Russell 2000, Fri","2,837.55 (+0.1%)","Small caps lagging the mega-cap move this week","p"],
-["<b>Brent crude, Fri</b>","<b>below $98</b>","<b>Broke a fresh threshold on US-Iran naval-blockade talks</b>","p"],
-["<b>Meta Platforms</b>","<b>+16.8% for the week</b>","Approaching $2 trillion market cap on its new 'Muse' AI agent","p"],
-["Akamai","+3% Friday","Multiyear deal announced with Anthropic","p"],
-["Gold / Silver, Fri AM","$4,337 (+0.91%) / $65.22 (+1.90%)","Both firmer even as risk appetite improved","p"],
-["<b>Dow, month-to-date</b>","<b>Sharp recovery</b>","From −2.05% (worst Sept since 2008) to a positive week","p"]].map(r=>
+${[["S&P 500, Mon settle","7,683.69 (−0.77%)","Nasdaq: 26,820.38 (−0.92%) — both off session lows after midday Iran headlines","n"],
+["<b>WTI, Mon settle</b>","<b>$92.60 (+0.2%)</b>","Pulled back hard from a session high above $96 after Saudi pipeline news","p"],
+["<b>Brent, Mon settle</b>","<b>$105.28 (+0.9%)</b>","Traded above $108.50 intraday before the Saudi pipeline headline trimmed it","p"],
+["<b>Saudi East-West pipeline</b>","<b>Resumed, ~3.5m bbl/day</b>","<b>Repaired and back online overnight — below its ~7m bbl/day capacity</b>","p"],
+["<b>Nov vs Dec Brent contracts</b>","<b>Nov ~$107+ · Dec just below $100</b>","<b>A real term-structure split — the front month prices the crisis, the next month doesn't</b>","a"],
+["<b>US 10-year</b>","<b>~5.25–5.26%</b>","Highest since 2007, still climbing into Tuesday","n"],
+["<b>Gold</b>","<b>Seven-week low, −4% stretch</b>","Hawkish-rate repricing overwhelming the safe-haven bid","n"],
+["<b>RBA (Australia)</b>","<b>Hiked to 4.60%</b>","<b>The fifth central bank to move this cycle, after Fed/ECB/BoJ (+) and BoE (hold)</b>","n"],
+["Asia, Tue AM","Nikkei −1.35%, Kospi −1.07%, Hang Seng −0.95%","A chip-led retreat tracking Monday's US selloff","n"],
+["Nvidia","$150bn buyback announced","The single largest corporate buyback on record","p"]].map(r=>
 `<tr class="wr"><td style="width:150px"><b>${r[0]}</b></td><td class="r m" style="width:120px">${r[1]}</td>
 <td class="${r[3]=='n'?'ne':r[3]=='p'?'po':'ac'}">${r[2]}</td></tr>`).join("")}
 </tbody></table></div></div>
 
 <div class="c"><div class="cl" style="margin-bottom:9px">Rates and currencies<s>The engine underneath everything</s></div>
 <div class="t"><table><tbody>
-${[["<b>US 10-year</b>","<b>hit 5.18% intraday Friday, then eased</b>","<b>Highest since the 2008 financial crisis — reversed same-day as oil fell</b>","n"],
-["US 5-year","touched 5% on Wed 23 Sep","First time since 2007","n"],
-["US 2-year","4.744%","Highest since July 2024 — the Fed hike now fully priced","n"],
-["US 30-year","~5.38%","New multi-decade high, off its peak by Friday","n"],
-["Germany 10-year","~3.35%","<b>Spread to France still at a 14-year high</b> — French fiscal/political risk, not a US story","p"],
-["UK 10-year","~5.22%, −8bp on the BoE hold","30-year gilts −12bp to 5.74% — a hold read as dovish relief","n"],
-["Japan 10-year","1.25% policy rate, effective 24 Sep","31-year high — 7-2 split vote, two dissents","n"],
-["EUR/USD","~1.152","One-month low on broad dollar strength post-Fed","a"],
-["<b>USD/JPY</b>","<b>weakening, intervention chatter continuing</b>","<b>Watch this — official action reported again this week</b>","n"]].map(r=>
+${[["<b>US 10-year</b>","<b>5.21%</b>","<b>El-Erian: \"we're not going back\" — highest in decades, still climbing Monday</b>","n"],
+["US 2-year","~4.92%","Short end leading the sell-off: markets pricing more Fed hikes, not fewer","n"],
+["US 30-year","~5.52%","Up about 27bp in September alone","n"],
+["Germany 10-year","~3.35%","Spread to France still at a 14-year high — a separate European stress","p"],
+["UK 10-year","~5.22%","Gilts tracking Treasuries; BoE held 3.75% on 17 Sep, 6–3","n"],
+["Japan","Policy rate 1.25%","BoJ hiked 18 Sep, 7–2 split; yen weakness and intervention chatter continue","n"],
+["<b>USD/CHF</b>","<b>Higher</b>","<b>SNB held rates but sounded less hawkish — a dovish hold lifted the dollar against the franc</b>","a"],
+["EUR/USD","~1.15","Lagarde speaks Monday and Thursday — the ECB's next guidance","a"]].map(r=>
 `<tr class="wr"><td style="width:150px"><b>${r[0]}</b></td><td class="r m" style="width:100px">${r[1]}</td>
 <td class="${r[3]=='n'?'ne':r[3]=='p'?'po':''}">${r[2]}</td></tr>`).join("")}
 </tbody></table></div></div>
@@ -222,10 +222,14 @@ ${[["<b>US 10-year</b>","<b>hit 5.18% intraday Friday, then eased</b>","<b>Highe
 
 <h2><b>3</b> · WHAT HAPPENED, AND WHY IT MATTERS</h2>
 ${[
-{t:"The US and Iran moved toward lifting the Gulf naval blockades — and the 10-year's spike to a 2008-level high reversed the same day",c:"p",g:"FRIDAY 25 SEP · THE BIGGEST MOVE OF THE MONTH",
- what:"Iran asked the US to return to a June memorandum of understanding — the one that had failed to end the conflict then — to lift the naval blockades on tankers in the Gulf and ease economic measures against Tehran. On that news, <b>Brent broke below $98</b>, extending its slide to a seventh session. The 10-year Treasury had spiked to <b>5.18% intraday, its highest level since the 2008 financial crisis</b>, before easing back the same afternoon as oil fell. Stocks rallied into the weekend: Dow +0.93% (snapping a three-week losing streak), S&P +0.51% (within 0.7% of its record), Nasdaq +0.5% — the major indices' first winning week in three.",
- why:"<b>This is the chokepoint story completing a full circle</b> — from war, to a physical workaround reopening the route (§4), to now the first real diplomatic movement on the underlying conflict itself. It also confirms the divergence flagged earlier this week: when oil fell, yields fell with it this time, meaning Wednesday's split (yields up, oil down) was a temporary decoupling, not a permanent break from the fiscal story. The debt-driven yield pressure in §6 hasn't gone away — it was simply overpowered by an oil-specific move on Friday.",
- meta:"De rekening in de kelder groeit nog steeds. Maar vrijdag ging de brandweer eindelijk het vuur zelf blussen, niet alleen de weg eromheen vrijmaken — en voor één dag daalde de rente mee met de olie, zoals het hoort."},
+{t:"Trump rejected Iran's seven-day Hormuz offer — and the Houthis are now the second front that decides the oil price",c:"n",g:"SAT 26 – MON 28 SEP · THE UNWIND",
+ what:"Iran had offered to reopen Hormuz and restart nuclear talks within seven days if the US lifted its naval blockade of Iranian ports, waived sanctions on Iranian oil sales and observed a ceasefire that includes Lebanon. On Saturday Trump said \"they made a proposal but I rejected it\" — Iran was \"losing so badly\" — while adding that he expects talks to resume this week. The Wall Street Journal reported he expects to resume bombing after the early-November midterms. Iran says it is still awaiting a \"definitive\" US response; mediation runs through Oman and Qatar. Meanwhile the Houthis fired more missiles and drones at Riyadh and southwestern Saudi Arabia and have taken a long stretch of Yemen's Red Sea coast — one report says they are effectively closing Bab el-Mandeb by targeting Saudi-flagged tankers. <b>Brent rose ~2.7% to about $107, up almost 18% in September; diesel hit all-time highs.</b> The Senate also rejected a war-powers resolution as gas prices upend the midterm race.",
+ why:"<b>Friday's relief was a proposal, not a deal — and the proposal has now been turned down.</b> That is why Brent went straight back up and the 10-year (~5.20%) and 2-year (4.90%) followed. The more important shift is structural: with Hormuz partly working around the blockade, the binding constraint on oil is increasingly the Red Sea/Bab el-Mandeb route and Saudi infrastructure. And a stated \"after the midterms\" timeline means markets may now trade a date — early November — rather than a headline.",
+ meta:"Vrijdag stond de deur op een kier omdat iemand een voorstel onder de mat schoof. Zaterdag zei de huisbaas nee. Maandag merkt iedereen dat de wind door de andere deur — de achterdeur bij de Rode Zee — inmiddels harder waait dan door de voordeur."},
+{t:"The US and Iran moved toward lifting the Gulf naval blockades — and the 10-year's spike to a 2008-level high reversed the same day",c:"p",g:"FRIDAY 25 SEP · REVERSED SATURDAY",
+ what:"Iran asked the US to return to a June memorandum of understanding — the one that had failed to end the conflict then — to lift the naval blockades on tankers in the Gulf and ease economic measures against Tehran. On that news, <b>Brent fell sharply</b> (AP put it below $98; other reports had it nearer $100–104, so treat the exact Friday level with care — Monday's Reuters print of ~$107 implies a Friday settle around $104). The 10-year Treasury had spiked to <b>5.18% intraday, its highest level since the 2008 financial crisis</b>, before easing back the same afternoon as oil fell. Stocks rallied into the weekend: Dow +0.93% (snapping a three-week losing streak), S&P +0.51% (within 0.7% of its record), Nasdaq +0.5% — the major indices' first winning week in three.",
+ why:"<b>This looked like the chokepoint story completing a full circle — and Saturday undid it.</b> It ran: war, to a physical workaround reopening the route (§4), to now the first real diplomatic movement on the underlying conflict itself. It also confirms the divergence flagged earlier this week: when oil fell, yields fell with it this time, meaning Wednesday's split (yields up, oil down) was a temporary decoupling, not a permanent break from the fiscal story. The debt-driven yield pressure in §6 hasn't gone away — it was simply overpowered by an oil-specific move on Friday.",
+ meta:"Vrijdag leek de brandweer het vuur zelf te gaan blussen, en voor één dag daalde de rente mee met de olie. Zaterdag bleek het slechts een aanbod dat niet werd aanvaard."},
 {t:"Trump-Xi ended with tea and a museum tour, not a trade deal",c:"a",g:"24-25 SEP · THE SUMMIT ITSELF",
  what:"The three-day state visit closed with tea at the White House and a joint tour of the National Archives before Xi flew back to Beijing. Trump called the visit \"very productive\"; the White House said little about what was actually achieved. Trump said American farmers \"are going to be very happy\" with the outcome, without specifics — widely read as a soybean-purchase signal. A senior official said a decision on the pending $14bn Taiwan arms package will come \"in a fairly short time\" — still unresolved. China's ambassador had written beforehand that Taiwan and human rights remain China's \"red lines.\" AI was discussed prominently by both leaders, but no safety-notification agreement was confirmed.",
  why:"<b>Low expectations were met exactly.</b> Nothing here resolves the 90-day tariff truce clock, the 10 November rare-earth suspension deadline, or the Taiwan arms question — all three remain open, dated risks rather than settled ones. The \"constructive strategic stability\" language repeated from May's Beijing meeting signals both sides are still managing the relationship rather than resetting it.",
@@ -256,11 +260,11 @@ ${[
 <h2><b>4</b> · CHOKEPOINTS AND ROUTES — WHY THE PHYSICAL PATH MATTERS AS MUCH AS THE PRICE</h2>
 <div class="nt" style="margin-bottom:10px">A price is what something costs. A route is whether it can get there at all. This month made that distinction concrete — and this week showed how fast it can reverse.</div>
 ${[
-{t:"From near-zero traffic to a six-month high to an actual blockade-lifting proposal — the route story completed itself this week",c:"p",g:"COMPLETE · WAR TO WORKAROUND TO DIPLOMACY",
- what:"US Central Command reported Hormuz crude and LNG flows at a <b>six-month high</b> early this week, averaging <b>17.1 million barrels a day</b> — essentially back to the pre-war norm. Then Friday, Iran asked the US to return to a June memorandum of understanding to <b>lift the naval blockades on tankers in the Gulf entirely</b> and ease economic measures against Tehran. Brent broke below $98 on the news — its lowest since the crisis began, down from a peak near $110 three weeks ago.",
- why:"<b>Three stages, in order: the war degraded the route, a military workaround reopened it, and now diplomacy is addressing the war itself.</b> Each stage moved price independently — the workaround mattered more than the diplomacy at first, and by Friday the diplomacy started mattering more than the workaround. Saudi Arabia's East-West pipeline (4% of global supply) remains shut regardless; the blockade story and the pipeline story are two separate threads that happen to move the same number.",
- meta:"Eerst ging de weg open omdat het leger een omweg bouwde. Toen, deze week, begonnen de twee partijen zelf te praten over het weghalen van de wegversperring — niet de omweg, de versperring zelf. Dat is de derde en grootste stap, en de prijs voelde het meteen."},
-{t:"Three routes were degraded at once earlier this month — the mechanism that made this whole story possible",c:"n",g:"CONTEXT · ACTIVE SINCE MARCH 2026",
+{t:"The route reopened, the diplomacy stalled, and the pressure moved to the Red Sea",c:"n",g:"UPDATED 28 SEP · WAR → WORKAROUND → DIPLOMACY → STALL",
+ what:"US Central Command reported Hormuz crude and LNG flows at a <b>six-month high</b> (~17.1 million barrels a day) in the week of 21 September. Then Friday's proposal to lift the Gulf blockades lifted hopes; Saturday Trump rejected it. Since then the weak point has moved: the Houthis have captured a long stretch of Yemen's Red Sea coast, fired at Saudi energy infrastructure and Riyadh, and reportedly are effectively closing Bab el-Mandeb to Saudi-flagged tankers. <b>Update 29 Sep: Saudi Arabia has since repaired and resumed the East-West pipeline, running at ~3.5m bbl/day</b> — below its ~7m bbl/day capacity but a real partial recovery, even as the naval-blockade diplomacy stalled.",
+ why:"<b>Four stages, in order: the war degraded the route, a military workaround reopened it, diplomacy began to address the war — and then the diplomacy stalled while a second chokepoint tightened.</b> Each stage moved the price on its own. The lesson is that no single route is the story: when one bypass opens, the constraint migrates to the next one. Also from the summit fact sheet: Trump asked Xi to increase China's refined-petroleum production to stabilise supply — a sign that Washington sees a product (diesel/refining) shortage, not only a crude one.",
+ meta:"Je maakt de hoofdweg vrij en het verkeer verhuist naar de zijweg. Vandaag staat de file op de zijweg, en de brug daar wordt beschoten."},
+{t:"Three routes were degraded at once earlier this month — the mechanism that made this whole story possible",c:"n",g:"CONTEXT · ACTIVE SINCE MARCH 2026 · PIPELINE NOW PARTIALLY BACK",
  what:"This has been an active war since late March: Iran closed Hormuz to US/Israel-bound shipping, the US blockaded Iranian ports through May, and the Houthis separately seized Perim Island and the port of Mocha, threatening the Bab al-Mandeb bypass. Saudi Arabia's East-West pipeline was hit by drones on 11 September. At the low point, one estimate put total disruption across the three chokepoints at <b>39% of global trade</b>.",
  why:"That combination — three routes strained together, not one — is why this was a genuine supply shock rather than a headline spike. It is also why the recovery this week is real: a US Navy-escorted shuttle route along Oman's coast, moving crude to pickup points outside Hormuz, rebuilt the physical path even while the underlying dispute continues.",
  meta:"Er waren drie wegen naar de stad, en alle drie waren tegelijk een keer afgesloten. Dat is waarom de stad het voelde — en waarom één geïmproviseerde omweg genoeg was om de prijs weer te laten zakken."},
@@ -287,17 +291,28 @@ The pattern held across all four: <b>the vote itself rarely moved markets — th
 <i>Vier weerberichten in vier dagen, en geen van de vier ging over de voorspelling zelf — telkens over de toon waarop hij werd gebracht.</i></div>
 
 <div class="wn r"><div class="h">Done · the summit came and went — here's what's actually left open</div>
-The three-day state visit is over: Xi arrived Wednesday, the White House ceremony and closed-door summit ran Thursday, and Friday closed with tea and the National Archives before Xi's flight home. <b>Every major dossier from the preview is still open</b>: the $14bn Taiwan arms package decision is deferred to "a fairly short time," the 90-day tariff truce clock keeps running (down to roughly six weeks), China's rare-earth suspension still expires 10 November, and no AI safety-notification agreement was confirmed despite both leaders discussing AI prominently. The one soft signal — Trump saying farmers "will be very happy" — points to a probable soybean-purchase commitment, unconfirmed in detail. Trump is next scheduled to host Xi's government at the <b>G20 summit in Miami this December</b>.<br><br>
+The three-day state visit is over: Xi arrived Wednesday, the White House ceremony and closed-door summit ran Thursday, and Friday closed with tea and the National Archives before Xi's flight home. <b>Every major dossier from the preview is still open</b>: the $14bn Taiwan arms package decision is deferred to "a fairly short time," the 90-day tariff truce clock keeps running (down to roughly six weeks), China's rare-earth suspension still expires 10 November, and no AI safety-notification agreement was confirmed despite both leaders discussing AI prominently. The one soft signal — Trump saying farmers "will be very happy" — points to a probable soybean-purchase commitment, unconfirmed in detail. The White House fact sheet adds one concrete line: Trump urged Xi to increase China's production of refined petroleum products to stabilise global supply. Trump is next scheduled to host Xi's government at the <b>G20 summit in Miami this December</b>.<br><br>
 <i>Drie letters, drie dossiers, en geen ervan is deze week afgesloten — alleen uitgesteld tot de volgende ontmoeting, in december in Miami.</i></div>
 
-<div class="wn r"><div class="h">The next 10 days, dated — the macro calendar right now</div>
+<div class="wn r"><div class="h">This week · Monday 28 Sep → Friday 2 Oct — oil, the Fed's mood, and payrolls</div>
 <div class="gr g4" style="margin:10px 0">
-${[["Tue 30 Sep","US federal fiscal year ends","contract-award clustering, defence/tech"],["~6 weeks out","90-day US-China tariff truce expires","clock keeps running post-summit"],
-["Tue 10 Nov","China's rare-earth suspension expires","Beijing's main leverage point, unchanged"],["Dec 2026","G20 summit, Miami","Trump's next scheduled Xi meeting"]].map(r=>
+${[["Mon–Thu","Lagarde (Mon, Thu) · Fed: Williams Tue, Cook Wed+Thu, Logan Thu","~70% odds of a 28 Oct hike ride on their tone"],
+["Tue 30 Sep","Quarter-end · US fiscal year ends","Window dressing and contract awards — flows, not news"],
+["Later this week","PCE inflation (the Fed's preferred gauge)","Feeds directly into the 28 Oct decision"],
+["Fri 2 Oct","US payrolls","If oil stays up and jobs stay resilient, 'higher for longer' becomes 'higher again'"]].map(r=>
 `<div class="c" style="margin:0;padding:11px 13px"><div class="med" style="font-size:14px">${r[0]}</div><div class="t2" style="margin-top:4px">${r[1]}</div><div class="t2" style="margin-top:2px;opacity:.7">${r[2]}</div></div>`).join("")}
 </div>
-This past week's earnings gave a live cross-check on consumer and industrial spending: Cintas, Paychex and General Mills reported Wednesday, Costco and Darden Thursday. None of these move the macro picture alone — together they're the sample that shows whether the "resilient consumer" story is still holding into Q4.<br><br>
-<i>Geen van deze op zich verandert het plaatje. Samen zijn ze de steekproef die laat zien of het verhaal van de bestedende consument nog standhoudt.</i></div>
+The single question for the week is whether Brent near $107 pushes central banks to lean harder against inflation just as bond markets are already under pressure from supply and term premia. If diplomacy resumes and crude retreats, risk assets get another chance to stabilise; if not, the 10-year at ~5.20% is the number to watch. Trump was also scheduled to have dinner Sunday with Anthropic CEO Dario Amodei to discuss his calls to slow AI development (Anthropic is the company that makes Claude — weigh that item accordingly); the outcome is not yet reported.<br><br>
+<i>De hele week draait om één vraag: dwingt een oliebrand van $107 de centrale banken om harder te remmen, terwijl de obligatiemarkt al onder druk staat?</i></div>
+
+<div class="wn r"><div class="h">Dated risks further out</div>
+<div class="gr g4" style="margin:10px 0">
+${[["Wed 28 Oct","FOMC decision","~70% priced for another 25bp"],["Early Nov (Tue 3)","US midterm elections","Trump reportedly plans to resume Iran bombing afterwards"],
+["~6 weeks out","90-day US-China tariff truce ends","Nothing at the summit changed the clock"],["Tue 10 Nov","China's rare-earth suspension expires","Beijing's main leverage, unchanged"]].map(r=>
+`<div class="c" style="margin:0;padding:11px 13px"><div class="med" style="font-size:14px">${r[0]}</div><div class="t2" style="margin-top:4px">${r[1]}</div><div class="t2" style="margin-top:2px;opacity:.7">${r[2]}</div></div>`).join("")}
+</div>
+Then G20 in Miami in December, with Xi again on the guest list.<br><br>
+<i>Vier datums achter de horizon: de Fed, de verkiezingen, het einde van de tariefpauze en de zeldzame aardmetalen. Niets van de afgelopen top heeft ze verschoven.</i></div>
 
 <div class="wn"><div class="h">The pattern worth keeping</div>
 A rate decision that is fully priced in advance rarely moves markets on the vote itself — it moves on the tone that follows: a press conference, a dot plot, a vote split. <b>Four central banks inside one week, each read through this same lens</b>, is the clearest version of that pattern this dashboard has tracked all year.<br><br>
@@ -768,40 +783,4 @@ const INS=[
  lv:[["Fresh high","$108–109","<b>This morning</b> — pipeline shutdown + Hormuz strike"],["Broken","$100","Breached 9 September, now well behind"],["Prior zone","$98.50–100","The upside zone cited for weeks — long since cleared"],["August low","$75.77","4 August de-escalation read"],["Support","$70","Pre-war level where physical buyers sit"]],
  dr:"<b>Not a consequence — the cause.</b> Everything else on this dashboard sits downstream of it. This morning added a second supply shock — Saudi Arabia's main Hormuz bypass — on top of the strait itself.",
  par:"1973 and 1979, structurally",
- same:"A supply shock from conflict rather than demand, feeding inflation and forcing central banks to tighten into a slowing economy. That is the stagflation trap.",
- diff:"<b>Three differences, all capping the upside.</b> Producers route around the chokepoint — flows recovered from 4 to 7–8m barrels a day. Shale did not exist in the 1970s. And each escalation is priced more cheaply: the first closure took Brent $72→$118, July stopped at $100. <b>Today's news attacks the workaround itself</b> — the East-West pipeline was the routing solution — so this difference is now weaker than it was Friday.",
- met:"<b>Olie is de kraan waar de hele economie op is aangesloten.</b> Van een tanker naar jouw aandelenkoers zijn het vier stappen: duurdere olie → duurdere spullen → hogere rente → lagere waardering. Vandaag ging niet de kraan zelf stuk, maar <b>de reserveslang ernaast.</b>",
- ev:[["late Apr","<b>Above $120</b>","First Hormuz closure"],["24 Jul","$100","Second escalation"],["4 Aug","$75.77","De-escalation read"],["late Aug","Flows recover 4m → 7–8m barrels","<b>Workarounds, not safety</b>"],["30 Aug","US strikes Larak Island — mines being prepared","—"],["2 Sep","WTI +5.2%, Brent +4.6%","Two tankers disabled by mines"],["9 Sep","<b>Brent breaks $100</b>","Biggest wave of shipping attacks by both sides"],["10 Sep","Brent touches ~$108 intraday","Fourth straight down day for stocks"],["11 Sep","Brent −2.8% to $104.61, WTI −2.4% to $100.05","Iran signals talks with Gulf states in Oman"],["Thu-Fri 10-11 Sep","Drones from Iraq hit Saudi Arabia's East-West pipeline, ~7m bbl/day capacity","Riyadh shuts it as a precaution — <b>~4% of global supply at risk</b>"],["<b>Mon 14 Sep</b>","<b>Oman talks postponed, merchant vessel struck in the Strait (1 death), Houthis seize Perim Island</b>","<b>Brent above $108, WTI ~$103 — two new chokepoints in one morning</b>"]]}
-];
-
-$("#c-dt").innerHTML=`
-<h2><b>DAYTRADING</b> · SIX INSTRUMENTS, LEVELS, HISTORY AND WHY</h2>
-<div class="ld">For each: where it is, the levels other people are watching, what drives it, the historical parallel, and <b>what does not match that parallel</b> — because the differences are where the money is.</div>
-
-<div class="wn"><div class="h">The chain — trade this, not the instrument</div>
-<div class="gr g4" style="margin:10px 0">
-${["Hormuz headline","Brent spikes","Yields rise","Nasdaq falls, gold bid"].map((s,i)=>
-`<div class="c" style="margin:0;padding:11px;border-color:${i<3?'#e6c8c8':'#c9e2d5'}">
-<div class="dk">STEP ${i+1}</div><div style="font-size:12.5px">${s}</div></div>`).join("")}
-</div>
-<b>But the DAX and FTSE split.</b> Germany pays the energy bill, Britain collects it. That is the one place where the same news moves two indices in opposite directions.<br><br>
-Higher yields <b>plus</b> higher oil is a simultaneous headwind for the Nasdaq and a tailwind for energy and metals. <b>Size positions for 5%+ oil days.</b></div>
-
-${INS.map(i=>`<div class="c" style="border-color:${i.c=='n'?'#e6c8c8':i.c=='p'?'#c9e2d5':'#e8dfc4'}">
- <div class="ct"><div class="cl">${i.k} · ${i.n}<s>${i.chg}</s></div>
-  <span class="g ${i.c}">${i.now}</span></div>
- <div class="gr g2" style="margin-bottom:10px">
-  <div><div class="dk">Levels</div><div class="t"><table><tbody>
-  ${i.lv.map(l=>`<tr class="wr"><td class="t2" style="width:110px">${l[0]}</td><td class="m" style="width:80px"><b>${l[1]}</b></td><td class="t2">${l[2]}</td></tr>`).join("")}
-  </tbody></table></div></div>
-  <div><div class="b i"><div class="h">What drives it</div>${i.dr}</div>
-  <div class="b mt"><div class="h">De metafoor</div>${i.met}</div></div>
- </div>
- <div class="gr g2">
-  <div class="b p"><div class="h">Parallel · ${i.par} — what is the same</div>${i.same}</div>
-  <div class="b n"><div class="h">What is different</div>${i.diff}</div>
- </div>
- <div style="margin-top:10px"><div class="dk">Major moves this year</div>
- <div class="t"><table><tbody>
- ${i.ev.map(e=>`<tr class="wr"><td class="m ac" style="width:130px"><b>${e[0]}</b></td><td style="min-width:260px">${e[1]}</td><td class="t2">${e[2]}</td></tr>`).join("")}
- </tbody></table></div></div
+ same:"A supply shock from conflict rather than demand, feeding inflation and forcing central banks to tighten into a slowing economy. That is the stagflat

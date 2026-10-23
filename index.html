@@ -1,0 +1,1121 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Control Room</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f7f4;--pn:#fff;--ln:#e6e4de;--l2:#d4d1c8;--tx:#1a1917;--t2:#6b675e;--mu:#9d988c;
+--ac:#8a6a1c;--po:#1d6b4c;--ne:#9b2f2f;--in:#2c5680;--wm:#fcf9f0;--cl:#f2f7f4;--rd:#fcf4f4;--bl:#f4f7fb}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--tx);font:400 13.5px/1.6 'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.m{font-family:'IBM Plex Mono',monospace}
+.hd{background:var(--pn);border-bottom:1px solid var(--l2);position:sticky;top:0;z-index:60}
+.hi{max-width:1560px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.lg{font-weight:700;font-size:18px;letter-spacing:-.4px;line-height:1}
+.lg s{display:block;text-decoration:none;font-weight:400;color:var(--t2);font-size:10px;letter-spacing:1.6px;margin-top:3px;text-transform:uppercase}
+.st{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.bd{font:500 9.5px/1 'IBM Plex Mono';letter-spacing:.6px;padding:6px 9px;border-radius:3px;background:var(--wm);border:1px solid var(--ln);color:var(--t2);text-transform:uppercase}
+.bd b{color:var(--tx);font-weight:700}
+.bd.f{background:var(--cl);border-color:#c9e2d5;color:var(--po)}
+.bd.a{background:var(--rd);border-color:#e6c8c8;color:var(--ne)}
+.tabs{max-width:1560px;margin:0 auto;padding:0 20px;display:flex;gap:2px;overflow-x:auto;border-top:1px solid var(--ln)}
+.tab{padding:11px 16px;font:600 12px/1 'IBM Plex Sans';letter-spacing:.3px;color:var(--t2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.tab i{font-style:normal;font-size:11px;opacity:.65}
+.tab:hover{color:var(--tx);background:var(--wm)}
+.tab.on{color:var(--ac);border-bottom-color:var(--ac);background:var(--wm)}
+.w{max-width:1560px;margin:0 auto;padding:22px 20px 80px}
+.pn{display:none}.pn.on{display:block}
+h2{font:600 11px/1 'IBM Plex Mono';letter-spacing:1.8px;color:var(--t2);text-transform:uppercase;margin:30px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--l2)}
+h2:first-child{margin-top:0}h2 b{color:var(--ac)}
+h3{font:600 15px/1.3 'IBM Plex Sans';margin-bottom:8px}
+.ld{font-size:14px;line-height:1.65;color:#3c3a33;margin-bottom:14px;max-width:1050px}
+.c{background:var(--pn);border:1px solid var(--ln);border-radius:6px;padding:15px 17px;margin-bottom:13px}
+.c.h{background:var(--wm);border-color:var(--l2)}
+.ct{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+.cl{font-weight:600;font-size:14.5px;line-height:1.3}
+.cl s{display:block;text-decoration:none;font-weight:400;font-size:10.5px;color:var(--t2);letter-spacing:.5px;margin-top:3px;text-transform:uppercase}
+.g{font:500 9px/1 'IBM Plex Mono';letter-spacing:.8px;padding:4px 8px;border-radius:3px;text-transform:uppercase;background:var(--wm);border:1px solid var(--ln);color:var(--t2);white-space:nowrap}
+.g.p{background:var(--cl);border-color:#c9e2d5;color:var(--po)}
+.g.n{background:var(--rd);border-color:#e6c8c8;color:var(--ne)}
+.g.a{background:var(--wm);border-color:#e8dfc4;color:var(--ac)}
+.g.i{background:var(--bl);border-color:#d0dcea;color:var(--in)}
+.g.m{opacity:.55}
+.gr{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(380px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(255px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.b{border-left:2px solid var(--ln);padding:9px 0 9px 12px;margin:9px 0;font-size:12.5px;line-height:1.65}
+.b .h{font:600 9px/1 'IBM Plex Mono';letter-spacing:1.2px;color:var(--t2);text-transform:uppercase;margin-bottom:6px}
+.b.p{border-color:#c9e2d5;background:var(--cl)}.b.p .h{color:var(--po)}
+.b.n{border-color:#e6c8c8;background:var(--rd)}.b.n .h{color:var(--ne)}
+.b.a{border-color:#e8dfc4;background:var(--wm)}.b.a .h{color:var(--ac)}
+.b.i{border-color:#d0dcea;background:var(--bl)}.b.i .h{color:var(--in)}
+.b.mt{border-color:var(--ac);background:var(--wm);font-style:italic}
+.b.mt .h{color:var(--ac);font-style:normal}
+.t{overflow-x:auto;border:1px solid var(--ln);border-radius:6px;background:var(--pn)}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{font:600 9px/1.4 'IBM Plex Mono';letter-spacing:1px;color:var(--t2);text-transform:uppercase;text-align:left;padding:10px 11px;border-bottom:1px solid var(--l2);background:var(--wm);white-space:nowrap}
+td{padding:10px 11px;border-bottom:1px solid var(--ln);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr.wr td{white-space:normal}
+th.r,td.r{text-align:right}
+.t2{font-size:11.5px;color:var(--t2);line-height:1.5}
+.po{color:var(--po)}.ne{color:var(--ne)}.ac{color:var(--ac)}.mu{color:var(--mu)}.in{color:var(--in)}
+.nt{font-size:11.5px;color:var(--t2);line-height:1.65;padding:10px 13px;background:var(--wm);border:1px solid var(--ln);border-radius:5px;margin:11px 0}
+.wn{border-left:3px solid var(--ac);background:var(--wm);padding:13px 16px;border-radius:0 5px 5px 0;margin:14px 0;font-size:12.5px;line-height:1.7}
+.wn .h{font:600 9.5px/1 'IBM Plex Mono';letter-spacing:1.3px;color:var(--ac);text-transform:uppercase;margin-bottom:8px}
+.wn.r{border-left-color:var(--ne);background:var(--rd)}.wn.r .h{color:var(--ne)}
+.wn.g{border-left-color:var(--po);background:var(--cl)}.wn.g .h{color:var(--po)}
+.big{font:700 34px/1 'IBM Plex Mono';letter-spacing:-1.5px}
+.med{font:600 20px/1 'IBM Plex Mono';letter-spacing:-.5px}
+.dk{font:600 9px/1 'IBM Plex Mono';letter-spacing:1.2px;color:var(--t2);text-transform:uppercase;margin-bottom:7px}
+.sr{font:500 8px/1 'IBM Plex Mono';letter-spacing:.5px;padding:2px 5px;border-radius:2px;background:var(--wm);border:1px solid var(--ln);color:var(--mu);margin-left:6px;text-transform:uppercase;vertical-align:1px}
+svg{display:block;max-width:100%}
+.ch{background:var(--pn);border:1px solid var(--ln);border-radius:6px;padding:16px;margin-bottom:13px}
+.chh{font:600 11px/1 'IBM Plex Mono';letter-spacing:1.2px;color:var(--t2);text-transform:uppercase;margin-bottom:4px}
+.chs{font-size:11.5px;color:var(--t2);margin-bottom:13px;line-height:1.55}
+.pill{display:inline-block;font:600 10px/1 'IBM Plex Mono';padding:5px 10px;border-radius:20px;margin:0 4px 4px 0;cursor:pointer;border:1px solid var(--ln);background:var(--pn);color:var(--t2)}
+.pill.on{background:var(--ac);border-color:var(--ac);color:#fff}
+@media(max-width:760px){.w{padding:15px 12px 70px}.g2,.g3,.g4{grid-template-columns:1fr}
+.hi{padding:10px 12px}.tabs{padding:0 12px}.lg{font-size:16px}.big{font-size:27px}}
+</style></head><body>
+<div class="hd"><div class="hi">
+<div class="lg">CONTROL ROOM<s id="ver">v87 · 22 October 2026, morning</s></div>
+<div class="st" id="stamps"></div></div>
+<div class="tabs" id="tabs">
+<div class="tab on" data-t="rp"><i>●</i>DAILY REPORT</div>
+<div class="tab" data-t="mc"><i>◉</i>MACRO</div>
+<div class="tab" data-t="bd"><i>▤</i>BONDS &amp; FX</div>
+<div class="tab" data-t="sg"><i>◈</i>STRATEGY</div>
+<div class="tab" data-t="dt"><i>▲</i>DAYTRADING</div>
+<div class="tab" data-t="lg"><i>▦</i>LOG</div>
+</div></div>
+<div class="w" id="panels">
+<div class="pn on" id="p-rp"><div id="c-rp"></div></div>
+<div class="pn" id="p-mc"><div id="c-mc"></div></div>
+<div class="pn" id="p-bd"><div id="c-bd"></div></div>
+<div class="pn" id="p-sg"><div id="c-sg"></div></div>
+<div class="pn" id="p-dt"><div id="c-dt"></div></div>
+<div class="pn" id="p-lg"><div id="c-lg"></div></div>
+</div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const SR=c=>`<span class="sr">${({co:'COMPANY',f4:'SEC FILING',ct:'OFFICIAL',an:'ANALYST',fe:'NEWS',de:'DERIVED',gap:'GAP'})[c]||c}</span>`;
+function go(t){$$('.pn').forEach(p=>p.classList.toggle('on',p.id=='p-'+t));
+$$('.tab').forEach(x=>x.classList.toggle('on',x.dataset.t==t));window.scrollTo(0,0);}
+$$('.tab').forEach(x=>x.onclick=()=>go(x.dataset.t));
+
+/* ───── CHART ENGINE ───── */
+const W=780;
+function bar(rows,o={}){
+ const P={l:o.l||128,r:64,t:12,b:28}, mx=o.max||Math.max(...rows.map(r=>r[1]||0))*1.14;
+ const bh=o.bh||27,gp=9,h=P.t+rows.length*(bh+gp)+P.b,iw=W-P.l-P.r;
+ let s=`<svg viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono,monospace">`;
+ for(let v=0;v<=mx;v+=(o.step||1)){const x=P.l+(v/mx)*iw;
+  s+=`<line x1="${x}" y1="${P.t-4}" x2="${x}" y2="${h-P.b+2}" stroke="#e6e4de"/><text x="${x}" y="${h-P.b+17}" font-size="9" fill="#9d988c" text-anchor="middle">${v}${o.u||'%'}</text>`;}
+ rows.forEach((r,i)=>{const y=P.t+i*(bh+gp),v=r[1],c=r[3]||'#8a6a1c';
+  s+=`<text x="${P.l-10}" y="${y+bh/2+4}" font-size="11" fill="#1a1917" text-anchor="end" font-weight="600">${r[0]}</text>`;
+  if(v==null){s+=`<rect x="${P.l}" y="${y}" width="${iw}" height="${bh}" fill="#f7f7f4" stroke="#e6e4de" stroke-dasharray="3 3" rx="2"/><text x="${P.l+11}" y="${y+bh/2+4}" font-size="9.5" fill="#9d988c" letter-spacing="1.2">GAP — NOT VERIFIED</text>`;}
+  else{const bw=Math.max(2,(v/mx)*iw);
+   s+=`<rect x="${P.l}" y="${y}" width="${bw}" height="${bh}" fill="${c}" rx="2"/><text x="${P.l+bw+8}" y="${y+bh/2+4}" font-size="11.5" fill="${c}" font-weight="700">${v.toFixed(2)}${o.u||'%'}</text>`;
+   if(r[2])s+=`<text x="${P.l+7}" y="${y+bh/2+4}" font-size="9" fill="#fff" opacity=".92">${r[2]}</text>`;}});
+ return s+`</svg>`;}
+
+function grp(rows,o={}){
+ const P={l:o.l||128,r:64,t:12,b:40}, mx=o.max||Math.max(...rows.flatMap(r=>r.slice(1).map(v=>v||0)))*1.14;
+ const n=rows[0].length-1,bh=o.bh||12,gp=15,h=P.t+rows.length*(bh*n+gp)+P.b,iw=W-P.l-P.r;
+ const C=o.c||['#2c5680','#c9a227','#9b2f2f'];
+ let s=`<svg viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono,monospace">`;
+ for(let v=0;v<=mx;v+=(o.step||1)){const x=P.l+(v/mx)*iw;
+  s+=`<line x1="${x}" y1="${P.t-4}" x2="${x}" y2="${h-P.b-8}" stroke="#e6e4de"/><text x="${x}" y="${h-P.b+6}" font-size="9" fill="#9d988c" text-anchor="middle">${v}%</text>`;}
+ rows.forEach((r,i)=>{const y0=P.t+i*(bh*n+gp);
+  s+=`<text x="${P.l-10}" y="${y0+bh*n/2+4}" font-size="11" fill="#1a1917" text-anchor="end" font-weight="600">${r[0]}</text>`;
+  for(let k=0;k<n;k++){const v=r[k+1],y=y0+k*bh,c=C[k];
+   if(v==null){s+=`<rect x="${P.l}" y="${y}" width="42" height="${bh-1.5}" fill="#f7f7f4" stroke="#e6e4de" stroke-dasharray="2 2"/><text x="${P.l+47}" y="${y+bh-3}" font-size="8.5" fill="#9d988c">GAP</text>`;}
+   else{const bw=Math.max(2,(v/mx)*iw);
+    s+=`<rect x="${P.l}" y="${y}" width="${bw}" height="${bh-1.5}" fill="${c}" rx="1.5"/><text x="${P.l+bw+6}" y="${y+bh-3}" font-size="10" fill="${c}" font-weight="600">${v.toFixed(2)}</text>`;}}});
+ (o.lb||[]).forEach((l,k)=>{s+=`<rect x="${P.l+k*160}" y="${h-16}" width="10" height="10" fill="${C[k]}" rx="1.5"/><text x="${P.l+k*160+15}" y="${h-7}" font-size="9.5" fill="#6b675e">${l}</text>`;});
+ return s+`</svg>`;}
+
+function div(rows,o={}){
+ const P={l:o.l||128,r:64,t:12,b:28};
+ const vs=rows.map(r=>r[1]).filter(v=>v!=null),mx=Math.max(...vs.map(Math.abs))*1.35||1;
+ const bh=27,gp=9,h=P.t+rows.length*(bh+gp)+P.b,iw=W-P.l-P.r,z=P.l+iw/2;
+ let s=`<svg viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono,monospace">
+ <line x1="${z}" y1="${P.t-4}" x2="${z}" y2="${h-P.b+2}" stroke="#6b675e" stroke-width="1.5"/>
+ <text x="${z}" y="${h-P.b+17}" font-size="9" fill="#6b675e" text-anchor="middle">0${o.u||'%'}</text>`;
+ rows.forEach((r,i)=>{const y=P.t+i*(bh+gp),v=r[1];
+  s+=`<text x="${P.l-10}" y="${y+bh/2+4}" font-size="11" fill="#1a1917" text-anchor="end" font-weight="600">${r[0]}</text>`;
+  if(v==null){s+=`<text x="${z+9}" y="${y+bh/2+4}" font-size="9.5" fill="#9d988c" letter-spacing="1.2">GAP</text>`;}
+  else{const bw=Math.abs(v)/(mx*2)*iw,c=v>=0?(o.pc||'#1d6b4c'):(o.nc||'#9b2f2f');
+   s+=`<rect x="${v>=0?z:z-bw}" y="${y}" width="${bw}" height="${bh}" fill="${c}" rx="2"/>
+   <text x="${v>=0?z+bw+8:z-bw-8}" y="${y+bh/2+4}" font-size="11.5" fill="${c}" font-weight="700" text-anchor="${v>=0?'start':'end'}">${v>0?'+':''}${v.toFixed(2)}${o.u||'%'}</text>`;}});
+ return s+`</svg>`;}
+
+function line(series,o={}){
+ const P={l:52,r:14,t:14,b:26},h=o.h||190,iw=W-P.l-P.r,ih=h-P.t-P.b;
+ const all=series.flatMap(s=>s.v),mn=o.min!=null?o.min:Math.min(...all)*.985,mx=o.max!=null?o.max:Math.max(...all)*1.015;
+ const X=i=>P.l+(i/(o.x.length-1))*iw, Y=v=>P.t+ih-((v-mn)/(mx-mn))*ih;
+ let s=`<svg viewBox="0 0 ${W} ${h}" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono,monospace">`;
+ for(let k=0;k<=4;k++){const v=mn+(mx-mn)*k/4,y=Y(v);
+  s+=`<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="#e6e4de"/><text x="${P.l-7}" y="${y+3.5}" font-size="9" fill="#9d988c" text-anchor="end">${v.toFixed(o.dp!=null?o.dp:1)}</text>`;}
+ o.x.forEach((lb,i)=>{s+=`<text x="${X(i)}" y="${h-8}" font-size="9" fill="#9d988c" text-anchor="middle">${lb}</text>`;});
+ series.forEach(se=>{const pts=se.v.map((v,i)=>`${X(i)},${Y(v)}`);
+  s+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${se.c}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  se.v.forEach((v,i)=>{s+=`<circle cx="${X(i)}" cy="${Y(v)}" r="${i==se.v.length-1?3.6:2.4}" fill="${se.c}"/>`;});
+  s+=`<text x="${W-P.r-2}" y="${Y(se.v[se.v.length-1])-8}" font-size="10" fill="${se.c}" text-anchor="end" font-weight="700">${se.n}</text>`;});
+ return s+`</svg>`;}
+
+/* ═════════ DAILY REPORT ═════════ */
+$("#c-rp").innerHTML=`
+<div class="c h" style="border-color:var(--l2)">
+ <div class="ct"><div>
+  <div style="font:600 10px/1 'IBM Plex Mono';letter-spacing:1.6px;color:var(--t2)">THURSDAY 22 OCTOBER 2026, MORNING · AI RELIEF RALLY ON WEDNESDAY, THEN A SELL-OFF IN ASIA AND A LOWER EUROPEAN OPEN AS FRENCH YIELDS TOP 5%</div>
+  <div style="font-size:21px;font-weight:600;margin-top:8px;line-height:1.35;max-width:820px">
+   Wednesday: <b>Dow +0.69% to 52,856.09</b> (a one-month high), S&amp;P 500 +0.58% to 7,757.17 (within 0.8% of its record), <b>Nasdaq +1.05%</b>, chip index +1.97% after SpaceX (revenue +161%) and Super Micro lifted AI hopes. Europe rebounded too (<b>DAX +1.35%, CAC +1.06%, FTSE +0.19%</b>) as <b>Russia agreed to renewed three-way peace talks</b> — but the <b>French 10-year yield topped 5%</b> (highest since 2002). After the bell Meta rose 2–3% (revenue $64.6bn, 2-for-1 split) and Tesla fell ~3%. Thursday: Asian tech sold off again, US futures are lower and Europe opens ~0.5–1% down</div></div>
+  <span class="g n">FRENCH 10Y &gt;5% · ASIA TECH SELL-OFF · FUTURES LOWER · DOW 1-MONTH HIGH</span></div>
+</div>
+
+<h2>⚡ AT A GLANCE — THE WHOLE PICTURE IN ONE SCREEN</h2>
+<div class="gr g2" style="margin-bottom:10px">
+ <div class="b p">
+  <div class="h">🟢 MACRO — GOOD</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li><b>Russia agreed to renewed three-way peace talks</b> (Wed) — energy markets have something to price after the energy ceasefire unravelled</li>
+   <li>G7 announced <b>release of strategic oil/diesel reserves</b> — a deliberate policy move to cool fuel prices</li>
+   <li><b>AI relief rally Wednesday:</b> SpaceX revenue +161% and Super Micro lifted chips (SOX +1.97%); Dow at a one-month high (52,856), S&amp;P within 0.8% of its record; Meta +2–3% after hours (revenue $64.6bn, 2-for-1 split)</li>
+   <li>No US government shutdown — funded through <b>11 December</b></li>
+  </ul>
+ </div>
+ <div class="b n">
+  <div class="h">🔴 MACRO — BAD</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li>Yemen's government launched a <b>full-scale offensive</b> against the Houthis — a fresh escalation, not de-escalation</li>
+   <li>Iran's own oil exports hit <b>zero</b> in September — the bilateral squeeze is tightening even as the region recovers</li>
+   <li>A <b>third US carrier</b> (USS Theodore Roosevelt) is inbound — timed near the November midterms</li>
+   <li>US pulled every bomber from a UK base (RAF Fairford) over a suspected terror plot</li>
+   <li><b>France is in turmoil:</b> worst unrest in years; French 10-year yield above 5% (5.009%), highest since 2002; OAT–Bund spread hit 155bp this week; more protests planned Thursday and budget talks continue</li>
+   <li><b>Europe's energy and growth:</b> Dutch gas €90/MWh (highest since 2022); German ZEW 28.1 and eurozone 18.5, both below forecasts; euro-area inflation 3.8%</li>
+   <li><b>Oil back above $100:</b> Brent $108.79, WTI $101.79 (Tue settle); Brent has swung between $97 and $112 this month; Houthi attacks on Saudi Arabia vs a Qatar–Pakistan mediation report</li>
+   <li><b>Hot CPI (3.7%) and PPI (+1.3% m/m, 6.3% y/y):</b> the Fed is in blackout until 29 Oct; hike odds for 28 Oct are ~15% after Warsh declined to signal more, December still priced high</li>
+   <li>A Houthi missile hit Saudi Aramco's Dhahran headquarters; Hormuz transits collapsed again earlier this month (7 tankers on 7 Oct, lowest since 23 July)</li>
+   <li>EUR/USD at a <b>2026 low</b>; US 10-year touched 5.36% last week, highest since April 2002</li>
+   <li>France-Germany bond spread at a 14-year high — a separate, unresolved European risk</li>
+  </ul>
+ </div>
+ <div class="b p">
+  <div class="h">🟢 MICRO — GOOD</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li>Nasdaq hit a fresh intraday record Friday — Nvidia led, chip stocks broadly firm</li>
+   <li>Nvidia announced a <b>$150bn share buyback</b> — the largest on record</li>
+   <li>Meta +16.8% in a week on its new "Muse" AI agent — AI enthusiasm back after the "pace the frontier" scare</li>
+   <li>Akamai +3% on a new multiyear deal with Anthropic</li>
+   <li>Intel's CEO personally bought ~$10m of stock in August — a rare open-market insider buy</li>
+  </ul>
+ </div>
+ <div class="b n">
+  <div class="h">🔴 MICRO — BAD</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li>Market breadth is narrowing: mega-cap tech <b>+14%</b> since late July, the rest of the S&P <b>−3%</b> over the same stretch</li>
+   <li>Gold fell to a <b>seven-week low</b>, down ~4% — losing to the rate-competition story</li>
+   <li>Bank stocks (JPMorgan, Cisco, AmEx) dropped on rate/yield fears even as chips rallied</li>
+   <li>Bitcoin and crypto-linked names slipped after the Senate failed a procedural vote on the Clarity Act</li>
+   <li><b>AI trade still fragile:</b> breadth thin (216 new Nasdaq lows vs 53 highs Wed); Tesla −3% after hours on capex cuts and delays; Asian tech sold off again Thursday and US futures are lower</li>
+   <li><b>Europe's data and markets weaker:</b> DAX −1.24%, CAC −1.11% and Stoxx 600 −0.8% on Monday; Volkswagen cut a model's sales forecast by 60%+; luxury spending is soft</li>
+  </ul>
+ </div>
+</div>
+
+<div class="wn" style="margin-bottom:10px"><div class="h">📊 THE VIEW — what this dashboard's own framework says right now</div>
+With the Fed in blackout until 29 October and hike odds near ~15%, the next two weeks are driven by <b>oil, French bond yields and the AI-hardware earnings</b>. Wall Street rallied Wednesday (Dow at a one-month high, S&amp;P within 0.8% of its record) but on thin breadth, and the futures turned lower overnight as Asian tech sold off again. Europe is the weak link: the French 10-year has passed 5% for the first time since 2002, protests continue, and the euro area's growth and sentiment data are soft. <b>28 October stacks the Fed decision and the UK Budget, with the ECB on the 29th.</b><br><br>
+<i>Wall Street viert, Parijs betaalt meer rente, en de Fed zwijgt. Kijk niet naar één van de drie, maar naar de combinatie.</i></div>
+
+<div class="wn r" style="margin-bottom:10px"><div class="h">📈 BIGGEST PRICE MOVERS — LAST COUPLE WEEKS, RANKED</div>
+<div class="t"><table><thead><tr><th>Rank</th><th>Event</th><th>What moved</th><th>Size</th></tr></thead><tbody>
+${[["1","Sat 26 Sep: Trump rejects Iran's Hormuz-reopening offer","Brent, 10-year yield","Both snapped back up within a day, erasing Friday's relief"],
+["2","Fri 2 Oct: September jobs report (+29k vs ~85k expected)","Fed-hike odds for 28 Oct","Flipped from ~70% hike to ~72% hold — the single biggest probability swing this month"],
+["3","16 Sep: Fed hikes 25bp, then Warsh's hawkish presser","Dow","Rallied on the hike, then fell 631pts (−1.21%) same day on the press conference tone"],
+["4","Mon 28 Sep → Tue 29 Sep: Saudi pipeline repair + export recovery","Brent / WTI","Brent round-tripped roughly $108 → $98 → $107 → $102 in under a week"],
+["5","Sat-Mon 12-14 Sep: Anthropic's 'pace the frontier' essay, Altman/Musk agree","Nasdaq, chip stocks","Chips fell as much as 5% in a session; Kospi had its worst day in months (−3.26%)"],
+["6","Ongoing since ~16 Sep: hawkish-Fed dollar strength + rising real yields","Gold","Round-tripped from +1.47% on hike day to a seven-week low, ~−4% net"]].map(r=>
+`<tr class="wr"><td class="m ac"><b>${r[0]}</b></td><td>${r[1]}</td><td><b>${r[2]}</b></td><td class="t2">${r[3]}</td></tr>`).join("")}
+</tbody></table></div>
+</div>
+
+<h2><b>1</b> · THE ONE NUMBER</h2>
+<div class="gr g3" style="margin-bottom:6px">
+ <div class="c" style="border-color:#e6c8c8;background:var(--rd)"><div class="dk">Fed decision · delivered today</div><div class="big ne">+25bp</div>
+  <div class="t2" style="margin-top:6px">3.50–3.75% → <b>3.75–4.00%</b>, 12-0 unanimous, first hike since 2023</div></div>
+ <div class="c"><div class="dk">Your written threshold</div><div class="big ac">65%</div>
+  <div class="t2" style="margin-top:6px">Was at 86% going in. This is the rule doing exactly what it said it would</div></div>
+ <div class="c" style="border-color:#e6c8c8;background:var(--rd)"><div class="dk">New number to watch</div>
+  <div class="big ne" style="font-size:25px">DOT PLOT</div>
+  <div class="t2" style="margin-top:6px">Signals <b>another hike still to come</b> this year. That is now the open question</div></div>
+</div>
+<div class="nt"><b>The trigger did its job.</b> It flagged this outcome three weeks before it happened, and did not waver through the CPI print, the oil shock or the AI selloff. <b>All four central banks have now moved</b> — Fed +25bp, ECB +25bp, BoJ +25bp, BoE held. The open question for the coming weeks is how many more, from any of them.</div>
+
+<h2><b>2</b> · WHERE THINGS STAND</h2>
+<div class="gr g2">
+<div class="c"><div class="cl" style="margin-bottom:9px">Markets<s>Wed 21 Oct close + Thursday morning</s></div>
+<div class="t"><table><tbody>
+${[["<b>Dow Jones</b>","<b>52,856.09 (+360.21, +0.69%)</b>","<b>One-month high; Goldman Sachs +2.25%</b>","p"],
+["S&amp;P 500","7,757.17 (+0.58%)","Within 0.8% of its record; third straight gain","p"],
+["<b>Nasdaq Comp. / chip index</b>","<b>26,702.86 (+1.05%) / SOX 11,505.56 (+1.97%)</b>","<b>SpaceX revenue +161% to $14.6bn (vs $12.86bn) and Super Micro's outlook revived AI-demand hopes</b>","p"],
+["Breadth","NYSE advancers 1.37-to-1; Nasdaq 216 new lows vs 53 new highs","A narrow rally — leadership narrowed again","a"],
+["<b>Meta / Tesla, after hours</b>","<b>Meta +2–3% / Tesla −3%</b>","<b>Meta: revenue $64.6bn (+26%), Q4 guide $73–76bn, 2-for-1 split, EPS hit by a $9.89bn legal charge. Tesla: revenue $28bn (slight miss), adj. EPS $0.48, capex cut to ~$20bn; had risen 3.4% on merger talk</b>","a"],
+["<b>DAX / CAC / FTSE, Wed</b>","<b>25,647.10 (+1.35%) / 7,921.69 (+1.06%) / 10,752.87 (+0.19%)</b>","<b>FTSE ~2.2% below its 10,989 July record; Italy's MIB +1.17%</b>","p"],
+["<b>French 10-year yield</b>","<b>5.009% (+6bp)</b>","<b>First time above 5% since 2002; protests planned Thursday, budget talks continue</b>","n"],
+["Russia–Ukraine","Russia agreed to renewed three-way peace talks","Energy markets in focus; earlier energy ceasefire had unravelled","p"],
+["WTI crude","+2.18% Wednesday (~$104, derived)","Hopes of a quick US–Iran deal faded; Brent level not confirmed","n"],
+["<b>Thursday morning</b>","<b>Asia tech sold off; Stoxx 50 futures &gt;1% lower; CAC −0.8 to −1.3%, DAX −0.7%, FTSE futures −0.5%</b>","<b>US futures: Nasdaq-100 −0.6% to −1%, S&amp;P −0.4% to −1%</b>","n"],
+["Kospi","+3.3% Wed to 5,735.66; lower at Thursday's open","A sidecar was triggered Wednesday after Tuesday's slide","a"]].map(r=>
+`<tr class="wr"><td style="width:150px"><b>${r[0]}</b></td><td class="r m" style="width:120px">${r[1]}</td>
+<td class="${r[3]=='n'?'ne':r[3]=='p'?'po':'ac'}">${r[2]}</td></tr>`).join("")}
+</tbody></table></div></div>
+
+<div class="c"><div class="cl" style="margin-bottom:9px">Rates and currencies<s>The engine underneath everything</s></div>
+<div class="t"><table><tbody>
+${[["<b>US 10-year</b>","<b>5.21%</b>","<b>El-Erian: \"we're not going back\" — highest in decades, still climbing Monday</b>","n"],
+["US 2-year","~4.92%","Short end leading the sell-off: markets pricing more Fed hikes, not fewer","n"],
+["US 30-year","~5.52%","Up about 27bp in September alone","n"],
+["Germany 10-year","~3.35%","Spread to France still at a 14-year high — a separate European stress","p"],
+["UK 10-year","~5.22%","Gilts tracking Treasuries; BoE held 3.75% on 17 Sep, 6–3","n"],
+["Japan","Policy rate 1.25%","BoJ hiked 18 Sep, 7–2 split; yen weakness and intervention chatter continue","n"],
+["<b>USD/CHF</b>","<b>Higher</b>","<b>SNB held rates but sounded less hawkish — a dovish hold lifted the dollar against the franc</b>","a"],
+["EUR/USD","~1.15","Lagarde speaks Monday and Thursday — the ECB's next guidance","a"]].map(r=>
+`<tr class="wr"><td style="width:150px"><b>${r[0]}</b></td><td class="r m" style="width:100px">${r[1]}</td>
+<td class="${r[3]=='n'?'ne':r[3]=='p'?'po':''}">${r[2]}</td></tr>`).join("")}
+</tbody></table></div></div>
+</div>
+
+<h2><b>3</b> · WHAT HAPPENED, AND WHY IT MATTERS</h2>
+${[
+{t:"An AI relief rally on SpaceX and Super Micro — then Meta and Tesla split, and Asia sold tech again on Thursday",c:"a",g:"WED 21 – THU 22 OCT · RELIEF, THEN DOUBT",
+ what:"Wednesday the <b>Nasdaq rose 1.05% to 26,702.86</b>, the Dow 0.69% to 52,856.09 (a one-month high) and the S&amp;P 500 0.58% to 7,757.17; the Philadelphia chip index jumped 1.97%. The catalysts were results from <b>SpaceX (revenue +161% to $14.6bn against $12.86bn expected, AI the biggest driver)</b> and Super Micro, which revived AI-demand hopes; Tesla also rose 3.4% on merger-committee news. Breadth was thin (NYSE advancers 1.37-to-1; 216 new lows against 53 new highs on the Nasdaq). After the close, <b>Meta</b> reported revenue of $64.6bn (+26%, above the $63.4bn forecast) and a $73–76bn Q4 outlook and announced a 2-for-1 split, but EPS of $3.83 missed because of a $9.89bn legal charge; shares rose 2–3%. <b>Tesla</b> reported revenue of $28bn (slightly below), adjusted EPS of $0.48, a surprise $1.53bn free cash flow, a capex cut to about $20bn from over $25bn and a revised Optimus timeline; shares fell ~3%. Thursday morning Asian tech sold off again, US futures turned lower (Nasdaq-100 −0.6% to −1%) and Europe was set to open down.",
+ why:"<b>Earnings are still beating, but the market is picky:</b> the rally needed a sector-specific catalyst (SpaceX, Super Micro) and faded in the futures overnight. The split reaction — Meta up, Tesla down on a similar \u201cmostly fine\u201d report — shows investors are paying for visible AI revenue and punishing capex cuts and delays. The thin breadth is the warning: a rally with more new lows than new highs is fragile.",
+ meta:"Twee leerlingen leverden vanavond hun werkstuk in. De ene kreeg een goede beoordeling omdat de klanten zichtbaar kwamen; de andere werd afgestraft omdat de planning werd bijgesteld. Dat zegt meer over wat de klas nu wil zien dan over de werkstukken zelf."},
+{t:"Europe's problems, in one place: French riots and a bond crisis, gas at a four-year high, weak sentiment — and the UK's gilts",c:"n",g:"17 – 20 OCT · THE EUROPE CARD (WHAT EARLIER EDITIONS UNDER-COVERED)",
+ what:"<b>France:</b> the worst unrest in years over the weekend of 17–18 October — thousands arrested, shops looted, public buildings set on fire in Limoges and Lyon, curfews requested and Prime Minister Lecornu (a minority government) not ruling out a state of emergency — over cost of living, schools and housing. A <b>National Assembly budget vote is days away</b>. French 10-year yields passed 5% on 21 October (5.009%, the highest since 2002) and the <b>OAT–Bund spread hit 155bp</b> (a new multi-year high, previous peak 151bp), the widest since the early-2010s euro debt crisis. Goldman says the deficit will be hard to cut without painful measures; RBC BlueBay sees a \u201cvery real risk\u201d of a sovereign debt crisis; Banque de France's governor says a 3% deficit by 2029 is still possible. Risks named by analysts: a no-confidence vote, a Moody's downgrade, and the April 2027 presidential election. <b>Euro area:</b> German ZEW 28.1 (forecast 30.2, prior 34.7), eurozone ZEW 18.5 (forecast 23.6); euro-area inflation 3.8% in September; Dutch TTF gas touched €90.24/MWh (highest since 2022); von der Leyen says the war has added ~€100bn to Europe's import bill (gas +140%, diesel doubled). German carmaker news: Volkswagen cut the 2026 sales forecast for a China-developed model by over 60%. <b>UK:</b> the 30-year gilt broke 6% (first since 1998) and the 10-year touched 5.53%; Budget on 28 October (IFS: ~£35bn challenge); BoE seen leaning toward hikes with inflation expected to top 4%.",
+ why:"<b>Honest answer to \u201chave you included Europe's problems?\u201d — partly.</b> Earlier editions covered gilts, the UK Budget, euro inflation and gas, but treated France mostly as a bond-spread footnote. It is the biggest local risk: the French stock market and banks fall when the spread widens, and a disorderly French bond market is the one scenario that could force the ECB to act. For the DAX it matters through confidence and the euro; for the FTSE through gilts and sterling rather than France directly. The caveat: Capital Economics notes the energy shock is smaller than in 2022, when there were no comparable riots — so cost of living is a trigger, not the only cause.",
+ meta:"In het huis aan de overkant van de gang is het gaan schreeuwen, de buren bellen de brandweer, en de huisbank vraagt een hogere rente om nog te blijven lenen. De rest van de straat voelt de rook, ook al is het niet hun keuken."},
+{t:"The AI-stock rout deepened into the worst week since June — while equal-weight stocks and Europe had their best in months",c:"n",g:"FRI 16 OCT · THE WEEK THAT BROKE THE NASDAQ'S STREAK",
+ what:"The Nasdaq Composite fell <b>2.14% to 26,140.03</b> on Friday (its biggest daily drop since 23 July) and <b>4.48% on the week</b>, snapping a four-week winning streak; the S&amp;P 500 fell 1.09% to 7,659.44 (<b>−1.95% on the week</b>, worst since late June); the Russell 2000 −1.66% (week −3%); the Dow −0.34% to 52,002.41 but <b>+0.67% on the week</b>, its second straight gain. The Philadelphia chip index fell for an <b>eighth day in a row, the longest losing streak since 2006</b>. Friday's laggards: Micron −5.6%, Intel −5.8%, CoreWeave about −12%. Cited worries: competition from Chinese chipmakers, debt-funded AI infrastructure, and rising oil feeding the inflation outlook. Energy stocks rose. The equal-weighted S&amp;P 500 had its best week against tech since 2009, and Europe outperformed: <b>FTSE 100 +3.13%</b> (best in about six months), <b>DAX +2.13%</b>, <b>Stoxx 600 +2.09%</b> (best since June). Treasuries had their best week since mid-February (10-year −14.6bp to 5.097%).",
+ why:"<b>This confirms the pattern this dashboard has flagged since early October:</b> the index was riding on a narrow AI-hardware group, and when that group sells off for eight straight days the headline index falls even though most stocks are fine. The same week showed the other side — falling yields and a defensive rotation lifted pharma, banks, staples, miners and energy, which is exactly the FTSE/DAX composition story. A caution: falling yields helped on Friday, but oil above $100 and the hot CPI/PPI prints have not gone away.",
+ meta:"Het dorp met de grote nieuwe fabrieken kreeg acht dagen op rij slecht nieuws over zijn leveranciers, en zakte vijf procent. De rest van de straat — apotheken, banken, brandstof — had juist zijn beste week in maanden. Hetzelfde weer, andere daken."},
+{t:"Oil is back above $100 as three conflicts hit energy flows at once",c:"n",g:"FRI 16 – SUN 18 OCT · BRENT $109.86",
+ what:"Brent hit $110 on Friday for the first time since May and <b>settled at $109.86 (+3.7%)</b>; WTI settled <b>$101.41 (+3.5%)</b> and gained over 10% on the week. At least nine commercial ships have been attacked near Hormuz since 11 October; Trump's Russia–Ukraine <b>\u201cenergy ceasefire\u201d unravelled</b> and Ukraine vowed to keep striking Russian refineries; Houthi missiles and drones hit Saudi Arabia repeatedly. Iran's army chief said the strait stays closed until Iran's demands are met and traffic is \u201cvery, very limited\u201d; CENTCOM said US forces keep control and ships keep transiting, and that Iran now has no maritime exports or imports because of the US blockade. Over the weekend Iran said two tankers hit mines and caught fire (not independently confirmed), appointed a new defence minister, and <b>urged the US to accept its proposal to reopen Hormuz</b>. Trump said Iran \u201cwill be over very soon.\u201d Markets reopened Sunday 22:00 Belgian time. Europe's import bill is up about €100bn, with gas +140% and diesel doubled (von der Leyen).",
+ why:"<b>One price, three conflicts</b> — Hormuz, the Red Sea/Saudi front and Russia–Ukraine — as one analyst put it. ING says oil carries a significant risk premium that would only fully clear with a US–Iran agreement; an Iranian proposal and a US demand are on the table but not agreed. Practical consequence: the first Brent print of the week can gap either way on weekend headlines, and a hot oil price keeps the inflation (CPI/PPI) story alive for the 28 October Fed decision.",
+ meta:"Drie branden tegelijk, en de brandweer blust nog steeds alleen de ene. Zolang de ruzie niet is opgelost, zit er een angstpremie in elke liter."},
+{t:"The hottest PPI since 2022 failed to revive the October hike bet — and the Dow rose 1%",c:"a",g:"THU 15 OCT · THE ODD REACTION",
+ what:"September producer prices rose <b>1.3% m/m</b> (consensus ~0.5–0.6%; the biggest monthly jump since March 2022) and <b>6.3% y/y</b> (consensus 5.3%; the fastest since December 2022). Core PPI excluding food, energy and trade services rose 0.5% m/m and 5.0% y/y; goods prices jumped 2.6% (the largest since the series began in 2009), energy +10.8% and gasoline +20.3%; services +0.8%. Yet the market priced a 28 October hike at only <b>~26–29%</b> after the release (it peaked ~49% on Wednesday after CPI and sat ~34–37% before PPI), with a December hike around 92%. US yields eased, the dollar fell (GBP/USD +0.56% to 1.3267), the <b>Dow gained 1.08% to 52,177.69</b>, the S&amp;P 500 0.33% and the Russell 2000 1.4% as money rotated into defensives. Axios: there is scant evidence that price pressures are receding on their own.",
+ why:"<b>The market is now debating when, not whether.</b> Moving from \u201cmaybe October\u201d to \u201calmost certainly by December\u201d can ease the short end even while the inflation path gets worse — and with yields softer the AI-debt scare paused. Treat the exact odds as a range: sources differ on the Wednesday peak and Thursday level. What the numbers do not argue is that the Fed is done: energy is driving much of it, but core PPI at 5% says it is not only the pump.",
+ meta:"De leerling kreeg een nog slechter rapport — en toch zakte de angst voor een extra straf. Niet omdat het goed gaat, maar omdat iedereen al verwacht dat de straf er hoe dan ook komt, alleen een paar weken later."},
+{t:"September CPI came in hot — and the Fed's October hike odds doubled in a day",c:"n",g:"WED 14 OCT · THE PRINT THAT MATTERED",
+ what:"Headline CPI rose <b>0.6% m/m and 3.7% y/y</b> (consensus 3.6%; August was 3.4%). Core CPI rose <b>0.3% m/m, 2.6% y/y</b> (consensus 0.2% / 2.5%) — the second straight 0.3% month, lifting the three-month annualised core rate to 3.4%. Gasoline jumped 9.1% and accounted for over half of the monthly headline rise, but shelter pushed core services up ~0.4%, so it was not only the pump. Real pay is slipping: inflation 3.7% against typical wage gains of ~3%. Treasury yields jumped (10-year to ~5.3%, 2-year to ~4.92%) and CME FedWatch priced a 25bp hike on 28 October at <b>~49%, up from 22% the day before</b>, with at least one hike by year-end at ~95%. Moody's Mark Zandi called the report \u201cuncomfortably strong.\u201d",
+ why:"<b>This is the reversal of the &quot;hold&quot; story this dashboard was tracking.</b> After the weak September jobs report, odds of an October hike had sunk to ~17%; one hot core print undid that. The mechanism is the one already on the page: oil near $106 feeds gasoline, gasoline feeds headline CPI, and when shelter also firms, the Fed cannot dismiss it as just energy. Thursday's PPI and Fed Chair Warsh's last speech before the meeting are now the next two tests.",
+ meta:"De dokter dacht dat de koorts wegtrok. Dan kwam de nieuwe meting: weer iets hoger, en nu ook niet alleen door het weer buiten. De kans dat hij toch nog een tweede injectie zet, ging van één op vijf naar bijna één op twee."},
+{t:"Trump eased Russian oil sanctions, then announced an \u201cenergy ceasefire\u201d — and it already looks fragile",c:"n",g:"FRI 9 – MON 12 OCT · A SECOND OIL FRONT OPENS",
+ what:"On Friday Trump announced Russia will supply diesel to the global market — a pivot away from sanctions pressure, following an NYT report of expanded US–Russia talks including a multibillion-dollar Lukoil oil deal. Over the weekend he announced that Russia and Ukraine had agreed to <b>halt attacks on each other's energy facilities</b>; oil briefly slipped Monday morning on hopes of more Russian supply, but Zelenskyy then said Moscow had already violated the ceasefire, and Brent reversed to close <b>+1.84% at $106.65</b> (WTI +2.06% to ~$93.7). Zelenskyy had earlier said the sanctions easing \u201cplays into Russia's hands\u201d; Trump separately said Zelenskyy should be replaced. Critics note it sits awkwardly beside a bipartisan sanctions bill Congress just passed.",
+ why:"<b>Analysts doubt it lowers fuel prices much</b>: Russia's own diesel-export ban (through end-October) and Ukrainian strikes on Russian refineries are the binding constraints, not US sanctions. The more useful signal is how the market treated it: a ceasefire headline took the oil price down for a few hours, and a Houthi attack on a Saudi airport plus the ceasefire's fragility took it straight back up — <b>Mideast supply fear is still outweighing every bearish headline.</b> The energy-sector ETF hit an all-time high Monday.",
+ meta:"Eén partij beloofde plechtig de lont uit het kruitvat te halen. Binnen een dag zei de andere partij dat de lont alweer brandde — en de prijs deed wat prijzen doen: eerst even zakken, dan harder terug omhoog."},
+{t:"Iran deliberately re-escalated Hormuz attacks right as the \"recovery\" story was being celebrated — and timed it to the midterms",c:"n",g:"WEEKEND 9-10 OCT · THE RECOVERY REVERSES",
+ what:"Within days of the Trump administration celebrating that US naval escorts had restored oil flows to near pre-war levels, <b>Iran sharply escalated tanker attacks</b> — at least 9 vessels hit last week, the worst violence in months. <b>IMF PortWatch recorded just 4 Hormuz transits on 4 October, against an 85/day pre-crisis baseline</b> — a near-total collapse, worse than the dip earlier in the crisis. A supertanker struck a mine today trying to leave via what Iran called an \"unauthorized route,\" and Iran's Revolutionary Guard is now threatening all ships not using its designated corridor. Separately, Trump is weighing joining Saudi Arabia in striking the Houthis and resuming strikes on Iran after an attack on Riyadh's King Khalid International Airport — a direct reversal of his pledge, just days old, not to attack before the midterms.",
+ why:"<b>This is a deliberate pressure campaign, not a random flare-up.</b> One analyst's framing is worth keeping: Iran doesn't need to stop every vessel, it needs the shipping industry to believe any vessel could be next — fear is the actual weapon, not the mine count. The timing — escalating right as Washington was claiming victory, and with the US midterms three weeks out — reads as Iran deliberately testing whether political pressure can force concessions before the election changes the calculus. Iran's own oil revenue is meanwhile being driven toward zero by the US blockade (Kpler: possibly by mid-December), so this is a regime under severe economic pressure choosing escalation anyway.",
+ meta:"De weg leek net heropend, de vrachtwagens reden weer. Toen, net op het moment dat iedereen het feest vierde, zette de ene kant extra wegversperringen neer — expres, op het moment dat het feest het meest zichtbaar was. Niet om de weg echt dicht te houden, maar om iedereen eraan te herinneren wie hem ooit weer kan sluiten."},
+{t:"Doubts about OpenAI's own revenue just did more damage to chip stocks than a month of Iran headlines",c:"n",g:"THU 8 OCT · THE AI-SPENDING QUESTION RETURNS",
+ what:"Reports that OpenAI's revenue came in below earlier estimates sent the <b>Nasdaq 100 to its worst day in seven weeks (−1.4%)</b>, with a gauge of chipmakers (SOX) down <b>3.4%</b>. Nvidia-backed Australian AI firm Firmus withdrew its IPO, citing market volatility — a concrete casualty, not just sentiment. This is a different thread from last month's \"pace the frontier\" safety-slowdown scare: that was about deliberately slowing capability growth; this is about whether the revenue to justify current AI infrastructure spending is actually materializing on schedule.",
+ why:"<b>This is the fragility this dashboard has flagged for months, finally triggered by something other than rates.</b> The market-breadth warning from early October — mega-cap tech +14% since July while the rest of the S&P lagged — means a lot of index-level strength is riding on a narrow set of AI-linked names. A single revenue-expectations wobble at the center of that trade (OpenAI, even though it's private, sits at the center of the infrastructure spending story via Microsoft, Nvidia, Oracle and others) moved chip stocks more in one day than weeks of Hormuz headlines did.",
+ meta:"Het hele dorp bouwde maanden aan een enorme nieuwe fabriek, in de verwachting dat de orders zouden binnenstromen. Deze week kwam het bericht dat de eerste orders kleiner uitvielen dan verwacht — en iedereen die spullen aan die fabriek levert, voelde het onmiddellijk."},
+{t:"The White House told the Pentagon to prepare Iran contingency options — and the de-escalation trade reversed in a day",c:"n",g:"THU 8 OCT · THE U-TURN",
+ what:"Reports surfaced that the White House instructed the Pentagon to prepare <b>contingency military options regarding Iran</b> ahead of the US midterms, alongside a fresh rise in attacks on shipping in the Gulf and the Strait of Hormuz. <b>WTI jumped ~5% to $92.62, Brent broke back above $102</b> — reversing most of the G7-reserve-release-driven decline from early October. Stocks fell for a second straight session, caught between earnings-season optimism and revived \"stagflation\" talk (strong growth/cost pressure, not weak growth — the phrase is being used loosely in commentary this week).",
+ why:"<b>This is the chokepoint story's fourth swing in under a month</b> — war → workaround → diplomacy → stall → route recovery → now contingency-planning headlines pushing it back up. Each swing has moved oil 10%+ within days. The pattern to hold onto: <i>headlines about intentions move price faster than actual physical supply does</i> — the Middle East export recovery to ~98% of pre-war levels (still broadly true) didn't change today, only the market's read of what might come next did.",
+ meta:"Het verkeer op de weg zelf is niet veranderd. Maar iedereen hoorde het leger plannen maken voor het geval de weg opnieuw dicht moet — en de prijs reageerde op het plan, niet op wat er vandaag echt over die weg reed."},
+{t:"G7 governments stepped in directly to cool fuel prices — and Yemen's government launched the biggest ground escalation yet",c:"p",g:"MON 5 OCT · POLICY MEETS A NEW FRONT",
+ what:"G7 nations announced Friday they will <b>release strategic crude and diesel reserves</b> to ease surging fuel prices — a direct policy intervention, not a market-driven move. Oil responded by sliding toward a one-month low (~$88 intraday Friday, settling near $90 Monday). OPEC+ separately held its output quota steady for next month, declining to add extra supply. On the ground, Yemen's internationally recognised government launched a <b>full-scale military offensive</b> to retake all Houthi-held territory — President al-Alimi said forces would press on \"until the country is liberated.\" Separately, the US pulled every bomber out of RAF Fairford in the UK over a suspected terror plot, and more tankers were struck in waters near Iran and Oman even as Tehran restates its conditions for reopening Hormuz.",
+ why:"<b>Two very different tools are now both in play.</b> The G7 reserve release is a deliberate, coordinated attempt to manage price from the demand/inventory side — governments stepping in because the physical supply recovery alone wasn't enough to fully cool prices. The Yemen offensive is the opposite signal: an attempt to resolve the Houthi threat by force rather than negotiation, which could go either way for the Bab el-Mandeb route depending on how it unfolds. Both landed the same day, which is why oil fell even as a new military front opened — the policy move currently outweighs the escalation risk in the price.",
+ meta:"Twee buren grijpen tegelijk in, maar op tegengestelde manieren. De ene opent zijn eigen voorraadkast om de prijs te drukken. De andere stuurt het leger erop af om het probleem bij de bron weg te halen. Vandaag won de voorraadkast — maar het leger is nog niet klaar."},
+{t:"Iran's own oil exports hit zero, and a third US carrier is on its way — the pressure campaign just entered a new phase",c:"n",g:"WEEKEND 3-4 OCT",
+ what:"Treasury Secretary Bessent said on social media that <b>Iran loaded zero crude oil onto tankers in September</b> — the US naval blockade and sanctions, part of what Washington calls the \"Economic Expulsion Operation,\" have driven Iran's own export revenue to nothing, even as the broader region's exports recovered to ~98% of pre-war levels (see §4). Separately, Energy Secretary Chris Wright said Sunday the US won't rule out further military action, confirming a <b>third US aircraft carrier, the USS Theodore Roosevelt</b>, is due in the region next month — potentially timed around the early-November midterms. Secretary of State Rubio separately flagged that any lasting deal must satisfy both \"Iran the state\" and \"Iran the revolution\" — two different constituencies inside the regime.",
+ why:"<b>This is two pressure campaigns running at once, not one.</b> The regional oil-supply story (§4) has normalized — tankers are moving again. But the bilateral US-Iran squeeze is tightening further, specifically targeting Iran's own revenue. That distinction matters: a calmer oil price today does not mean the underlying conflict is resolving, and the carrier deployment timeline suggests Washington expects this to still be unresolved well into November.",
+ meta:"De doorgaande weg door het dorp is weer open voor iedereen — maar de ene herberg aan de rand, waar de ruzie begon, krijgt nu zelf geen leveringen meer binnen. Dat is geen toeval, dat is het plan."},
+{t:"The September jobs report missed badly — and flipped the Fed bet from likely-hike to likely-hold overnight",c:"p",g:"FRI 2 OCT · THE BIGGEST SWING YET",
+ what:"The US added just <b>29,000 jobs in September</b>, against forecasts of roughly 85,000 — a sharp miss. The unemployment rate rose to <b>4.2% from 4.1%</b>. July's already-soft number was revised down further, to −31,000. This is part of a pattern: nonfarm payrolls have averaged only about 10,000 a month over the past year. Markets responded immediately: fed funds futures now imply <b>~72% odds the Fed holds rates steady</b> at its 28 October meeting — a complete reversal from two weeks ago, when a follow-up hike looked like the base case. Treasury yields tumbled, and stocks rallied: the Nasdaq hit a fresh record (+1–1.2%), the S&P and Dow both gained roughly 0.5–0.7%.",
+ why:"<b>This is the clearest demonstration yet of why this dashboard tracks the probability, not the prediction.</b> Two weeks ago the story was \"the Fed will probably hike again.\" One soft data print later, that flipped to \"the Fed will probably pause.\" Nothing about the war, the debt, or the tariffs changed — only the labour-market data did, and that was enough to move the number more than any geopolitical headline this month. One economist's caveat worth keeping: the Fed's late-October decision is still \"live\" and may be swayed further by the September CPI and PPI reports, which land before the meeting.",
+ meta:"Twee weken geleden dacht iedereen dat de dokter zeker een tweede operatie zou voorstellen. Toen kwam er één nieuwe bloedtest terug zwakker dan verwacht — en nu denkt diezelfde dokter dat afwachten waarschijnlijker is. <b>Hetzelfde bed, dezelfde patiënt, één getal verschil.</b>"},
+{t:"Trump rejected Iran's seven-day Hormuz offer — and the Houthis are now the second front that decides the oil price",c:"n",g:"SAT 26 – MON 28 SEP · THE UNWIND",
+ what:"Iran had offered to reopen Hormuz and restart nuclear talks within seven days if the US lifted its naval blockade of Iranian ports, waived sanctions on Iranian oil sales and observed a ceasefire that includes Lebanon. On Saturday Trump said \"they made a proposal but I rejected it\" — Iran was \"losing so badly\" — while adding that he expects talks to resume this week. The Wall Street Journal reported he expects to resume bombing after the early-November midterms. Iran says it is still awaiting a \"definitive\" US response; mediation runs through Oman and Qatar. Meanwhile the Houthis fired more missiles and drones at Riyadh and southwestern Saudi Arabia and have taken a long stretch of Yemen's Red Sea coast — one report says they are effectively closing Bab el-Mandeb by targeting Saudi-flagged tankers. <b>Brent rose ~2.7% to about $107, up almost 18% in September; diesel hit all-time highs.</b> The Senate also rejected a war-powers resolution as gas prices upend the midterm race.",
+ why:"<b>Friday's relief was a proposal, not a deal — and the proposal has now been turned down.</b> That is why Brent went straight back up and the 10-year (~5.20%) and 2-year (4.90%) followed. The more important shift is structural: with Hormuz partly working around the blockade, the binding constraint on oil is increasingly the Red Sea/Bab el-Mandeb route and Saudi infrastructure. And a stated \"after the midterms\" timeline means markets may now trade a date — early November — rather than a headline.",
+ meta:"Vrijdag stond de deur op een kier omdat iemand een voorstel onder de mat schoof. Zaterdag zei de huisbaas nee. Maandag merkt iedereen dat de wind door de andere deur — de achterdeur bij de Rode Zee — inmiddels harder waait dan door de voordeur."},
+{t:"The US and Iran moved toward lifting the Gulf naval blockades — and the 10-year's spike to a 2008-level high reversed the same day",c:"p",g:"FRIDAY 25 SEP · REVERSED SATURDAY",
+ what:"Iran asked the US to return to a June memorandum of understanding — the one that had failed to end the conflict then — to lift the naval blockades on tankers in the Gulf and ease economic measures against Tehran. On that news, <b>Brent fell sharply</b> (AP put it below $98; other reports had it nearer $100–104, so treat the exact Friday level with care — Monday's Reuters print of ~$107 implies a Friday settle around $104). The 10-year Treasury had spiked to <b>5.18% intraday, its highest level since the 2008 financial crisis</b>, before easing back the same afternoon as oil fell. Stocks rallied into the weekend: Dow +0.93% (snapping a three-week losing streak), S&P +0.51% (within 0.7% of its record), Nasdaq +0.5% — the major indices' first winning week in three.",
+ why:"<b>This looked like the chokepoint story completing a full circle — and Saturday undid it.</b> It ran: war, to a physical workaround reopening the route (§4), to now the first real diplomatic movement on the underlying conflict itself. It also confirms the divergence flagged earlier this week: when oil fell, yields fell with it this time, meaning Wednesday's split (yields up, oil down) was a temporary decoupling, not a permanent break from the fiscal story. The debt-driven yield pressure in §6 hasn't gone away — it was simply overpowered by an oil-specific move on Friday.",
+ meta:"Vrijdag leek de brandweer het vuur zelf te gaan blussen, en voor één dag daalde de rente mee met de olie. Zaterdag bleek het slechts een aanbod dat niet werd aanvaard."},
+{t:"Trump-Xi ended with tea and a museum tour, not a trade deal",c:"a",g:"24-25 SEP · THE SUMMIT ITSELF",
+ what:"The three-day state visit closed with tea at the White House and a joint tour of the National Archives before Xi flew back to Beijing. Trump called the visit \"very productive\"; the White House said little about what was actually achieved. Trump said American farmers \"are going to be very happy\" with the outcome, without specifics — widely read as a soybean-purchase signal. A senior official said a decision on the pending $14bn Taiwan arms package will come \"in a fairly short time\" — still unresolved. China's ambassador had written beforehand that Taiwan and human rights remain China's \"red lines.\" AI was discussed prominently by both leaders, but no safety-notification agreement was confirmed.",
+ why:"<b>Low expectations were met exactly.</b> Nothing here resolves the 90-day tariff truce clock, the 10 November rare-earth suspension deadline, or the Taiwan arms question — all three remain open, dated risks rather than settled ones. The \"constructive strategic stability\" language repeated from May's Beijing meeting signals both sides are still managing the relationship rather than resetting it.",
+ meta:"Twee buren dronken thee samen en bekeken oude documenten. Geen van de openstaande rekeningen tussen hen werd die middag vereffend — ze spraken alleen af het gesprek niet te laten escaleren."},
+{t:"The Fed hiked, 12-0 — and the dot plot says this isn't the last one",c:"n",g:"16 SEP · THE DECISION",
+ what:"The FOMC voted <b>unanimously, 12-0</b>, to raise the federal funds rate by 25bp to <b>3.75–4.00%</b> — the first hike since July 2023, ending five consecutive holds. Chair Warsh's statement cited \"solid\" economic activity and elevated uncertainty tied in part to the Middle East conflict. The updated dot plot <b>signals at least one more hike this year</b>. In the minutes after, stocks rose (S&P +0.4%, Nasdaq +0.9%), yields fell slightly across the curve, gold jumped 1.47% to $4,396.70, and WTI fell 3.3% to $102.29.",
+ why:"<b>This is the trigger working exactly as designed.</b> It flagged ~68% on 2 September, correctly did not fire, then climbed steadily to ~86% after Friday's CPI and held there through the weekend's oil shock and Monday's AI selloff. The hike itself was fully priced, so the market's real reaction is to the dot plot — <b>and it just told you there is at least one more of these coming</b>, most likely October or December. That is now the number to watch, not this one.",
+ meta:"De bel die drie weken lang luidde, bleek deze keer geen loos alarm. <b>De brand kwam — en de brandweer zegt er nog minstens één keer te moeten terugkomen.</b>"},
+{t:"The diplomatic meeting got cancelled by the attack it was meant to prevent — and Saudi Arabia's main bypass is now shut too",c:"n",g:"MONDAY 14 SEP",
+ what:"The Oman meeting between Iran and Gulf states was <b>abruptly postponed</b> after drones launched from Iraq hit Saudi Arabia's East-West pipeline — the 1,200km, <b>7-million-barrel-a-day</b> route that was the kingdom's main way of moving oil <i>around</i> the Strait of Hormuz. A merchant vessel was struck inside the Strait itself, killing one crew member, and Houthi forces seized <b>Perim Island</b> in the Bab al-Mandeb strait — a second chokepoint threat.",
+ why:"This directly reversed Friday's relief rally. The 4% of global supply the pipeline carries compounds the Hormuz story rather than replacing it — and it is the reason oil stayed elevated through the Fed decision rather than fading on its own.",
+ meta:"De brandweer had een afspraak om het vuur te bespreken. <b>Onderweg brandde de andere blusleiding ook af.</b>"},
+{t:"Three rival AI CEOs told the market to expect less AI, on purpose — the selloff that followed ran two full days",c:"a",g:"SAT-MON WEEKEND ESSAY → TUESDAY'S ROUT",
+ what:"Anthropic's Dario Amodei published an essay urging the industry to deliberately <b>\"pace the frontier\"</b>; OpenAI's Sam Altman and xAI's Elon Musk publicly agreed within hours, and Altman confirmed OpenAI will <b>skip an IPO this year</b>. Chip and AI-infrastructure names sold off Monday and continued into Tuesday — Samsung, SK Hynix, and the US hyperscalers named above.",
+ why:"This was a sentiment shock to the single most crowded trade in the market, arriving right before the Fed and compounding the rate story rather than sitting separately from it — exactly the \"market has not been this expensive since the dot-com peak\" fragility already flagged for the Nasdaq.",
+ meta:"De drie grootste bierbrouwers zeiden tegelijk: <b>we moeten trager brouwen.</b> De klanten zetten meteen een stap terug — en bleven twee dagen terugstappen."},
+].map(x=>`<div class="c" style="border-color:${x.c=='n'?'#e6c8c8':x.c=='i'?'#d0dcea':x.c=='p'?'#c9e2d5':'#e8dfc4'}">
+ <div class="ct"><div class="cl">${x.t}</div><span class="g ${x.c}">${x.g}</span></div>
+ <div class="b"><div class="h">What happened</div>${x.what}${SR('ct')}</div>
+ <div class="b ${x.c=='n'?'n':x.c=='i'?'i':x.c=='p'?'p':'a'}"><div class="h">Why it matters to you</div>${x.why}</div>
+ <div class="b mt"><div class="h">De metafoor</div>${x.meta}</div>
+</div>`).join("")}
+
+<h2><b>4</b> · CHOKEPOINTS AND ROUTES — WHY THE PHYSICAL PATH MATTERS AS MUCH AS THE PRICE</h2>
+<div class="nt" style="margin-bottom:10px">A price is what something costs. A route is whether it can get there at all. This month made that distinction concrete — and this week showed how fast it can reverse.</div>
+${[
+{t:"Five stages now: war, workaround, diplomacy, stall, recovery — and then a deliberate re-escalation",c:"n",g:"UPDATED 11 OCT · \u201cTRYING TO REGAIN ITS STRANGLEHOLD\u201d (CNN)",
+ what:"By early October, JPMorgan put Middle East crude exports at ~98% of pre-war levels and US officials were publicly celebrating restored flows. <b>That recovery has now reversed hard</b>: Iran escalated tanker attacks to a wartime high, and Hormuz transits collapsed — just <b>7 tankers transited on Tuesday 7 October, the lowest count since 23 July</b> (Kpler). A supertanker hit a mine on 10 October; Saturday the UAE rescued 22 crew from a tanker fire — <b>a new target, since Iran had been deliberately avoiding Emirati-linked shipping until now</b>. IRGC chief Ahmed Vahidi called Hormuz Iran's \u201cstrategic red line.\u201d CNN's regional analysis frames the motive bluntly: Iran is trying to <b>restore its leverage, and possibly goad the US into retaliating</b> — escalation as a deliberate strategy, not loss of control.",
+ why:"<b>Five stages, in order: the war degraded the route, a military workaround reopened it, diplomacy began to address the war, diplomacy stalled while a second chokepoint tightened, routes recovered toward normal — and now a deliberate re-escalation, timed to the US celebrating victory and to the midterms three weeks out.</b> The UAE being targeted for the first time is a real widening, not just more of the same — it suggests Iran is willing to spend political capital with a Gulf neighbor it had previously spared. Tehran's own words make the strategy explicit: \u201cwhere we cannot sell oil, no one else will be able to sell oil either.\u201d The pattern to hold onto, reinforced again: recovery headlines move price fast, but the underlying war has never actually ended, and either side can reverse the physical reality within days.",
+ meta:"Je maakt de hoofdweg vrij, het verkeer stroomt weer normaal, iedereen viert feest. Dan, precies op het hoogtepunt van het feest, zet de andere partij expres nieuwe versperringen neer — niet omdat ze moeten, maar om te laten zien dat ze het kunnen, wanneer het hen het beste uitkomt."},
+{t:"Three routes were degraded at once earlier this month — the mechanism that made this whole story possible",c:"n",g:"CONTEXT · ACTIVE SINCE MARCH 2026 · PIPELINE NOW PARTIALLY BACK",
+ what:"This has been an active war since late March: Iran closed Hormuz to US/Israel-bound shipping, the US blockaded Iranian ports through May, and the Houthis separately seized Perim Island and the port of Mocha, threatening the Bab al-Mandeb bypass. Saudi Arabia's East-West pipeline was hit by drones on 11 September. At the low point, one estimate put total disruption across the three chokepoints at <b>39% of global trade</b>.",
+ why:"That combination — three routes strained together, not one — is why this was a genuine supply shock rather than a headline spike. It is also why the recovery this week is real: a US Navy-escorted shuttle route along Oman's coast, moving crude to pickup points outside Hormuz, rebuilt the physical path even while the underlying dispute continues.",
+ meta:"Er waren drie wegen naar de stad, en alle drie waren tegelijk een keer afgesloten. Dat is waarom de stad het voelde — en waarom één geïmproviseerde omweg genoeg was om de prijs weer te laten zakken."},
+{t:"Gold's route matters as much as gold's price — a separate, slower-moving story",c:"a",g:"STRUCTURAL, NOT WAR-RELATED",
+ what:"Separately from the war, the Netherlands (86t) and France (129t) both physically moved gold out of the New York Fed's vaults this year — the first repatriation wave of its kind in years. Central banks that do this cite technical reasons: bar-quality upgrades, easier tradability, locking in gains — not distrust, according to their own statements.",
+ why:"The distinction that matters: owning gold and <i>holding</i> gold are legally identical but practically different. Gold in a foreign vault is still yours on paper, but a freeze, sanction or dispute can separate the two — as happened with frozen Russian central-bank reserves in 2022. That is a real, structural reason routes matter for a reserve asset, independent of price. It is also why comparisons to 1971 are only half right — see §6.",
+ meta:"Een chalet in andermans dorp is nog steeds van jou op papier. Maar als de dorpsraad ooit besluit de poort dicht te doen, maakt dat papier ineens minder uit dan waar de sleutel echt ligt."}
+].map(x=>`<div class="c" style="border-color:${x.c=='n'?'#e6c8c8':x.c=='p'?'#c9e2d5':x.c=='a'?'#e8dfc4':'#e6e4de'}">
+ <div class="ct"><div class="cl">${x.t}</div><span class="g ${x.c}">${x.g}</span></div>
+ <div class="b"><div class="h">What's happening</div>${x.what}</div>
+ <div class="b ${x.c=='n'?'n':x.c=='p'?'p':'a'}"><div class="h">Why the route, not just the price</div>${x.why}</div>
+ <div class="b mt"><div class="h">De metafoor</div>${x.meta}</div>
+</div>`).join("")}
+
+<h2><b>5</b> · THIS WEEK</h2>
+<div class="wn r"><div class="h">Done · four central banks, four days, four different tones</div>
+<div class="gr g4" style="margin:10px 0">
+${[["Fed, Wed","+25bp","hawkish presser reversed the day's rally","ne"],["BoE, Thu","held 3.75%","6-3, dovish-read despite the split","po"],
+["BoJ, Fri","+25bp to 1.25%","31-yr high, yen fell on a 7-2 split vote","ne"],["Quad witching, Fri","~$7trn notional","2nd-largest ever — heavy but orderly",""]].map(r=>
+`<div class="c" style="margin:0;padding:11px 13px"><div class="dk">${r[0]}</div>
+<div class="med ${r[3]}">${r[1]}</div><div class="t2" style="margin-top:4px">${r[2]}</div></div>`).join("")}
+</div>
+The pattern held across all four: <b>the vote itself rarely moved markets — the tone after it did.</b> A hawkish press conference erased a hike-day rally on Wednesday; a dovish-sounding hold lifted gilts on Thursday; a split vote weakened the yen on Friday even as Japan raised rates to a 31-year high. Worth noting on the BoJ specifically: reporting ties part of the pressure behind the timing to public comments from the <b>US Treasury Secretary</b> — a second thread of political pressure on a central bank this month, after Trump's on the Fed.<br><br>
+<i>Vier weerberichten in vier dagen, en geen van de vier ging over de voorspelling zelf — telkens over de toon waarop hij werd gebracht.</i></div>
+
+<div class="wn r"><div class="h">Done · the summit came and went — here's what's actually left open</div>
+The three-day state visit is over: Xi arrived Wednesday, the White House ceremony and closed-door summit ran Thursday, and Friday closed with tea and the National Archives before Xi's flight home. <b>Every major dossier from the preview is still open</b>: the $14bn Taiwan arms package decision is deferred to "a fairly short time," the 90-day tariff truce clock keeps running (down to roughly six weeks), China's rare-earth suspension still expires 10 November, and no AI safety-notification agreement was confirmed despite both leaders discussing AI prominently. The one soft signal — Trump saying farmers "will be very happy" — points to a probable soybean-purchase commitment, unconfirmed in detail. The White House fact sheet adds one concrete line: Trump urged Xi to increase China's production of refined petroleum products to stabilise global supply. Trump is next scheduled to host Xi's government at the <b>G20 summit in Miami this December</b>.<br><br>
+<i>Drie letters, drie dossiers, en geen ervan is deze week afgesloten — alleen uitgesteld tot de volgende ontmoeting, in december in Miami.</i></div>
+
+<div class="wn r"><div class="h">This week (updated Thu 22 Oct) — France's budget talks, oil, and a silent Fed</div>
+<div class="gr g4" style="margin:10px 0">
+${[["<b>Thu 22 Oct</b>","French budget negotiations · US jobless claims","Protests planned; French 10-year above 5%; CAC opened ~1% lower"],
+["<b>Done Wed</b>","Meta, Tesla, TI, Lam, IBM reported","Meta +2–3%, Tesla −3% after hours"],
+["Fed blackout","Until Thu 29 Oct","Oct-hike odds ~15%; no official speaks"],
+["<b>Wed 28 – Thu 29 Oct</b>","Fed + UK Budget · ECB","All three expected steady; the UK Budget is the wild card for gilts"]].map(r=>
+`<div class="c" style="margin:0;padding:11px 13px"><div class="med" style="font-size:14px">${r[0]}</div><div class="t2" style="margin-top:4px">${r[1]}</div><div class="t2" style="margin-top:2px;opacity:.7">${r[2]}</div></div>`).join("")}
+</div>
+Russia agreed to renewed three-way peace talks on Wednesday, which gave energy markets something to price; the rest of Big Tech reports next week. With the Fed silent, the swing factors are oil, French bond yields and the AI-hardware names.<br><br>
+<i>Parijs onderhandelt over zijn begroting terwijl de rente op zijn leningen boven de 5% is gekomen. De Fed zwijgt. Dat zijn de twee dingen om te volgen.</i></div>
+
+<div class="wn r"><div class="h">Dated risks further out</div>
+<div class="gr g4" style="margin:10px 0">
+${[["Wed 28 Oct","Fed decision + UK Budget","~15% priced for a hike; Fed and ECB expected to hold"],["Thu 29 Oct","ECB decision (14:15 CET)","Expected on hold"],
+["Tue 3 Nov","US midterm elections","Trump says the Iran war \u201cwill be over very soon\u201d"],["Tue 10 Nov","China's rare-earth suspension expires","The US–China tariff truce ends around mid/late November"]].map(r=>
+`<div class="c" style="margin:0;padding:11px 13px"><div class="med" style="font-size:14px">${r[0]}</div><div class="t2" style="margin-top:4px">${r[1]}</div><div class="t2" style="margin-top:2px;opacity:.7">${r[2]}</div></div>`).join("")}
+</div>
+Then the December Fed (8–9 Dec), the US government-funding deadline on 11 December and the G20 in Miami.<br><br>
+<i>Vier datums achter de horizon: de Fed, de ECB, de verkiezingen en de zeldzame aardmetalen. Niets van het afgelopen weekend heeft ze verschoven.</i></div>
+
+<div class="wn"><div class="h">The pattern worth keeping</div>
+A rate decision that is fully priced in advance rarely moves markets on the vote itself — it moves on the tone that follows: a press conference, a dot plot, a vote split. <b>Four central banks inside one week, each read through this same lens</b>, is the clearest version of that pattern this dashboard has tracked all year.<br><br>
+<i>Het weerbericht was al bekend. Het was de manier waarop de weerman het bracht die bepaalde of mensen een paraplu meenamen.</i></div>
+
+<h2><b>6</b> · 1971, HONESTLY — WHAT'S REPEATING, AND WHAT'S CONSPICUOUSLY NOT</h2>
+<div class="nt" style="margin-bottom:10px">Every "monetary reset" narrative this year reaches for 1971 — Nixon closing the gold window. Worth checking the parallel piece by piece rather than taking it whole.</div>
+<div class="wn r" style="margin-bottom:10px"><div class="h">The number underneath all of it: $40 trillion, 125% of GDP</div>
+US federal debt passed $40 trillion in August 2026 — <b>$117,000 per American</b>, and a debt-to-GDP ratio of roughly <b>125%</b>, higher than the WWII-era peak of 106%. Interest on that debt now exceeds the entire US defence budget. About 76% is held domestically (the Fed, banks, pension funds, households); 24% (~$9.3trn) is held by foreign investors — which is the channel through which today's 10-year and 5-year yield moves connect back to this bigger number. <b>This is the slow-moving fact that every faster-moving headline this month — the Fed, the gold repatriation, the tariffs, today's yield spike — sits on top of.</b><br><br>
+<i>Onder elk snel nieuwsbericht deze maand ligt hetzelfde trage feit: een schuld die sneller groeit dan de economie die hem moet dragen. Het is niet het nieuws van vandaag — het is de grond waarop al het nieuws van vandaag staat.</i></div>
+<div class="t" style="margin-bottom:10px"><table><thead><tr><th style="width:220px">1971 element</th><th>Echo in 2026</th><th style="width:110px">Verdict</th></tr></thead><tbody>
+${[["Allies repatriating gold from the US","Netherlands (86t) and France (129t) moved gold home in 2026 — real, current, verified","Repeating","p"],
+["A President publicly pressuring the Fed chair to cut rates before he wants to","Trump's 4 Sept ultimatum to Chair Warsh, tied to a trade-deficit threat","Repeating","p"],
+["Import surcharge / tariff used as trade leverage","2026 effective tariff rate up to 11.8% of imports, from 1.5% in 2022; Trump's ultimatum is explicitly tariff-shaped","Repeating","p"],
+["An energy shock feeding inflation just as rates were already stretched","Hormuz/Bab al-Mandeb chokepoint war pushing oil and the CPI print that fired this dashboard's trigger","Repeating","p"],
+["<b>The Fed chair actually caving to the pressure</b>","<b>Warsh did the opposite — hiked 12-0 while Trump demanded cuts</b>","<b>NOT repeating — the strange one</b>","n"],
+["A literal gold-dollar link to break (Bretton Woods convertibility)","No such link exists anymore — it was severed in 1971. There is no window left to close","Can't repeat — structurally absent","n"],
+["Wage and price controls as a companion policy","No equivalent proposal on the table in 2026 despite similar inflation rhetoric","Not repeating","n"],
+["A currency devaluation / realignment event (Smithsonian Agreement, 1971-73)","The dollar index just had its best week in months — strengthening, not devaluing","Not repeating — opposite direction","n"]].map(r=>
+`<tr class="wr"><td><b>${r[0]}</b></td><td class="t2">${r[1]}</td><td class="${r[3]=='n'?'ne':'po'} m">${r[2]}</td></tr>`).join("")}
+</tbody></table></div>
+<div class="nt"><b>The one that matters most is the one that didn't happen.</b> In 1971-72, Fed Chair Arthur Burns caved to Nixon's pressure, held rates too low, and that decision is widely credited with helping seed the Great Inflation of the 1970s. This month's actual test of that exact mechanism — a President publicly demanding cuts, a Fed chair he appointed himself — produced the opposite result: a unanimous hike. <b>That is either the most reassuring fact on this whole page, or too early to call given the dot plot still signals more hikes to come.</b> The structural piece — no gold standard left to abandon — also means the 1971 comparison can describe the politics but never fully complete the mechanism; there is no window left for anyone to close.<br><br>
+<i>De vorige keer boog de kapitein voor de reder en voer het schip recht op de klippen af. Deze keer zei de kapitein nee tegen dezelfde reder — maar het schip vaart nog steeds door hetzelfde nauwe kanaal, en niemand weet nog hoe diep het water daar is.</i></div>`;
+
+/* ═════════ DATA ═════════ */
+const CTRY=[
+{n:"United States",k:"US",pol:3.875,polL:"3.75–4.00%",y2:4.62,y10:5.10,y10m:4.55,y10y:4.20,y30:5.38,
+ cpi:3.7,cpim:3.5,cpiy:2.9,core:2.6,un:4.1,rec:"10-year 5.10% on Fri 16 Oct — best week since February (−14.6bp) after a 5.36% peak on 7 Oct, the highest since April 2002",
+ nx:"<b>Fed decision Wed 28 Oct</b> · hike odds ~15% after Warsh declined to signal more tightening; blackout until 29 Oct; a December hike is priced high",
+ good:"Payrolls +162k against ~56k expected, with upward revisions. Unemployment 4.1%, <i>below</i> the Fed's own 4.2% projection. <b>Core inflation eased to 2.4% y/y</b>, its lowest since March 2021.",
+ bad:"August core CPI rose 0.3% m/m, a tenth hotter than expected — enough on its own to push hike odds from ~60% to ~86% and then to a delivered hike. Producer prices +4.7% with energy +18.2%. Roughly <b>$1trn of annual interest</b> — as much as the base defence budget, and now growing at a higher rate.",
+ met:"<b>Het café draait uitstekend.</b> Volle zaal, goede omzet, personeel te vinden. Maar de lening op het pand is enorm en de bank heeft de rente net verder verhoogd, tot het hoogste niveau in twintig jaar. <b>Het probleem is niet de zaak — het is de hypotheek, en die is net duurder geworden.</b>"},
+{n:"United Kingdom",k:"UK",pol:3.75,polL:"3.75%",y2:null,y10:5.41,y10m:4.90,y10y:4.30,y30:null,
+ cpi:3.1,cpim:2.6,cpiy:null,core:2.6,un:4.9,rec:"30-year gilt broke 6% on 1 Oct (first time since 1998); 10-year touched 5.53% on 8 Oct, the highest since July 2007",
+ nx:"<b>UK Budget Wed 28 Oct</b> (bank-tax fears eased after the Chancellor's comments) · BoE decision in November · UK GDP Aug +0.1% m/m (beat)",
+ good:"Energy shares at <b>all-time highs</b>. The FTSE held roughly flat while European peers fell.",
+ bad:"<b>The highest yield of the group.</b> Inflation rose from 2.6% to 2.9%. Unemployment 4.9%, up from ~4.7%. Growth slowed to +0.3% from +0.6%.",
+ met:"<b>Het dorp waar iedereen in de olie werkt heeft een goed jaar</b> terwijl de rest het zwaar heeft. Maar de bank in datzelfde dorp vraagt de hoogste rente sinds 2007."},
+{n:"Germany",k:"DE",pol:2.50,polL:"ECB 2.50%",y2:null,y10:3.40,y10m:3.12,y10y:2.60,y30:3.84,
+ cpi:2.9,cpim:2.8,cpiy:null,core:null,un:null,rec:"30-year highest since <b>2011</b>",
+ nx:"<b>ECB decision Thu 29 Oct, 14:15 CET</b> — expected on hold; euro-area inflation 3.8% in September; ZEW Tue 20 Oct",
+ good:"Factory orders +2.5% in July. <b>Lowest yields of the group</b>, so the discount rate hurts least here.",
+ bad:"<b>−1.97% last week, worst of the European majors.</b> Regional inflation up to 2.9%. European gas prices rose sharply.",
+ met:"<b>De fabriek draait op goedkope stroom.</b> De stroom werd duurder door iets aan de andere kant van de wereld, en de bank wil ook meer. <b>Twee kosten stijgen tegelijk en aan geen van beide kan hij iets doen.</b>"},
+{n:"France",k:"FR",pol:2.50,polL:"ECB 2.50%",y2:null,y10:5.01,y10m:null,y10y:null,y30:null,
+ cpi:null,cpim:null,cpiy:null,core:null,un:null,rec:"10-year yield above <b>5%</b> on 21 Oct (5.009%) — the highest since 2002; the OAT–Bund spread hit 155bp earlier this week, the widest since the early-2010s euro debt crisis",
+ nx:"<b>National Assembly budget vote days away</b> · Lecornu's minority government · presidential election April 2027",
+ good:"Banque de France governor: a 3% deficit by 2029 is still possible. Portugal and Spain are in much stronger fiscal positions.",
+ bad:"Worst unrest in years (riots, curfews, a possible state of emergency); weak growth and ballooning debt; RBC BlueBay sees a \u201cvery real risk\u201d of a sovereign debt crisis; a no-confidence vote or Moody's downgrade are named risks.",
+ met:"<b>In één huis in de straat is brand uitgebroken</b> terwijl de huiseigenaar nog zoekt naar het geld voor een nieuw dak. De bank wil een hogere rente om nog te blijven lenen — en alle buren kijken mee."},
+{n:"Japan",k:"JP",pol:1.25,polL:"1.25% (since 24 Sep)",y2:1.81,y10:3.00,y10m:2.93,y10y:1.60,y30:4.18,
+ cpi:null,cpim:null,cpiy:null,core:null,un:null,rec:"10-year highest since <b>Sep 1996</b> — thirty years",
+ nx:"BoJ next meeting late October (date to confirm) · USD/JPY near 158",
+ good:"Unemployment ~2.6%, lowest of the group. Nikkei 225 near ~66,400, <b>+2.1%</b> — a weak yen still lifts exporter earnings even as the BoJ tightens.",
+ bad:"<b>Thirty-year high in yields.</b> Growth +1.1%, below the 2.0% forecast. The yen hit a four-decade low in July, needing the first joint intervention since 2011 at ~$85bn.",
+ met:"<b>De buurman die dertig jaar zijn spaargeld aan jou uitleende omdat hij thuis niets kreeg, krijgt nu thuis 2%.</b> Hij komt nog langs, maar bestelt minder. <b>Zijn twijfel verhoogt jouw rente.</b>"},
+{n:"China",k:"CN",pol:3.00,polL:"1Y LPR 3.00% · 5Y 3.50%",y2:null,y10:null,y10m:null,y10y:null,y30:2.14,
+ cpi:0.8,cpim:0.5,cpiy:null,core:1.0,un:null,rec:"30-year placed at <b>2.1405%</b> — cheapest of the group",
+ nx:"PBoC left the LPR unchanged at record lows in August · Hang Seng fell 1.3% Thursday on Middle East and rate jitters, Shanghai Composite held near ~3,930",
+ good:"Inflation just <b>0.8%</b> against America's 3.4%. Borrows thirty-year money at 2.14%. Bought 33 tonnes of gold in Q2.",
+ bad:"The improvement came from <b>energy prices, not broad consumer demand</b>. Kept selling US Treasuries: $633.4bn in June from $659.3bn in May.",
+ met:"<b>Het buurdorp heeft nauwelijks prijsstijging.</b> Klinkt goed — tot je vraagt waarom. <b>Niet omdat het goed gaat, maar omdat er te weinig gekocht wordt.</b>"}
+];
+const D=(a,b)=>(a==null||b==null)?null:+(a-b).toFixed(2);
+
+/* ═════════ MACRO ═════════ */
+$("#c-mc").innerHTML=`
+<h2><b>MACRO</b> · FIVE COUNTRIES, EVERY NUMBER, EVERY COMPARISON</h2>
+<div class="ld">Each country as a balance sheet: what is good, what is bad, and a metaphor so the mechanism sticks. <b>GAP means not verified — not zero, not estimated.</b></div>
+
+<h2>1 · THE COMPARISON TABLE</h2>
+<div class="t" style="margin-bottom:6px"><table><thead><tr>
+<th>Country</th><th class="r">Policy</th><th class="r">2Y</th><th class="r">10Y</th><th class="r">30Y</th>
+<th class="r">Δ month</th><th class="r">Δ year</th><th class="r">Inflation</th><th class="r">Core</th><th class="r">Real 10Y</th></tr></thead><tbody>
+${CTRY.map(c=>{const dm=D(c.y10,c.y10m),dy=D(c.y10,c.y10y),rl=D(c.y10,c.cpi);
+return `<tr class="wr"><td><b>${c.n}</b></td>
+<td class="r m t2">${c.polL}</td>
+<td class="r m">${c.y2!=null?c.y2.toFixed(2):'<span class="mu">GAP</span>'}</td>
+<td class="r m ${c.y10>4.5?'ne':''}"><b>${c.y10!=null?c.y10.toFixed(2):'<span class="mu">GAP</span>'}</b></td>
+<td class="r m">${c.y30!=null?c.y30.toFixed(2):'<span class="mu">GAP</span>'}</td>
+<td class="r m ${dm==null?'mu':dm>0?'ne':'po'}">${dm==null?'GAP':(dm>0?'+':'')+dm}</td>
+<td class="r m ${dy==null?'mu':dy>0?'ne':'po'}"><b>${dy==null?'GAP':(dy>0?'+':'')+dy}</b></td>
+<td class="r m">${c.cpi!=null?c.cpi.toFixed(1):'<span class="mu">GAP</span>'}</td>
+<td class="r m t2">${c.core!=null?c.core.toFixed(1):'<span class="mu">GAP</span>'}</td>
+<td class="r m ${rl==null?'mu':rl>0?'po':'ne'}"><b>${rl==null?'GAP':(rl>0?'+':'')+rl}</b></td></tr>`;}).join("")}
+</tbody></table></div>
+<div class="nt"><b>Read the "Δ year" column first.</b> Japan moved +1.40 points in twelve months, the UK +0.86, Germany +0.75, the US +0.66. <b>The biggest move happened in the country that was supposed to be permanently at zero.</b><br><br>
+<i>De rustigste buurman van de straat is degene die het hardst is gaan schreeuwen. Dat valt meer op dan wanneer de luidruchtige buurman iets harder praat.</i></div>
+
+<h2>2 · COUNTRY BY COUNTRY</h2>
+${CTRY.map(c=>`<div class="c">
+ <div class="ct"><div class="cl">${c.n}<s>${c.polL} · ${c.rec.replace(/<\/?b>/g,'')}</s></div>
+  ${c.y10!=null?`<span class="g ${c.y10>4.5?'n':c.y10>3.2?'a':'i'}">10Y ${c.y10.toFixed(2)}%</span>`:'<span class="g m">10Y GAP</span>'}</div>
+ <div class="gr g2">
+  <div class="b p"><div class="h">Good</div>${c.good}</div>
+  <div class="b n"><div class="h">Bad</div>${c.bad}</div></div>
+ <div class="b mt"><div class="h">De metafoor</div>${c.met}</div>
+ ${c.nx!="—"?`<div class="b i"><div class="h">Next</div>${c.nx}</div>`:''}
+</div>`).join("")}
+
+<h2>3 · WHO IS MOVING MONEY WHERE</h2>
+<div class="ld"><b>Yields rise when buyers step back.</b> So watching named buyers beats watching forecasts. These four are the real story of 2026.</div>
+<div class="gr g2">
+${[{t:"Norway's $2.3 trillion fund proposes buying fewer Treasuries",v:"VERIFIED",c:"n",
+ b:"Cut government bonds in the benchmark from <b>70% to 50%</b>. US Treasuries fall from <b>34.1% to 21.9%</b> of the bond index — roughly <b>$80bn</b>. But <b>Japanese government bonds rise from 4.6% to 7.4%.</b>",
+ w:"Letter sent 1 September, public on the 4th. <b>Proposal only, no approval confirmed, implemented gradually.</b><br><br>Note what it is not: this is not a flight from government debt. Japan gets more. <b>It is a rotation out of America specifically.</b>",
+ m:"De grootste vaste klant van het café zegt: ik ga minder bestellen — <b>en ik ga voortaan bij de buurman drinken.</b>"},
+{t:"Japan has stopped being the marginal buyer",v:"REPORTED",c:"a",
+ b:"The 10-year hit 3.00% and hedged Japanese yields now beat hedged 30-year Treasury returns for the first time in years. Banks cut foreign exposure; life insurers turned net sellers. Latest weekly figure: <b>−¥945.4bn</b> of net foreign bond investment.",
+ w:"<b>Correction to what this dashboard said in August.</b> I framed it as a repatriation wave. One strategist put it better: the story is not large-scale repatriation but Japan <b>gradually ceasing to be the marginal buyer</b>. Slower, structural, more durable for that reason.",
+ m:"Hij verhuist niet. <b>Hij bestelt gewoon elke week iets minder.</b> Dat merk je pas na een jaar — en dan is het onomkeerbaar."},
+{t:"China keeps selling",v:"VERIFIED",c:"n",
+ b:"Holdings fell to <b>$633.4bn in June</b> from <b>$659.3bn in May</b> — about $25.9bn in one month. The all-time high was $1,316.7bn in November 2013.",
+ w:"The foreign official share of Treasuries is at a thirty-year low of roughly <b>13%</b>.<br><br><b>My own correction:</b> I said 'China is selling' before checking it. It happens to be true. I should not have said it first.",
+ m:"De klant die nooit iets zegt, bestelt elk kwartaal iets minder. <b>Geen ruzie, geen aankondiging — alleen een dalende rekening.</b>"},
+{t:"Central banks bought a record amount of gold",v:"VERIFIED",c:"p",
+ b:"<b>288.9 tonnes in Q2</b>, +62% on a year earlier, <i>while the price was falling</i>. Poland +51t, China +33t, Uzbekistan +16t, Kazakhstan +15t. Russia sold 22t to cover a deficit.",
+ w:"Two survey numbers matter more than the tonnage: <b>89% of central banks expect to buy more gold</b> in the next twelve months, and <b>74% of reserve managers expect to cut dollar holdings</b> over five years.",
+ m:"Als de caféhouder geld begint bij te maken, wil je geen tegoedbon meer. <b>Je wilt de goudstaaf achter de bar</b> — en je koopt hem ook als hij duurder wordt."}
+].map(x=>`<div class="c" style="border-color:${x.c=='n'?'#e6c8c8':x.c=='p'?'#c9e2d5':'#e8dfc4'}">
+ <div class="ct"><div class="cl" style="font-size:13.5px">${x.t}</div><span class="g ${x.c}">${x.v}</span></div>
+ <div class="b">${x.b}${SR('ct')}</div>
+ <div class="b ${x.c}"><div class="h">What it means</div>${x.w}</div>
+ <div class="b mt"><div class="h">De metafoor</div>${x.m}</div></div>`).join("")}
+</div>
+
+<h2>4 · TARIFFS — WHAT EACH ONE ACTUALLY DOES</h2>
+<div class="ld">A tariff is a tax on an import, paid by the importer and usually passed to the buyer. <b>It protects a domestic producer by making the foreign one more expensive.</b></div>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th style="width:190px">Measure</th><th class="r" style="width:95px">Rate</th><th>What it does</th><th style="width:270px">Who pays</th></tr></thead><tbody>
+${[["Semiconductors","25%","Taxes specified advanced chips and derivatives on entry. Stacks on existing China tariffs","US chip importers and anyone building data centres"],
+["Steel & aluminium","50%","Applied to <b>full customs value</b> since April, exemptions revoked","US manufacturers using metal — wire mills, transformer makers, builders"],
+["Copper","50%","On semi-finished products. Customs rejects entries lacking smelt-and-cast data from 14 September","US electrical and construction supply chains"],
+["Lumber","10% / 25%","10% softwood, 25% furniture and cabinets. <b>Rises to 30%/50% on 1 January</b>","US homebuilders and furniture retailers"],
+["Unmanned aircraft","—","New, around 20 August","Drone importers — relevant to your defence cluster"],
+["Polysilicon","15%","Plus minimum import prices. <b>Effective 4 December</b>","Solar installers"],
+["Canada · Section 338","50%","Vehicles, alcohol, dairy. Energy, potash, fish and critical minerals excluded","US importers of Canadian goods"],
+["<b>Canada · new bans</b>","ban + 50%","<b>Bans</b> on alcohol, motorcycles, whey, molasses. <b>50% on dairy, paper, wood, aluminium, furniture from 29 September</b>","A ban is not a tariff — you cannot buy at any price"],
+["Canada's retaliation","varies","Effective 8 September on ~<b>$20bn</b> — announced as $27.6bn","US exporters to Canada"]
+].map(t=>`<tr class="wr"><td><b>${t[0]}</b></td><td class="r m ne"><b>${t[1]}</b></td><td>${t[2]}${SR('ct')}</td><td class="t2">${t[3]}</td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn"><div class="h">What tariffs actually do to you</div>
+<b>What they do is add to inflation</b> — and inflation keeps the rate path steep, and the rate path drives the valuation of long-duration assets such as tech shares.<br><br>
+<i>De gemeente heft tol op de brug naar de stad. Jij rijdt niet over die brug. Maar alles in de winkel komt er wel over, dus je betaalt hem alsnog — verstopt in de prijs.</i></div>`;
+
+/* ═════════ BONDS & FX ═════════ */
+const col10=c=>c.y10==null?null:(c.y10>4.5?'#9b2f2f':c.y10>3.2?'#8a6a1c':'#2c5680');
+const r10=CTRY.map(c=>[c.n,c.y10,null,col10(c)]);
+const r30=CTRY.map(c=>[c.n,c.y30,null,c.y30==null?null:(c.y30>5?'#9b2f2f':c.y30>3.5?'#8a6a1c':'#2c5680')]);
+const rpol=CTRY.map(c=>[c.n,c.pol,null,'#2c5680']);
+const rreal=CTRY.map(c=>[c.n,D(c.y10,c.cpi)]);
+const rdy=CTRY.map(c=>[c.n,D(c.y10,c.y10y)]);
+const rinf=CTRY.map(c=>[c.n,c.cpi,c.core]);
+const rcurve=CTRY.map(c=>[c.n,c.pol,c.y10,c.y30]);
+
+function mtx(rows){
+ const n=rows.length,cs=78,lb=112,sz=lb+n*cs+8;
+ let s=`<svg viewBox="0 0 ${sz} ${sz}" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono,monospace">`;
+ rows.forEach((c,i)=>{s+=`<text x="${lb-9}" y="${lb+i*cs+cs/2+4}" font-size="11" fill="#1a1917" text-anchor="end" font-weight="700">${c.k}</text>
+ <text x="${lb+i*cs+cs/2}" y="${lb-10}" font-size="11" fill="#1a1917" text-anchor="middle" font-weight="700">${c.k}</text>`;});
+ rows.forEach((a,i)=>rows.forEach((b,j)=>{const x=lb+j*cs,y=lb+i*cs;
+  if(i==j){s+=`<rect x="${x}" y="${y}" width="${cs-3}" height="${cs-3}" fill="#efece5" rx="2"/>`;return;}
+  const d=D(a.y10,b.y10);
+  if(d==null){s+=`<rect x="${x}" y="${y}" width="${cs-3}" height="${cs-3}" fill="#f7f7f4" stroke="#e6e4de" stroke-dasharray="2 2" rx="2"/><text x="${x+cs/2}" y="${y+cs/2+4}" font-size="9" fill="#9d988c" text-anchor="middle">GAP</text>`;return;}
+  const a2=Math.min(1,Math.abs(d)/2.4),c=d>0?`rgba(155,47,47,${.10+a2*.6})`:`rgba(44,86,128,${.10+a2*.6})`;
+  s+=`<rect x="${x}" y="${y}" width="${cs-3}" height="${cs-3}" fill="${c}" rx="2"/>
+  <text x="${x+cs/2}" y="${y+cs/2+4}" font-size="12" fill="${Math.abs(d)>1.3?'#fff':'#1a1917'}" text-anchor="middle" font-weight="700">${d>0?'+':''}${d.toFixed(2)}</text>`;}));
+ return s+`</svg>`;}
+
+$("#c-bd").innerHTML=`
+<h2><b>BONDS &amp; FX</b> · THE ENGINE UNDER EVERYTHING</h2>
+<div class="ld"><b>Start here if you read nothing else.</b> The bond yield is the rate against which every share you own is valued. When it rises, the value of profit that arrives in the future falls — and the further away that profit is, the harder it falls.<br><br>
+<i>Metafoor: stel dat er in je kelder een spaarrekening staat die gegarandeerd 4,86% oplevert, zonder risico. Alles wat je kunt kopen concurreert met die kelder. <b>Hoe dieper de kelder, hoe minder alles anders waard is.</b></i></div>
+
+<div class="ch"><div class="chh">10-YEAR GOVERNMENT BOND YIELD</div>
+<div class="chs">The world's benchmark. Verified 9–10 September 2026.</div>
+${bar(r10,{step:1})}
+<div class="nt" style="margin-bottom:0"><b>Read the spread, not the levels.</b> The UK pays 5.16% and Germany 3.35% — 1.81 points apart for the same promise over the same period.<br><br>
+But remember the trap: <b>a high yield is a price for risk, not a reward for quality.</b> If high rates automatically attracted money, Argentina would have the deepest capital market in the world.<br><br>
+<i>Twee buren vragen een lening. De ene biedt 3%, de andere 12%. Waarom biedt de tweede zoveel meer? <b>Omdat niemand anders hem wil lenen.</b></i></div></div>
+
+<div class="ch"><div class="chh">30-YEAR GOVERNMENT BOND YIELD — THE CONFIDENCE NUMBER</div>
+<div class="chs">Nobody has a plan for 2056. Lending for thirty years is a verdict on a country, not a forecast about next quarter.</div>
+${bar(r30,{step:1})}
+<div class="nt" style="margin-bottom:0">The US pays <b>5.25%</b>, China <b>2.14%</b>. <b>More than three points apart for identical maturity.</b> That is the clearest single picture of how differently the two are viewed as long-term credits.</div></div>
+
+<div class="ch"><div class="chh">POLICY RATE VERSUS MARKET RATE — THE GAP THAT EXPLAINS 2026</div>
+<div class="chs">Blue is what the central bank sets. Gold is the 10-year. Red is the 30-year. The market sets the last two.</div>
+${grp(rcurve,{step:1,c:['#2c5680','#c9a227','#9b2f2f'],lb:['Policy rate','10-year','30-year'],bh:11})}
+<div class="wn" style="margin-bottom:0"><div class="h">This is the single most important chart on the dashboard</div>
+<b>Every bar gets longer as you go right.</b> In the US the policy rate is 3.50–3.75% while the 10-year is 4.857% and the 30-year 5.25%.<br><br>
+The Fed has not moved since December 2025. <b>The long end moved anyway.</b> That gap is the market saying: we do not believe your rate is the right one for thirty years.<br><br>
+<i>De thermostaat in de woonkamer zegt 20 graden. <b>Maar het dak lekt.</b> Je kunt de thermostaat zetten waar je wilt — de mensen die je huis komen taxeren kijken naar het dak.</i></div></div>
+
+<div class="ch"><div class="chh">TWELVE-MONTH CHANGE IN THE 10-YEAR</div>
+<div class="chs">Where the move actually came from. A level tells you where something is; a change tells you what is happening.</div>
+${div(rdy,{u:' pts',pc:'#9b2f2f',nc:'#1d6b4c'})}
+<div class="nt" style="margin-bottom:0"><b>Japan moved the most</b> — the country that was supposed to be permanently at zero. That is why the Japanese story matters more than its headline size suggests.</div></div>
+
+<div class="ch"><div class="chh">INFLATION — HEADLINE VERSUS CORE</div>
+<div class="chs">Core strips out food and energy because they swing too hard. Central banks watch core.</div>
+${grp(rinf,{step:1,c:['#9b2f2f','#2c5680'],lb:['Headline','Core'],bh:13})}
+<div class="nt" style="margin-bottom:0">In the US the headline is 3.4% and core 2.4% — <b>and the gap is energy.</b> That single distinction is what drove Friday's Fed repricing.<br><br>
+<b>China at 0.8% is the outlier</b>, more than four times below America. Half the explanation for why it borrows thirty-year money at 2.14%.</div></div>
+
+<div class="ch"><div class="chh">REAL YIELD — WHAT YOU ACTUALLY KEEP</div>
+<div class="chs">Ten-year yield minus headline inflation, before tax. This is purchasing power, not headline return.</div>
+${div(rreal)}
+<div class="nt" style="margin-bottom:0"><b>The UK's +2.26% is the highest verified real yield.</b> The US pays 4.857% but keeps only ~1.46% after inflation — and a Belgian investor loses roughly 30% of the coupon to withholding tax on top of that.<br><br>
+<i>Twee banen: €5.000 in Zwitserland of €2.500 in Portugal. Welke is beter? <b>Dat hangt af van wat een brood kost.</b></i></div></div>
+
+<div class="ch"><div class="chh">EVERY COUNTRY AGAINST EVERY COUNTRY</div>
+<div class="chs">Difference in 10-year yield, row minus column. Red means the row country pays more. This is the number that decides where global money goes — before currency risk.</div>
+${mtx(CTRY)}
+<div class="nt" style="margin-bottom:0">The UK pays <b>2.16 points more than Germany</b> and <b>2.16 more than Japan</b>. That is the compensation demanded for the same promise.</div></div>
+
+<h2>THE FOUR MULTI-DECADE HIGHS</h2>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th>Country</th><th class="r">Level</th><th>Record broken</th><th class="r">Years back</th></tr></thead><tbody>
+${[["Japan","3.00%","Highest since <b>September 1996</b>","30"],
+["United Kingdom","5.16–5.25%","Highest since <b>August 2007</b>","19"],
+["Germany","3.84% (30y)","Highest since <b>2011</b>","15"],
+["United States","4.857%","Highest since <b>November 2023</b>","3"]].map(r=>
+`<tr class="wr"><td><b>${r[0]}</b></td><td class="r m ne">${r[1]}</td><td>${r[2]}</td><td class="r m ac"><b>${r[3]}</b></td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn r"><div class="h">One story, not four</div>
+Fewer buyers for government promises. <b>Norway</b> proposed cutting US Treasuries from 34.1% to 21.9% of its bond index. <b>China</b> went from $659bn to $633bn in one month. <b>Japan</b> stopped being the marginal buyer. And central banks bought a record <b>288.9 tonnes of gold</b> instead.<br><br>
+<b>Yields rise when buyers step back. Four buyers stepped back at once.</b><br><br>
+<i>Het café heeft vier vaste klanten die elke week een vat afnemen. Deze week zei de eerste dat hij minder gaat bestellen, de tweede stopte met bijbestellen, de derde verkocht zijn voorraad terug — en alle vier begonnen goud te kopen in plaats van tegoedbonnen.</i></div>
+
+<h2>CURRENCIES</h2>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th style="width:130px">Pair</th><th class="r" style="width:100px">Level</th><th style="width:260px">Range and levels</th><th class="r" style="width:110px">1% move</th><th>What drives it</th></tr></thead><tbody>
+${[["EUR/USD","~1.163","Resistance <b>1.1680–1.1700</b> · support below 1.1580 · 50-day 1.1524","116 pips","ECB pricing against a hawkish Fed"],
+["USD/JPY","~160","Hit ~163.73 in late July before intervention","160 pips","<b>Intervention risk at 160–161.</b> The yen rally paused"],
+["USD/CHF","~0.8091","—","81 pips","Safe-haven demand"],
+["Dollar index","~99.7","Six-month band 95–102","—","The 16 September decision is the swing factor"]
+].map(f=>`<tr class="wr"><td><b>${f[0]}</b></td><td class="r m">${f[1]}</td><td class="t2">${f[2]}</td><td class="r m">${f[3]}</td><td>${f[4]}</td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn"><div class="h">What a 1% currency move is worth to you</div>
+A euro-based investor in dollar-denominated shares carries currency risk: <b>every 1% move in euro–dollar changes the euro value of those shares by about 1%</b> — with no compensation, because shares pay no interest.<br><br>
+A Japanese pension fund gets paid roughly 3% to carry that same currency risk. <b>You carry it for nothing.</b><br><br>
+<i>Je bord staat op een weegschaal die zelf beweegt. Het eten verandert niet, de meter wel.</i></div>`;
+
+/* ═════════ STRATEGY ═════════ */
+$("#c-sg").innerHTML=`
+<h2><b>STRATEGY</b> · POLICY → SECTOR → INSIDER</h2>
+<div class="ld"><b>The whole idea in one sentence:</b> find a government measure with a date, find the company it names as a beneficiary, and then check whether the people who run that company are buying it with their own money.<br><br>
+<i>Metafoor: de gemeente kondigt aan dat ze de brug gaat vernieuwen. Je zoekt de aannemer die de klus krijgt. <b>En dan kijk je of de directeur van die aannemer zelf aandelen bijkoopt — of juist verkoopt.</b></i></div>
+
+<h2>1 · WHY ONLY "CODE P" COUNTS</h2>
+<div class="gr g4" style="margin-bottom:6px">
+${[["P · PURCHASE","<b>The only one that counts.</b> The insider bought on the open market with their own money","p"],
+["A · AWARD","A grant. Costs the insider nothing. <b>Often shows a price of $0</b>","n"],
+["M · OPTION","Exercising an option they already had. Not a fresh decision","n"],
+["S · SALE","Could be a house, a divorce, diversification. Weak evidence","m"]].map(r=>
+`<div class="c" style="margin:0"><div class="dk ${r[2]=='p'?'po':r[2]=='n'?'ne':''}">${r[0]}</div><div class="t2">${r[1]}</div></div>`).join("")}
+</div>
+<div class="nt">Across the market there is roughly <b>one open-market purchase for every fifty sales.</b> That asymmetry is why a purchase is worth reading and a sale usually is not.<br><br>
+<b>The trap this catches:</b> one aggregator reported a chief executive "buying 38,437 shares at $0". A price of zero is never a purchase — it was a grant.</div>
+
+<h2>2 · POLICY WITH A DATE</h2>
+<div class="t" style="margin-bottom:13px"><table><thead><tr><th style="width:150px">Date</th><th>Action</th><th style="width:160px">Sector</th><th style="width:170px">Named beneficiary</th></tr></thead><tbody>
+${[["14–15 Jan 2026","<b>Section 232 on processed critical minerals</b>, including uranium. Negotiation of supply agreements. No immediate tariff, but reserves the right to tariffs and minimum import prices","Rare earths, uranium","MP, USA Rare Earth, Energy Fuels",1],
+["14 Jan 2026","<b>Section 232 semiconductors — 25% tariff</b>","Semiconductors","Domestic fabs",1],
+["10 Jul 2025 · live","<b>Defense Department–MP Materials.</b> $400m convertible preferred at $30.03 plus a warrant — roughly a <b>15% stake, largest shareholder</b>. $150m loan. <b>Ten-year $110/kg NdPr price floor</b>, department takes 30% of upside above it","Rare earths, defence","<b>MP — you own this</b>",1],
+["2025–26","Steel and aluminium tariffs expanded, exemptions revoked","Steel, aluminium","Nucor, Cleveland-Cliffs, Alcoa",0],
+["19 Aug → 8 Sep","50% on Canadian goods; Canada retaliated on ~$20bn effective 8 September","Autos, alcohol, steel","US steel and aluminium",0],
+["<b>9 Sep → 29 Sep</b>","<b>Bans</b> on Canadian alcohol, motorcycles, whey, molasses. <b>50% on dairy, paper, wood, aluminium, furniture</b>","<b>Wood, aluminium</b>","US producers",1],
+["30 Sep 2026","<b>US federal fiscal year ends</b> — agencies spend or lose their budget, so defence awards cluster","Defence","<b>Defence contractors</b>",1],
+["<b>10 Nov 2026</b>","<b>China's rare-earth suspension expires</b> unless extended. Note: the April 2025 controls on seven heavy rare earths were never suspended and are already live","Rare earths","<b>Rare-earth producers vs importers</b>",1]
+].map(r=>`<tr class="wr" ${r[4]?'style="background:var(--wm)"':''}><td class="m ac"><b>${r[0]}</b></td>
+<td>${r[1]}${SR('ct')}</td><td class="t2">${r[2]}</td><td class="t2">${r[3]}</td></tr>`).join("")}
+</tbody></table></div>
+
+<h2>3 · VERIFIED OFFICER AND DIRECTOR PURCHASES</h2>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th>Ticker</th><th style="width:135px">Company</th><th style="width:145px">Insider</th><th style="width:125px">Title</th><th style="width:75px">Date</th><th class="r">Shares</th><th class="r">Price</th><th class="r">Value</th><th>Cluster</th></tr></thead><tbody>
+${[["UUUU","Energy Fuels","<b>Ross R. Bhappu</b>","<b>President &amp; CEO</b>","7 Jul","74,000","$13.08","~$967,920","YES","po"],
+["UUUU","Energy Fuels","Bruce D. Hansen","Director","8 Jul","4,000","$12.695","~$50,780","YES","po"],
+["MP","MP Materials","<b>Michael S. Rosenthal</b>","<b>COO</b>","20 May","17,000","$56.62","~$962,540","NO","ac"],
+["AMR","Alpha Metallurgical","Kenneth S. Courtis","Director","21 Aug","15,000","$210.51","~$3.16m","NO","ac"],
+["AMR","Alpha Metallurgical","Kenneth S. Courtis","Director","20 Aug","15,000","~$193.50","~$2.9m","NO","ac"],
+["AMR","Alpha Metallurgical","Kenneth S. Courtis","Director","12 Jun","10,000","~$200.80","~$2.0m","NO","ac"],
+["AMR","Alpha Metallurgical","Kenneth S. Courtis","Director","12 May","15,000","~$187","~$2.8m","NO","ac"]
+].map(b=>`<tr class="wr"><td><b class="${b[9]}">${b[0]}</b></td><td class="t2">${b[1]}</td><td>${b[2]}</td>
+<td class="t2">${b[3]}</td><td class="m ac">${b[4]}</td><td class="r m">${b[5]}</td><td class="r m">${b[6]}</td>
+<td class="r m"><b>${b[7]}</b></td><td><span class="g ${b[8]=='YES'?'p':'m'}">${b[8]}</span></td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn g"><div class="h">The cleanest signal in the entire set</div>
+<b>Energy Fuels.</b> The president and chief executive bought 74,000 shares at $13.08 on 7 July — roughly <b>$968,000 of his own money</b>. A director followed the next day.<br><br>
+A genuine cluster, verified against the primary filing, in a sector with a live policy tailwind.<br><br>
+<i>De baas koopt met eigen geld aandelen van zijn eigen café bij, en de dag erna doet een bestuurslid hetzelfde. Dat is iets anders dan een bonus in aandelen krijgen.</i></div>
+
+<h2>4 · WHERE NOBODY IS BUYING</h2>
+<div class="ld">As informative as the buying. Six sectors with a policy tailwind and <b>no officer putting their own money in.</b></div>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th style="width:200px">Sector</th><th style="width:250px">Checked</th><th>What the filings actually show</th></tr></thead><tbody>
+${[["Copper","Freeport-McMoRan","Director retainer grants only — code A"],
+["Uranium and nuclear","Centrus, Cameco, Oklo, NuScale","Grants and tax withholding only"],
+["<b>Defence, drones, space</b>","AeroVironment, Kratos, <b class='ne'>BigBear.ai</b>","<b>Restricted stock awards, not purchases.</b> Palantir insiders sold"],
+["Lumber and timber","Weyerhaeuser, Rayonier","Tax withholding only — <b>despite the new 50% tariff on wood</b>"],
+["Phosphate and fertiliser","Mosaic, CF Industries, Nutrien","A senior vice-president <b>sold</b>. The CF \"purchase\" was a grant"],
+["Large steel and aluminium","Nucor, Steel Dynamics, Alcoa","Selling and option exercises"]
+].map(n=>`<tr class="wr"><td><b class="ne">${n[0]}</b></td><td class="t2">${n[1]}</td><td>${n[2]}${SR('f4')}</td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn r"><div class="h">The finding that should stop you</div>
+There is a defence budget <i>request</i> of $1.5 trillion, a new tariff on unmanned aircraft, and a fiscal year ending 30 September that reliably surges contract awards.<br><br>
+<b>And not one verified officer open-market purchase across the entire defence, drone and space complex. The activity was awards and sales.</b><br><br>
+That includes <b>BigBear.ai.</b><br><br>
+<i>Er wordt een enorm feest aangekondigd. <b>De organisatoren kopen zelf geen kaartje.</b></i></div>
+
+<h2>5 · INSIDER SELLING — THE OTHER HALF</h2>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th style="width:160px">Company</th><th style="width:180px">Who</th><th>What</th><th style="width:280px">How to weigh it</th></tr></thead><tbody>
+${[["<b>MP Materials</b>","<b>CEO and CFO</b>","<b>~1.5m shares sold by the CEO, ~84k by the CFO</b> — in the same window the COO bought ~$963k","One officer buying against two selling is a disagreement, not a signal"],
+["Palantir","Insiders","Sold","The sector bellwether sold into strength"],
+["Warrior Met Coal","CEO and others","Sold in August under pre-arranged plans","<b>Opposite to Alpha Metallurgical</b>, where a director keeps buying. Two coal names, two signals"],
+["USA Rare Earth","One director","Bought 100,000 shares <b>while being a large net seller</b>","Why a single filing is not a signal. Read the net position"]
+].map(s=>`<tr class="wr"><td><b>${s[0]}</b></td><td class="t2">${s[1]}</td><td>${s[2]}${SR('f4')}</td><td class="t2">${s[3]}</td></tr>`).join("")}
+</tbody></table></div>
+
+<h2>6 · INSIDERS IN THE TRUMP-POLICY TRADE</h2>
+<div class="nt" style="margin-bottom:10px">These three sit in the policy sectors this dashboard tracks — chips, rare earths, tariff-protected steel — and show whether insiders believe the trade, or are just collecting RSUs.</div>
+${[
+{tk:"INTC",nm:"Intel",sec:"Chips · CHIPS Act equity stake",c:"p",
+ fig:[["CEO bought","11 Aug 2026"],["Size","105,263 sh · ~$10m"],["Price paid","$95.00"],["Gov't stake now","~$45.5bn, from $8.9bn"]],
+ pol:"The clearest government-equity trade running. Washington converted $8.9bn of unpaid CHIPS Act grants into a 9.9% Intel stake at $20.47/share in August 2025 — a passive, non-voting position, no board seat.",
+ ins:"<b>Real open-market buy.</b> CEO Lip-Bu Tan personally bought 105,263 shares on 11 August at $95, through a family trust — on top of his existing 1.31m indirect shares. This is cash out of pocket, not a grant or an option exercise.",
+ dec:"The government's stake has gained roughly 395% on paper. Trump has publicly promoted the gain. The CEO buying into that same trade, from his own funds, is the strongest insider signal in this group right now.",
+ met:"Je buurman is stille vennoot geworden in de bakkerij verderop. De bakker zelf koopt er nu ook extra aandelen bij, met eigen geld. <b>Als de bakker zelf niet gelooft in de winst, koopt hij niet bij.</b>"},
+{tk:"USAR",nm:"USA Rare Earth",sec:"Rare earths · Commerce Dept stake",c:"m",
+ fig:[["Latest filings","3 Sep, 19 Aug, 19 Jul, 7 Jul"],["Type","RSU grants only"],["Open-market buys","None found"],["Open-market sells","None found"]],
+ pol:"MP's sibling trade. The Commerce Department (not Defense, as with MP) took a stake in USAR in January 2026 — same government-equity playbook, different sector focus (Round Top mine, Oklahoma magnet plant), no price-floor mechanism yet.",
+ ins:"<b>No signal either way.</b> Every recent Form 4 — four directors and officers across July, August and September — is a routine restricted-stock-unit grant, not a purchase or a sale. Nobody is voting with cash here, in either direction.",
+ dec:"Absence of a signal is itself information: unlike Intel's CEO, no USAR insider has chosen to buy on the open market even as the government-stake story runs in parallel to MP's.",
+ met:"De bakker verderop krijgt wel zijn loon uitbetaald, maar koopt zelf geen extra taart. <b>Hij is niet negatief — hij doet gewoon niets bijzonders.</b>"},
+{tk:"NUE·CLF·STLD",nm:"Steel & aluminium tariff names",sec:"Nucor · Cleveland-Cliffs · Steel Dynamics",c:"a",
+ fig:[["Nucor YTD","+58%"],["Tariff level","50% (US-Canada talks collapsed late Aug)"],["Single-day swings","±6–33% on tariff headlines"],["Insider Form 4 found","<b>None verified</b>"]],
+ pol:"The most tariff-whiplashed sector in the market: shares have swung double digits within a single session, up on tariff hikes and threats, down on rumours of a rollback — most recently the collapsed US-Canada talks in late August that reinstated 50% tariffs.",
+ ins:"<b>Not verified this pass.</b> No specific Form 4 buy or sell was confirmed for any of the three names — an honest gap, not evidence of inactivity. Worth a dedicated check if you want this sector covered properly.",
+ dec:"Right now this is a pure policy-headline trade with no insider confirmation either way — the riskiest kind, since the people closest to the business haven't shown their hand in either direction.",
+ met:"Drie winkels waarvan de prijs elke dag verandert al naargelang het gerucht over de grens. <b>Niemand van het personeel heeft tot nu toe laten zien wat zij zelf denken.</b>"}
+].map(p=>`<div class="c" style="border-color:${p.c=='n'?'#e6c8c8':p.c=='a'?'#e8dfc4':p.c=='p'?'#c9e2d5':'#e6e4de'}">
+ <div class="ct"><div class="cl">${p.tk} · ${p.nm}<s>${p.sec}</s></div></div>
+ <div class="gr g4" style="margin-bottom:10px">
+ ${p.fig.map(f=>`<div style="border-left:2px solid var(--ln);padding-left:9px"><div class="dk" style="margin-bottom:3px">${f[0]}</div><div class="m" style="font-weight:600;font-size:14px">${f[1]}</div></div>`).join("")}
+ </div>
+ <div class="gr g3">
+  <div class="b i"><div class="h">Policy alignment</div>${p.pol}</div>
+  <div class="b ${p.c=='p'?'p':p.c=='a'?'a':'n'}"><div class="h">Insider signal</div>${p.ins}</div>
+  <div class="b p"><div class="h">What actually decides it</div>${p.dec}</div></div>
+ <div class="b mt"><div class="h">De metafoor</div>${p.met}</div>
+</div>`).join("")}
+<div class="nt" style="margin-top:4px">One broader pattern worth flagging: reporting puts the number of US companies where the administration has taken an equity stake at <b>at least 10</b> since Trump's second term began. That is not insider trading, but it is a new class of "insider" this dashboard did not track before — <b>the government itself, as a shareholder, in the sectors this dashboard tracks.</b></div>
+
+<h2>7 · EARNINGS AND EVENTS AHEAD</h2>
+<div class="t"><table><thead><tr><th style="width:150px">Date</th><th style="width:150px">Company / event</th><th>What to watch</th></tr></thead><tbody>
+${[["<b>Tue 20 Oct</b>","<b>Netflix · German ZEW</b>","Netflix after the close; guided $12.86bn revenue and EPS $0.82"],
+["<b>Wed 21 Oct</b>","<b>Meta, Tesla, TI, Lam Research, IBM</b>","After the close — the AI-hardware test after eight down days for chips"],
+["<b>Wed 28 Oct</b>","<b>Fed decision + UK Budget</b>","~15% priced for a hike; bank-tax talk eased"],
+["Thu 29 Oct","ECB decision","Expected on hold"],
+["<b>Tue 3 Nov</b>","<b>US midterm elections</b>","Iran policy and gasoline prices are campaign issues"],
+["<b>Tue 10 Nov</b>","<b>China's rare-earth suspension expires</b>","Rare-earth producers vs importers"],
+["Following week","Big Tech results","Dates not verified here"]
+].map(e=>`<tr class="wr"><td class="m ac"><b>${e[0]}</b></td><td><b>${e[1]}</b></td><td>${e[2]}</td></tr>`).join("")}
+</tbody></table></div>`;
+
+/* ═════════ DAYTRADING ═════════ */
+const INS=[
+{k:"UK100",n:"FTSE 100",c:"p",now:"10,752.87 (+0.19%, Wed close)",chg:"~2.2% below the 10,989 July record; Thursday futures about −0.5%",
+ lv:[["Resistance","10,750→10,990","Old support zone and the July record area — no resistance in between"],["Now","10,752.87","Wednesday close, ~2.2% below the July record"],["Support","10,602→10,552→10,458","Last week's peak, Friday's close, Wednesday's close"]],
+ dr:"<b>What's actually in it:</b> Banks ~17% (HSBC, Barclays, Lloyds, NatWest), Health Care ~14% (AstraZeneca, GSK), Industrial Goods ~12% (BAE Systems, Rolls-Royce), Energy ~9% (Shell, BP), plus Mining/Resources ~10–12% (Rio Tinto, Glencore, Anglo American, Antofagasta). The \"Big Four\" — AstraZeneca, HSBC, Shell, Unilever — are almost <b>28% of the entire index</b> on their own. This is the one major index that <i>gains</i> when oil and metals rise, because it owns the producers, not the consumers.",
+ par:"1970s energy weighting",
+ same:"An index dominated by energy and financials during an oil-driven inflation story. Energy and mining have carried a disproportionate share of 2026's gains relative to their index weight — exactly the high-beta effect you'd expect from ~20% combined energy/resources exposure.",
+ diff:"In the 1970s the whole market fell and energy fell least. <b>Now the index sits at three-week highs, ~2.4% below its July record</b> — relative strength, not just survival. US Treasury yields near 5.3–5.4% (the highest since April 2002) mean there is still no rate relief underneath this rally.",
+ met:"<b>Het dorp waar iedereen in de olie, mijnbouw of bank werkt.</b> Bijna 3 op de 10 euro in dit dorp zit in vier namen: de oliehandelaar, de bank, de farmaceut en de zeepfabrikant. Wordt olie of metaal duurder, dan juicht dit dorp terwijl de techdorpen kreunen.",
+ ev:[["29–31 Jul","Four record highs","Energy +15% in a month"],["1 Sep","−1.17% to 10,697","Gilts hit 5.25%"],["7–9 Sep","Copper hit an all-time LME high above $14,700/ton","Tailwind for the mining weight"],["17 Sep","Bank of England held 3.75%, 6–3 vote","Three dissents already wanted 4.00%"],["Late Sep","Oil round-tripped $98→$108→$98 on Hormuz/Iran headlines","Energy weight tracked every swing"],["5 Oct","Closed 10,497.94 (+0.34%)","Banks and miners both contributing to the move up"],["6 Oct","Closed 10,541.69 (+0.42%)","Third straight up day"],["<b>7 Oct</b>","<b>Reversed hard: closed 10,458.50 (−0.79%)</b>","<b>Banks led the fall — StanChart −4.5%, HSBC −4.4%, Barclays −3.4%, NatWest −2.8% — as the 10-year hit 5.32% and Brent rose above $101; miners fell too (gold −0.75%, silver −2.57%, copper −0.36%), while defensives like Reckitt, Haleon and BAT gained — a clear rotation, not a broad flush</b>"],["Fri 9 Oct","Closed 10,552.00 (+1.06%)","Recovered Wednesday's drop on easing Iran strike fears"],["<b>Mon 12 Oct</b>","<b>Closed 10,656.28 (+0.99%) — a multi-week high</b>","<b>Energy at record highs with oil +2%, banks and miners firm; the composition working as designed</b>"],["Thu 1 Oct","Closed 10,428.27 (−1.68%) — worst day since May","30-year gilt yield broke 6% for the first time since 1998; banks and housebuilders led losses"],["<b>Wed 14 Oct</b>","<b>Closed 10,724.86 (+0.70%) — a three-week high despite the hot US CPI</b>","<b>GSK +3.6%, AstraZeneca +3.4%, defence and energy up; Fresnillo −5.1% and Endeavour −3.5% as gold fell. Still ~2.4% below the 10,989 July record</b>"],["<b>Thu 15 Oct</b>","<b>Closed 10,840.34 (+1.08%) — a three-week high</b>","<b>UK GDP +0.1% vs −0.1% expected; few tech stocks, so the AI-debt scare passed it by. ~1.4% below the 10,989 July record</b>"],["<b>Fri 16 Oct</b>","<b>+0.38% to ~10,880; week +3.13%, best in ~6 months</b>","<b>UK banks firmer after the Chancellor's comments eased windfall-tax fears; about 1% below the July record</b>"],["<b>Mon 19 – Tue 20 Oct</b>","<b>−1.08% to ~10,765, then −0.29% to 10,732.99</b>","<b>French turmoil and gas weighed on Europe; the FTSE cushioned by oil, pharma and defence; Anglo American kept its 2026 guidance</b>"],["<b>Wed 21 Oct</b>","<b>Closed 10,752.87 (+0.19%)</b>","<b>Lagged the DAX (+1.35%) and CAC (+1.06%) on the AI/Russia-talks rebound; Thursday futures lower; Standard Chartered upgraded to Overweight at Barclays</b>"]]},
+{k:"MNQ",n:"Nasdaq 100 micro futures",c:"a",now:"Nasdaq Comp. 26,702.86 (+1.05% Wed)",chg:"SOX +1.97%; Meta +2–3% and Tesla −3% after hours; Thursday futures −0.6% to −1%",
+ lv:[["Resistance","30,450→30,808","Old resistance just became the new price"],["Support","27,201","The mechanical −10% line where systematic funds sell"]],
+ dr:"<b>What's actually in it:</b> Technology is ~59% of the index on its own. Top names: Nvidia ~13.7%, Microsoft ~12%, Apple ~10.8%, Amazon ~7.8%, Meta ~6%, Broadcom ~5.4%, Alphabet (both share classes combined) ~9%, Tesla ~3.8%. <b>No single company can exceed 24% of the index</b> by rule, but the top 10 names still run past half the total weight. Quarterly expiry only: March, June, September, December.",
+ par:"2000 and 2022 — neither cleanly",
+ same:"One widely-read note says the market <b>has not been this expensive since the dot-com peak</b>, and with ~59% in one sector, this index lives or dies on a handful of names far more than the S&P 500 does.",
+ diff:"<b>In 2000 the companies had no earnings. Now they have enormous ones.</b> And despite the 10-year sitting near its highest level in over two decades, tech has kept climbing on its own earnings momentum — rates currently matter less intraday than the earnings/AI story.",
+ met:"Twee buren lenen van je: de ene betaalt volgend jaar terug, de andere over twintig jaar. Gaat de kelderrente omhoog, dan verliest de eerste ~3% aan waarde en <b>de tweede veel meer</b> — behalve als die tweede buur net een recordwinst aankondigt. Dat is precies wat er nu gebeurt: de rente stijgt, en de Nasdaq ook.",
+ ev:[["28 Aug","<b>NVIDIA −4.45%</b>, Marvell −10.3% despite a beat and raised outlook","<b>The bar argument confirmed</b>"],["Sat 12 Sep","Anthropic's Amodei publishes \"We Must Pace the Frontier\"; Altman and Musk publicly agree","Chips fell as much as 5% in the following days"],["Wed 16 Sep","Fed hikes 25bp; initial rally reversed into a 631pt Dow drop on Warsh's tone","Nasdaq still firmer than the Dow that day"],["Fri 2 Oct","September payrolls miss (+29k vs ~85k expected)","Fed-hike odds flipped toward a hold — risk-on across tech"],["<b>Mon 5 Oct</b>","<b>Nasdaq 100 closed 30,807.93 (+1.00%), a fresh record; Composite hit 27,477.31</b>","<b>Despite the 10-year near 5.3%, the highest in over two decades — tech shrugged it off</b>"],["Thu 8 Oct","Nasdaq Composite −1.25% to 27,193.34","FT: OpenAI annualised revenue ~$50bn vs the ~$70bn figure previously circulated"],["<b>Mon 12 Oct</b>","<b>Nasdaq 100 −0.71% to 30,664.70</b>","<b>Memory chips led it down (Micron −3.9%, SK Hynix ADR −4%); Dow and Europe rose</b>"],["Mon 12 Oct","SOX −2.7% on the day","Memory names led: Micron, SK Hynix"],["<b>Tue 13 Oct</b>","<b>Nasdaq Composite −0.15% to 27,204.38; Kospi −6% overnight</b>","<b>Chip rout in Asia, JPMorgan miss, CPI and TSMC (Thu) next</b>"],["<b>Wed 14 Oct</b>","<b>Hot CPI: Nasdaq Composite −1.88% to 26,692.87; NDX ~−2% (futures-based)</b>","<b>Tech sector −3% while healthcare/staples rose 2%+; hike odds ~49%</b>"],["<b>Thu 15 Oct</b>","<b>Nasdaq Comp. +0.08% to 26,713.03 after nearing a one-month low; Kospi −8%, Nikkei −5% overnight</b>","<b>PPI hot, but yields eased and rotation into defensives; TSMC ADR −4.1% on a cautious 2027 tone</b>"],["<b>Fri 16 Oct</b>","<b>Nasdaq Comp. −2.14% to 26,140.03; week −4.48%</b>","<b>SOX down 8 days; Micron −5.6%, Intel −5.8%, CoreWeave ~−12%; worst week since June</b>"],["<b>Mon 19 – Tue 20 Oct</b>","<b>Nasdaq Comp. +1.11% Monday, −0.02% Tuesday (26,424.82)</b>","<b>AI rebound then pause; Dow and small caps led Tuesday; Netflix −5.8% after hours</b>"],["<b>Wed 21 Oct</b>","<b>Nasdaq Comp. +1.05% to 26,702.86; SOX +1.97%</b>","<b>SpaceX revenue +161%, Super Micro outlook; Meta +2–3% and Tesla −3% after hours; thin breadth</b>"]]},
+{k:"MGC",n:"Gold micro futures",c:"n",now:"$4,181.10 (Fri, Dec contract, +0.26%)",chg:"Rebounded above $4,150 on falling yields; trying to break the downtrend that began in August",
+ lv:[["Range top","$4,697","One desk frames the whole range as $4,230–$4,697"],["Resistance","$4,230","Where the most recent bounce stalled"],["Now","~$4,140–4,174","—"],["Support","$4,110","Then $4,100 round number — traders see both as live levels"]],
+ dr:"<b>No longer trading rates — trading debt, except when the dollar overwhelms it.</b> Central banks bought a record 288.9 tonnes in Q2 while the price fell. Right now the <b>dollar index near 102.4, its highest since April 2025</b>, is the dominant force pinning gold down — a strong dollar makes gold more expensive for everyone else, cutting demand mechanically.",
+ par:"1970s currency debasement",
+ same:"Gold rising <i>while</i> real yields rise is the signature of a debasement period, not a rate cycle. <b>89% of central banks say they will buy more</b> — that structural story hasn't gone anywhere.",
+ diff:"In the 1970s the trigger was leaving the gold standard. <b>Now it is the size of the debt</b> ($40trn, 125% of GDP) — but that slow story is currently losing to the fast one: a stronger dollar and a 10-year near 5.3% give savers a paying alternative to a metal that yields nothing.",
+ met:"Een kluis met een goudstaaf betaalt geen rente. Normaal maakt dat niet uit als de wereld onzeker is. <b>Maar als de dollar zelf plots sterker wordt én de bank 5% rente biedt, kiezen veel mensen toch voor de bank — tijdelijk.</b>",
+ ev:[["Q2","Central banks buy a record 288.9t, +62%","<b>While the price fell</b>"],["Wed 16 Sep","+1.47% to $4,396.70 on the Fed decision","Classic post-hike relief"],["Late Sep","Slid to a seven-week low, −4% from the peak","Rate-competition story dominant"],["Fri 2 Oct","Edged up on the weak jobs report","Softer Fed-hike odds briefly helped"],["<b>Mon 5 Oct</b>","<b>Choppy around $4,140–4,174, down ~6% over the month</b>","<b>Dollar at a 2025 high is now the main headwind, more than yields alone</b>"],["<b>Tue 13 Oct</b>","<b>~$4,163 (−0.3%); bounced toward $4,200 in Asia, gave it back as oil and yields rose in the US morning</b>","<b>Even a softer dollar could not lift it — oil/inflation fears and the CPI wait capped it</b>"],["<b>Wed 14 Oct</b>","<b>~$4,090, −1.3 to −1.8% — below the $4,150 floor</b>","<b>Hot CPI + stronger dollar; silver about −6%</b>"],["<b>Fri 16 Oct</b>","<b>$4,181.10 (+0.26%), second daily gain</b>","<b>Falling yields and a softer dollar; still below the August downtrend</b>"]]},
+{k:"DAX",n:"GER40",c:"p",now:"25,647.10 (+1.35%, Wed close)",chg:"Rebounded on AI-earnings relief and Russia peace-talk hopes; Thursday opens ~0.7% lower on French worries",
+ lv:[["Resistance","26,200","Broken 4 August — now a reference point above"],["Now","25,254.21","—"],["Support","25,300→25,000","Watch whether the round number holds"]],
+ dr:"<b>Correction to this dashboard's earlier framing: the DAX is NOT heavy energy.</b> Verified composition: Industrials ~34% (Siemens, Airbus, Deutsche Post), Financial Services ~22% (Allianz, Munich Re, Deutsche Bank, Deutsche Börse), Technology ~15% (SAP, Infineon — Infineon alone gives real, not \"almost none,\" chip exposure), Healthcare ~6%, <b>Energy is close to 0%</b> — no oil majors at all. The old \"heavy energy\" description was wrong; the real story is industrial/financial, and Infineon ties it to the same semiconductor cycle as the Nasdaq, just at a much smaller weight.",
+ par:"2022 energy crisis",
+ same:"An export-heavy industrial economy whose competitiveness depends on input costs it doesn't control — energy earlier this year, now also copper, which its auto/industrial names buy as a raw material (the mirror of the FTSE's miners, who sell it).",
+ diff:"In 2022 the shock was Russian gas and Germany fell far more than its neighbours. This year's moves have been smaller and the German 10-year, near a multi-year high, still caps any rate-driven relief.",
+ met:"<b>Twee dorpen krijgen hetzelfde nieuws over duurder koper.</b> Het ene dorp verkoopt koper (rugwind). Het andere dorp koopt het in voor zijn fabrieken (kostenpost). Dat tweede dorp is Duitsland — niet, zoals eerder gedacht, een olie-dorp.",
+ ev:[["6 Jul · 29 Jul · 3–4 Aug","<b>Four record highs</b>","Industrials and financials-led, not energy"],["7–9 Sep","Copper hit a fresh LME record above $14,700/ton","A cost headwind for German industrials/autos"],["10 Sep","ECB hiked 25bp to 2.50% deposit rate, as expected","No surprise — confirmed the expected path"],["Late Sep","Choppy alongside the Hormuz/oil swings","Indirect exposure via energy costs, not direct energy holdings"],["<b>Mon 5 Oct</b>","<b>Closed 25,254.21, +0.09% — a quiet day</b>","Composition correction applied this update: industrials/financials, not energy, drive this index"],["Fri 9 Oct","Closed 25,087.27 (+1.13%)","Eased strike fears, firmer metals, calmer bonds"],["<b>Mon 12 Oct</b>","<b>Closed 25,277.69 (+0.76%)</b>","<b>Up despite EUR/USD at a 2026 low and oil +2% — industrials/financials carried it</b>"],["Thu 8 Oct","Fell 1.12%, below 25,000 — a two-month low","German exports fell for a second month, factory orders −10.6% m/m, bond sell-off"],["<b>Wed 14 Oct</b>","<b>Closed 25,298.61 (+0.15%) while Wall Street fell 1.1%</b>","<b>ASML +1.2% on results; German wholesale prices +8.7% y/y, euro-area gas near a four-year high</b>"],["<b>Thu 15 Oct</b>","<b>Closed 25,368.03 (+0.27%)</b>","<b>Held up despite a ~3% early drop in Stoxx tech; German wholesale prices +8.7% y/y</b>"],["<b>Fri 16 Oct</b>","<b>+0.95% to ~25,610; week +2.13%</b>","<b>Outperformed the Nasdaq as chip names fell; Europe's energy bill up ~€100bn</b>"],["<b>Mon 19 – Tue 20 Oct</b>","<b>−1.24% to ~25,310, then −0.05% to 25,306.76</b>","<b>OAT–Bund spread at 155bp, ZEW 28.1 vs 30.2 expected, TTF gas €90; chip names (ASML −2.5%) weak</b>"],["<b>Wed 21 Oct</b>","<b>+1.35% to 25,647.10</b>","<b>AI relief and Russia peace-talk hopes; but the French 10-year topped 5% and the DAX was seen opening ~0.7% lower Thursday</b>"]]},
+{k:"SILVER",n:"Micro silver",c:"p",now:"About −6% on Wed 14 Oct (price level not confirmed)",chg:"Hot CPI + stronger dollar hit silver harder than gold",
+ lv:[["January peak","~$121","Then lost roughly half"],["Recent range","$60–67","Chopping in a wide band since late August"],["Now","~$61.5","Gold–silver ratio compressed to 67.5 from 68.6 Friday"],["Support","$60","Psychological level, tested repeatedly"]],
+ dr:"<b>Two jobs at once.</b> A factory metal by day, a vault metal by night. Light positioning means small flows produce large moves — today's +2% day on genuine physical tightness (per market commentary), not just gold tracking.",
+ par:"2011 — and this is the warning",
+ same:"A monetary rally on top of an industrial one, with extremely light positioning — the combination that made 2011's spike so violent on the way down too.",
+ diff:"<b>In 2011 silver peaked and fell roughly 70% over four years. It has already done roughly half of that this year</b> — from ~$121 in January to the low $60s. <b>The crash risk is not theoretical, it is recent.</b>",
+ met:"<b>Zilver heeft twee banen.</b> Overdag in een fabriek, 's avonds in dezelfde kluis als goud. Vandaag werkten beide banen weer samen — en zilver klom harder dan goud, waardoor de ruilverhouding tussen de twee verschoof.",
+ ev:[["Jan 2026","<b>Peak near $121</b>","Then lost half"],["Aug","+16% — best asset of the month","Both legs working together"],["Late Sep","Fell toward a 6-week low near $60","Tracking gold's rate-driven slide"],["<b>Mon 5 Oct</b>","<b>+1.5–2.2% to $61.24–61.80 — best day in weeks</b>","<b>Gold-silver ratio fell to 67.5 — silver outperforming gold on the day</b>"],["<b>Wed 14 Oct</b>","<b>About −6% on the hot CPI and stronger dollar</b>","<b>Gave back Monday's bounce; Fresnillo and Endeavour fell with it</b>"]]},
+{k:"OIL",n:"WTI · Brent",c:"n",now:"WTI ~$104 (+2.2% Wed, derived) · Brent not confirmed",chg:"Hopes of a quick US–Iran deal faded; Russia agreed to renewed peace talks",
+ lv:[["Recent high","$108–109","Mid-September, pipeline/Hormuz shock peak"],["Round number broken","$100","Brent back below this for the first time since the crisis escalated"],["Now","WTI $90.15 / Brent ~$101.5","—"],["August low","$75.77","4 August de-escalation read — the deeper floor"]],
+ dr:"<b>Two forces now, not one.</b> The war/chokepoint story (§4 on the Daily Report tab) still exists, but is now joined by direct policy intervention: the <b>G7 announced release of ~100 million barrels</b> of strategic crude and diesel reserves specifically to cool prices. That is a deliberate inventory move, separate from the physical-route recovery already underway.",
+ par:"1973 and 1979, structurally",
+ same:"A supply shock from conflict, feeding inflation and forcing central banks to tighten into a slowing economy — the stagflation trap, though cooling for now.",
+ diff:"<b>Unlike the 1970s, governments now have a direct lever — strategic reserves — that didn't exist at scale then.</b> Producers also keep routing around the chokepoint (Middle East exports back near 98% of pre-war levels), and shale provides a supply buffer that didn't exist in the 1970s either. All three differences are currently capping the price.",
+ met:"<b>Olie is de kraan waar de hele economie op is aangesloten.</b> Deze week deden overheden iets dat in de jaren '70 niet kon: ze openden hun eigen reservetank om de druk op de kraan te verlichten — bovenop het feit dat de kapotte leiding al grotendeels gerepareerd was.",
+ ev:[["9 Sep","<b>Brent breaks $100</b>","Biggest wave of shipping attacks by both sides"],["14 Sep","Brent above $108 — pipeline + Hormuz shock peak","Two new chokepoints in one morning"],["26 Sep","Trump rejects Iran's Hormuz-reopening offer","Brent snapped back up within a day"],["29 Sep","Saudi pipeline resumes at ~3.5m bbl/day","Middle East exports recover toward 98% of pre-war levels"],["3 Oct","G7 announces strategic reserve release","Oil falls to a one-month low on the policy move"],["<b>Mon 5 Oct</b>","<b>WTI $90.15, Brent ~$101.5 — Brent back under $100 for the first time since the crisis</b>","<b>Route recovery + reserve release are currently outweighing the still-unresolved underlying war</b>"],["<b>Tue 13 Oct</b>","<b>Brent ~$106.5, WTI ~$95 — after dipping to ~$104.6 early on Russian-diesel hopes</b>","<b>Saudi–Houthi strikes, tanker incidents near Hormuz and reports of Trump–Netanyahu talks on Iran revived supply fears</b>"],["<b>Wed 14 Oct</b>","<b>Brent ~$105.7–107 — swung between gains and losses</b>","<b>Houthi missile on Saudi Aramco's Dhahran HQ vs uncertainty over Gulf shipments</b>"],["<b>Fri 16 Oct</b>","<b>Brent $109.86 (+3.7%), WTI $101.41 (+3.5%)</b>","<b>Hormuz attacks, Houthi strikes on Saudi Arabia, Ukraine vowing to hit Russian refineries; weekend: Iran claims two tankers hit mines and offers a reopening plan</b>"],["<b>Mon 19 – Tue 20 Oct</b>","<b>Brent ~$108–112 range; settled $108.79 Tue (WTI $101.79)</b>","<b>Houthi attacks on Saudi Arabia vs Qatar–Pakistan mediation report</b>"],["<b>Wed 21 Oct</b>","<b>WTI +2.18% (~$104, derived)</b>","<b>Quick US–Iran deal hopes faded; Russia agreed to renewed three-way peace talks</b>"]]}
+];
+
+$("#c-dt").innerHTML=`
+<h2><b>DAYTRADING</b> · SIX INSTRUMENTS, LEVELS, HISTORY AND WHY</h2>
+<div class="ld">For each: where it is, the levels other people are watching, what drives it, the historical parallel, and <b>what does not match that parallel</b> — because the differences are where the money is.</div>
+
+<div class="wn"><div class="h">The chain — trade this, not the instrument</div>
+<div class="gr g4" style="margin:10px 0">
+${["Hormuz headline","Brent spikes","Yields rise","Nasdaq falls, gold bid"].map((s,i)=>
+`<div class="c" style="margin:0;padding:11px;border-color:${i<3?'#e6c8c8':'#c9e2d5'}">
+<div class="dk">STEP ${i+1}</div><div style="font-size:12.5px">${s}</div></div>`).join("")}
+</div>
+<b>But the DAX and FTSE split.</b> Germany pays the energy bill, Britain collects it. That is the one place where the same news moves two indices in opposite directions.<br><br>
+Higher yields <b>plus</b> higher oil is a simultaneous headwind for the Nasdaq and a tailwind for energy and metals. <b>Size positions for 5%+ oil days.</b></div>
+
+${INS.map(i=>`<div class="c" style="border-color:${i.c=='n'?'#e6c8c8':i.c=='p'?'#c9e2d5':'#e8dfc4'}">
+ <div class="ct"><div class="cl">${i.k} · ${i.n}<s>${i.chg}</s></div>
+  <span class="g ${i.c}">${i.now}</span></div>
+ <div class="gr g2" style="margin-bottom:10px">
+  <div><div class="dk">Levels</div><div class="t"><table><tbody>
+  ${i.lv.map(l=>`<tr class="wr"><td class="t2" style="width:110px">${l[0]}</td><td class="m" style="width:80px"><b>${l[1]}</b></td><td class="t2">${l[2]}</td></tr>`).join("")}
+  </tbody></table></div></div>
+  <div><div class="b i"><div class="h">What drives it</div>${i.dr}</div>
+  <div class="b mt"><div class="h">De metafoor</div>${i.met}</div></div>
+ </div>
+ <div class="gr g2">
+  <div class="b p"><div class="h">Parallel · ${i.par} — what is the same</div>${i.same}</div>
+  <div class="b n"><div class="h">What is different</div>${i.diff}</div>
+ </div>
+ <div style="margin-top:10px"><div class="dk">Major moves this year</div>
+ <div class="t"><table><tbody>
+ ${i.ev.map(e=>`<tr class="wr"><td class="m ac" style="width:130px"><b>${e[0]}</b></td><td style="min-width:260px">${e[1]}</td><td class="t2">${e[2]}</td></tr>`).join("")}
+ </tbody></table></div></div>
+</div>`).join("")}
+
+<h2>FTSE 100 &amp; DAX — MACRO VS MICRO: IS US CPI REALLY EVERYTHING?</h2>
+<div class="wn r"><div class="h">Short answer: US CPI is the biggest <i>shared</i> switch — not the only one</div>
+US CPI matters so much because it moves <b>US Treasury yields</b>, and UK gilts and German Bunds have been moving in step with them (analysts note gilts &quot;have been moving closely with US Treasuries&quot;). A hot print pushes yields up everywhere; a soft one pulls them down. But on top of that shared switch, each index has its own calendar of local macro and company news — and on some days the local news wins (on 7 October the FTSE fell less than Paris, Frankfurt and Milan because of its energy and defensive weight).<br><br>
+<i>Het Amerikaanse inflatiecijfer is de hoofdschakelaar voor het licht in alle kamers. Maar elke kamer heeft ook nog een eigen lamp die op een eigen knop werkt.</i></div>
+
+<div class="gr g2" style="margin-bottom:10px">
+ <div class="b a">
+  <div class="h">🇬🇧 FTSE 100 — MACRO (UK-specific)</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li><b>Gilt market is the main local story:</b> the 30-year gilt yield broke 6% on 1 Oct (first time since 1998) and hit 6.04% on 7 Oct; the 10-year touched 5.53% on 8 Oct, its highest since July 2007. A 10-year gilt auction cleared at 5.38%, the highest since 1999.</li>
+   <li><b>UK Budget, Wed 28 Oct</b> (the same day as the Fed): IFS warns of a ~£35bn challenge; talk of a higher bank surcharge hit Lloyds, NatWest and Barclays.</li>
+   <li><b>Bank of England:</b> inflation 3.1% (core 2.6%), could pass 4% if energy stays high; Barclays' UK economist sees a November hike as likely. Deputy Governor Breeden speaks this week; <b>UK August GDP lands Thu 15 Oct</b> (expected to dip).</li>
+   <li>Public debt ~£3trn, roughly 95% of GDP — the reason gilts react harder than Bunds.</li>
+  </ul>
+ </div>
+ <div class="b a">
+  <div class="h">🇬🇧 FTSE 100 — MICRO (company news this fortnight)</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li><b>Banks:</b> Prudential, Standard Chartered and HSBC fell 4%+ on 7 Oct; Lloyds/NatWest/Barclays dragged the week of 1 Oct. Higher yields can help bank interest margins, but the surcharge talk offsets it.</li>
+   <li><b>Energy and miners:</b> Shell and BP gain from higher crude; mining names move with metals (gold/silver/copper) — both were the index's support on 12 Oct.</li>
+   <li><b>Smaller-cap stories:</b> Pennon cut its dividend and asked shareholders for £550m; IG Group lost about a quarter of its value; Unite hit an 11-year low; Vesuvius confirmed a takeover approach.</li>
+   <li>Index-level result: the FTSE 100 was −2.2% in the week to 2 Oct (worst day since May on 1 Oct), then +1.06% Fri 9 Oct and +0.99% Mon 12 Oct to a multi-week high of 10,656 (the July record is 10,989).</li>
+  </ul>
+ </div>
+ <div class="b a">
+  <div class="h">🇩🇪 DAX — MACRO (Germany / euro-area-specific)</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li><b>Mixed data:</b> August industrial production +2.0% m/m (biggest rise in 17 months), but factory orders −10.6% m/m (only −0.1% excluding large orders) and exports fell for a second month. ifo 89.9 in September (from 88.8).</li>
+   <li><b>Euro-area inflation jumped to 3.8% in September</b> (from 3.2%); the ECB deposit rate is 2.50% after the 10 Sep hike. <b>Next ECB decision Thu 29 Oct, 14:15 CET</b> — the day after the Fed and the UK Budget.</li>
+   <li><b>Bunds ~3.4–3.5%</b> (near multi-year highs) and the <b>French bond spread</b>: analysts call US yields and French bonds the main swing factors for the DAX.</li>
+   <li>Calendar: <b>ZEW Tue 20 Oct</b>, German Q3 GDP first estimate late October, September industrial production early November.</li>
+  </ul>
+ </div>
+ <div class="b a">
+  <div class="h">🇩🇪 DAX — MICRO (company news this fortnight)</div>
+  <ul style="margin:6px 0 0 16px;padding:0;line-height:1.7">
+   <li><b>Winners on the 9 Oct rebound:</b> Zalando +4.7%, SAP +3.9%, Siemens +3.0%. Defence names such as Rheinmetall have held up.</li>
+   <li><b>Losers:</b> Telekom shares plunged on 9 Oct; Bayer, Infineon and Heidelberg Materials fell on 5 Oct amid high oil and euro-area debt jitters.</li>
+   <li><b>Siemens:</b> record orders and a €6bn buyback running, but rising ECB rates and Bund yields weigh; results Thu 12 Nov.</li>
+   <li>Index-level result: a two-day slide to a two-month low (below 25,000 on Thu 8 Oct), then +1.13% Fri and +0.76% Mon to 25,277.69 — still ~5% under the ~26,600 August record, and only ~3% up in 2026 versus ~7.7% for the Euro Stoxx 50.</li>
+  </ul>
+ </div>
+</div>
+
+<div class="wn r"><div class="h">Europe-wide stress that hits both indices (added 21 Oct)</div>
+<b>France:</b> riots, curfews and a possible state of emergency; OAT–Bund spread 155bp (highest since the early-2010s euro debt crisis), yields at 24-year highs, a National Assembly budget vote days away, and the April 2027 presidential election behind it. French banks and luxury stocks fall when the spread widens; a disorderly bond market is the scenario that could force the ECB to act. <b>Energy:</b> Dutch TTF €90/MWh (highest since 2022); Europe's import bill +€100bn. <b>Growth and prices:</b> German ZEW 28.1, eurozone 18.5 (both below forecasts); euro-area inflation 3.8%; ECB deposit rate 2.50%, expected on hold on 29 October. <b>UK:</b> 30-year gilt above 6%, Budget on 28 October, BoE seen leaning toward hikes. <b>DAX</b> feels this through confidence, autos and the euro; <b>FTSE</b> through gilts and sterling — and cushions it with energy, pharma and defence.<br><br>
+<i>Eén buur is in paniek, de gasrekening stijgt en de bank wil meer rente. Het dak van het ene huis (Londen) lekt door de gilts, dat van het andere (Frankfurt) door het vertrouwen.</i></div>
+
+<div class="t" style="margin-bottom:10px"><table><thead><tr><th style="width:150px">Date</th><th>Event</th><th>Which index feels it most</th></tr></thead><tbody>
+${[["Wed 14 Oct (done)","US September CPI: 3.7% / core 2.6%, hotter than expected","Both via yields — yet FTSE +0.7% (pharma, defence, energy) and DAX +0.15% held up"],
+["Thu 15 Oct (done)","UK August GDP +0.1% m/m vs −0.1% expected","FTSE: +1.08% to 10,840 on the day; yields and sterling reacted positively"],
+["Tue 20 Oct (done)","German ZEW 28.1 (exp. 30.2); eurozone 18.5 (exp. 23.6)","DAX and the euro area"],
+["<b>Days away</b>","<b>French National Assembly budget vote</b>","Both via the euro and bond spreads; CAC and French banks most"],
+["<b>Wed 28 Oct</b>","<b>UK Budget + Fed decision</b>","FTSE (gilts, bank surcharge) — and both indices through the Fed"],
+["<b>Thu 29 Oct, 14:15 CET</b>","<b>ECB decision</b>","DAX (and EUR/USD at a 2026 low)"],
+["November","BoE meeting; Siemens results 12 Nov","FTSE / DAX"]].map(r=>
+`<tr class="wr"><td class="m ac">${r[0]}</td><td>${r[1]}</td><td class="t2">${r[2]}</td></tr>`).join("")}
+</tbody></table></div>
+
+<h2>VOLATILITY CALENDAR</h2>
+<div class="ld">Days where the move is <b>mechanical rather than informational</b>. On these days price moves without news — and knowing that stops you inventing a reason.</div>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th style="width:145px">Date</th><th style="width:230px">Event</th><th class="r" style="width:100px">Volatility</th><th>What it means</th></tr></thead><tbody>
+${[["MON–THU","Lagarde (Mon, Thu) · Fed's Williams Tue, Cook Wed+Thu, Logan Thu","MEDIUM","Speech tone matters: 28 Oct hike odds ~26–29% after PPI, December ~92%","a"],
+["TUE 30 SEP","Quarter-end · US federal fiscal year ends","MEDIUM","Fund rebalancing and contract-award clustering — <b>flows, not news</b>","a"],
+["THU 1 OCT","Q4 begins · bond seasonal","MEDIUM","Bond prices historically rise from here — <b>rising prices means falling yields</b>","p"],
+["<b>FRI 2 OCT</b>","<b>US payrolls</b>","VERY HIGH","Oil up plus resilient jobs turns 'higher for longer' into 'higher again'","n"],
+["<b>WED 28 OCT</b>","<b>FOMC decision</b>","VERY HIGH","~26–29% priced for another 25bp (peak ~49% on 14 Oct); December ~92%","n"],
+["<b>TUE 3 NOV</b>","<b>US midterm elections</b>","VERY HIGH","Trump reportedly plans to resume Iran bombing afterwards — a date the oil market may now trade","n"],
+["<b>TUE 10 NOV</b>","<b>China's rare-earth export-control suspension expires</b>","VERY HIGH","The broader critical-minerals policy deadline; tariff truce ends about the same time","n"],
+["THU 26 NOV","US Thanksgiving — closed","NONE","Thin liquidity, wider spreads","m"],
+["FRI 18 DEC","<b>QUAD WITCHING</b> · final of the year","HIGH","Plus the December Fed on 8–9. Into thin holiday liquidity","a"]
+].map(c=>`<tr class="wr" ${c[2]=='VERY HIGH'?'style="background:var(--rd)"':''}>
+<td class="m ${c[2]=='VERY HIGH'?'ne':'ac'}"><b>${c[0]}</b></td><td>${c[1]}</td>
+<td class="r"><span class="g ${c[4]}">${c[2]}</span></td><td class="t2">${c[3]}</td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn"><div class="h">What quad witching actually is</div>
+Four kinds of contract expire on the same day: index futures, index options, single-stock futures and single-stock options. Everyone holding them must close, roll or take delivery <b>on that day</b>.<br><br>
+That produces enormous volume and exaggerated moves — <b>and none of it is news.</b> It amplifies whatever direction already exists.<br><br>
+<i>Iedereen in het dorp moet op dezelfde dag zijn huur betalen. Er is die dag enorm veel geldverkeer en de prijzen schieten heen en weer — maar er is niets gebeurd. <b>Alleen de kalender.</b></i></div>
+
+<h2>CME EDUCATION — CONTRACT SPECS FOR EVERY INSTRUMENT ON THIS PAGE</h2>
+<div class="ld">The GAP from earlier editions is now filled: verified specs for MNQ, MGC, micro silver (SIL) and micro WTI crude (MCL), straight from CME/COMEX/NYMEX documentation.</div>
+<div class="t" style="margin-bottom:10px"><table><thead><tr><th>Contract</th><th>Size</th><th>Tick / value</th><th>Margin (approx, varies)</th><th>Hours (CT)</th><th>Expiry cycle</th></tr></thead><tbody>
+${[["<b>MNQ</b> · Micro Nasdaq-100","$2 × index","0.25 pts = <b>$0.50</b>/tick","~$1,825 initial / $1,660 maint.","Sun 5pm–Fri 4pm, 1hr daily halt","<b>Quarterly</b> — Mar/Jun/Sep/Dec, cash-settled"],
+["<b>MGC</b> · Micro Gold","10 troy oz, 1/10 of GC","$0.10/oz = <b>$1.00</b>/tick","Moves with volatility — check live","Sun 5pm–Fri 4pm, 1hr daily halt","Monthly listed, <b>physically deliverable</b> — most close/roll well before"],
+["<b>SIL</b> · Micro Silver","1,000 troy oz, 1/5 of SI","$0.005/oz = <b>$5.00</b>/tick","~1/5 of SI's $9–12k overnight range","Sun 5pm–Fri 4pm, 1hr daily halt","Monthly listed, physically deliverable"],
+["<b>MCL</b> · Micro WTI Crude","100 barrels, 1/10 of CL","$0.01/bbl = <b>$1.00</b>/tick","Historically ~$200–580 range","Sun 5pm–Fri 4pm CT, settles 1:30pm","<b>Monthly</b> — the odd one out; rollover volume shifts ~8 days before expiry ('rollover Thursday')"]].map(r=>
+`<tr class="wr"><td><b>${r[0]}</b></td><td class="m">${r[1]}</td><td class="m">${r[2]}</td><td class="t2">${r[3]}</td><td class="t2" style="font-size:11px">${r[4]}</td><td class="t2">${r[5]}</td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn r"><div class="h">For you specifically: the daily maintenance halt, in Belgian time</div>
+Every CME futures session pauses <b>16:00–17:00 Central Time</b> for daily maintenance/settlement — that's <b>23:00–00:00 Belgian time</b> during CEST (summer clock), or <b>22:00–23:00</b> only in the single week of 25 Oct–1 Nov (Belgium on winter time while the US is still on summer time) and back to 23:00–00:00 from 2 Nov — in that week Wall Street also opens at 14:30 Belgian time. Spreads widen sharply inside that hour because market makers pull back; they normalise within minutes of the 17:00 CT reopen, and get progressively tighter as the Asian session builds from roughly 01:00–02:00 Belgian time onward. <b>This applies to MNQ, MGC, SIL and MCL — not to UK100/DAX as cash indices</b>, which simply reflect their own exchange's closing hours instead.<br><br>
+<i>Elke dag, rond middernacht Belgische tijd, legt de beurs een uur lang het werk stil voor onderhoud. De brede spread die je dan ziet is geen paniek — het is gewoon niemand aan het loket.</i></div>
+
+<div class="wn"><div class="h">The one distinction that trips people up</div>
+<b>MNQ and MGC/SIL trade the same four-times-a-year rhythm as this dashboard's quad-witching calendar — MCL does not.</b> Crude oil expires <i>monthly</i>, with volume rolling to the next contract about a week before, on what traders call "rollover Thursday." A position held into that window without rolling can end up settling against a different month's price than expected. Gold and silver are technically monthly-listed too, but are physically deliverable — which is precisely why almost nobody holds a micro gold or silver position into expiry; the delivery mechanics are built for commercial users, not a retail account.<br><br>
+<i>Drie van je vier instrumenten volgen hetzelfde kwartaalritme als de rest van dit dashboard. De olie loopt op een eigen, maandelijkse klok — wie daar niet op let, betaalt de rekening op de verkeerde dag.</i></div>
+
+<div class="wn r"><div class="h">Still worth a live check before trading</div>
+<b>Margins move with volatility</b> — the figures above are reference points, not this session's requirement; the exchange raised gold and silver margins earlier this month. <b>Confirm current margin and the active front-month contract with your broker or on the CME margin page before sizing any position.</b> ATR and implied-volatility readings were not independently re-verified this pass; qualitatively, silver still trades with meaningfully wider swings than gold, and oil remains in a 5%+ daily-move regime given the active Hormuz situation.</div>`;
+
+/* ═════════ LOG ═════════ */
+const LOG=[
+{d:"22 OKT (ochtend)",t:"AI-herstelrally woensdag, daarna techverkoop in Azië; Franse 10-jaarsrente boven 5%; Meta en Tesla gesplitst",
+ pts:["Woensdag 21 okt: Dow +0,69% naar 52.856,09 (maandhoogte), S&P 500 +0,58% naar 7.757,17 (binnen 0,8% van het record), Nasdaq Composite +1,05% naar 26.702,86, chipindex +1,97% naar 11.505,56 — na SpaceX (omzet +161% naar $14,6 mld, verwacht $12,86 mld) en Super Micro","Smalle breedte: NYSE-stijgers 1,37 tegen 1 dalers; Nasdaq 216 nieuwe laagtepunten tegenover 53 hoogtepunten","Na slot: Meta +2-3% (omzet $64,6 mld +26%, Q4-vooruitzicht $73-76 mld, 2-voor-1-splitsing, winst per aandeel $3,83 door een juridische last van $9,89 mld); Tesla ~-3% (omzet $28 mld iets onder verwachting, adj. EPS $0,48, vrije kasstroom +$1,53 mld, capex-doel verlaagd naar ~$20 mld)","Europa woensdag: DAX +1,35% naar 25.647,10, CAC 40 +1,06% naar 7.921,69, FTSE 100 +0,19% naar 10.752,87 (~2,2% onder het record van 10.989), FTSE MIB +1,17%","Frankrijk: 10-jaarsrente boven 5% (5,009%), hoogste sinds 2002; protesten gepland op donderdag, begrotingsonderhandelingen lopen door","Rusland stemde in met hernieuwde drieweg-vredesgesprekken; WTI +2,18% (~$104, afgeleid) nu hoop op een snel VS-Iran-akkoord vervaagde","Donderdagochtend: Aziatische tech opnieuw lager, Stoxx 50-futures >1% lager (CAC -0,8 tot -1,3%, DAX -0,7%, FTSE-futures -0,5%), Amerikaanse futures lager (Nasdaq-100 -0,6 tot -1%)","Fed in stiltepériode tot 29 okt; 28 okt Fed + Britse begroting, 29 okt ECB"],
+ trig:"~15%",st:"MACRO"},
+{d:"21 OKT (voor opening)",t:"Frankrijk in onrust, Europees gas op vierjaarshoogte, zwakke ZEW — en de Dow +1% op winstcijfers",
+ pts:["Frankrijk: zwaarste onrust in jaren in het weekend van 17-18 oktober (duizenden arrestaties, plunderingen, brandstichting in Limoges en Lyon, avondklokken gevraagd; premier Lecornu sluit een noodtoestand niet uit); stemming in de Assemblée nationale over de begroting binnen enkele dagen","OAT-Bund-spread 155bp, een nieuw meerjarenhoogtepunt (vorige piek 151bp), hoogste sinds de eurocrisis begin jaren 2010; Franse rentes op een 24-jaarshoogte; analisten noemen een motie van wantrouwen, een Moody's-verlaging en de presidentsverkiezing van april 2027 als risico's","Duitse ZEW 28,1 (verwacht 30,2; vorige 34,7), eurozone-ZEW 18,5 (verwacht 23,6); Nederlandse TTF-gas €90,24/MWh, hoogste sinds 2022; Europese importrekening +€100 mld (von der Leyen); euro-inflatie 3,8% in september","Maandag 19 okt: DAX -1,24%, FTSE 100 -1,08% (naar ~10.765), CAC -1,11%, FTSE MIB -1,55%, Stoxx 600 -0,8%; dinsdag: FTSE -0,29% naar 10.732,99, DAX -0,05% naar 25.306,76, CAC -0,38%, Ibex +0,28%","Wall Street dinsdag: Dow +1,02% naar 52.495,88 (3M +5,8%), S&P 500 +0,28% naar 7.712,57, Nasdaq Composite -0,02% naar 26.424,82, Russell 2000 +1,65% naar 2.773,42; maandag: Nasdaq +1,11% (AI-herstel), S&P +0,41%, Dow -0,07%","Olie: Brent $108,79 (-0,7%), WTI $101,79 (-1,8%) na een piek rond $112 en een bericht over een Qatarees-Pakistaans bemiddelingsvoorstel tussen de VS en Iran; Brent schommelt in oktober tussen $97 en $112","Na slot: Netflix -5,8% (omzetvooruitzicht Q4 onder verwachting), SpaceX sterk hoger; Meta, Tesla, Texas Instruments, Lam Research en IBM rapporteren woensdag na slot","Dashboard: Frankrijk toegevoegd aan het Macro-tabblad; Europa-blok toegevoegd aan de FTSE/DAX-sectie; kaart 'Europe's problems' toegevoegd"],
+ trig:"~15%",st:"MACRO"},
+{d:"18 OKT (zondag)",t:"AI-uitverkoop verdiept tot slechtste week sinds juni, olie weer boven $100, Europa heeft zijn beste week in maanden",
+ pts:["Vrijdag 16 okt: Nasdaq Composite -2,14% naar 26.140,03 (grootste daling sinds 23 juli), S&P 500 -1,09% naar 7.659,44, Dow -0,34% naar 52.002,41, Russell 2000 -1,66% naar 2.721,37","Week: Nasdaq -4,48% (vierweekse winstreeks beëindigd), S&P 500 -1,95% (slechtste week sinds eind juni), Dow +0,67% (tweede weekwinst op rij), Russell 2000 -3%","Chipindex (SOX) viel een achtste dag op rij — langste reeks sinds 2006; Micron -5,6%, Intel -5,8%, CoreWeave ~-12%; zorgen: Chinese chipconcurrentie en met schuld gefinancierde AI-bouw","Olie: Brent $109,86 (+3,7%, hoogste slot sinds 19 mei), WTI $101,41 (+3,5%, +10,4% op de week); minstens negen schepen aangevallen bij Hormuz sinds 11 okt; het Russisch-Oekraïense energie-staakt-het-vuren is uiteengevallen","Weekend: Iran zegt dat twee tankers op mijnen liepen (niet onafhankelijk bevestigd), benoemde een nieuwe minister van Defensie en dringt er bij de VS op aan zijn voorstel voor heropening van Hormuz te aanvaarden; Trump: de Iran-oorlog is 'binnenkort voorbij'","Treasuries: beste week sinds half februari — 10-jaars -14,6bp naar 5,097%; goud $4.181,10 (+0,26%); EUR/USD 1,1236","Europa: FTSE 100 +3,13% op de week (beste in ~6 maanden, ~1% onder het record van 10.989), DAX +2,13%, Stoxx 600 +2,09% (beste sinds juni)","Fed in stiltepériode van za 17 tot do 29 okt; kans op een verhoging op 28 okt ~15% nadat Warsh geen signaal gaf","Week vooruit: Netflix (di), Meta, Tesla, Texas Instruments, Lam Research, IBM (wo); 28 okt Fed + Britse begroting, 29 okt ECB","Dashboard opgeschoond: posities uit het Strategy-tabblad verwijderd; Macro/Bonds & FX bijgewerkt (ECB 2,50%, BoJ 1,25%, VS-inflatie 3,7%); CME-notitie over de wintertijd gecorrigeerd"],
+ trig:"~15%",st:"MACRO"},
+{d:"16 OKT (voor opening)",t:"Hetere PPI dan ooit sinds 2022 verandert de Fed-weddenschap amper, Kospi -8% door AI-schuldschrik, FTSE 10.840",
+ pts:["Amerikaanse PPI september: +1,3% m/m (verwacht ~0,5-0,6%) en 6,3% j/j (verwacht 5,3%) — grootste maandstijging sinds maart 2022; kern (excl. voeding, energie, handel) +0,5% m/m en 5,0% j/j; goederen +2,6% (grootste sinds 2009), energie +10,8%, benzine +20,3%","Kans op een renteverhoging op 28 oktober: piek ~49% woensdag na de CPI, ~34-37% vóór de PPI, daarna ~26-29%; december ~92% (bronnen verschillen)","Wall Street donderdag: Dow +1,08% naar 52.177,69; S&P 500 +0,33% naar 7.744,06; Nasdaq Composite +0,08% naar 26.713,03 (nabij een maandlaagterecord intraday); Russell 2000 +1,4% naar 2.767,27 — rotatie naar defensieve aandelen","Azië: Kospi -7,5 tot -8% (handel tijdelijk stilgelegd volgens één bron), Nikkei -4,6 tot -5% (Kioxia, SoftBank), Taiex -3%; woensdag in de VS: CoreWeave -15,5%, Oracle -8,8% door duurder lenen voor AI-bouwers","TSMC: recordwinst derde kwartaal (NT$763,1 mld, +68,7%; omzet +50,9%) maar brutomarge 66,4% (was 67,7%) en voorzichtig over 2027; ADR -4,1%. Eén bericht meldt een omzetsprong van 45% kwartaal-op-kwartaal bij Anthropic (Anthropic maakt Claude)","Europa: FTSE 100 +1,08% naar 10.840,34 (hoogste in ruim drie weken, ~1,4% onder het record van 10.989 uit juli); DAX +0,27% naar 25.368,03; CAC 40 +0,78% naar 7.934,71; Stoxx 600 +0,38%; SMI +1,55%","Brits bbp augustus +0,1% m/m (verwacht -0,1%); pond +0,56% naar 1,3267","28 oktober: Fed-besluit én Britse begroting; 29 oktober: ECB"],
+ trig:"~26-29%",st:"MET"},
+{d:"15 OKT (voor PPI)",t:"Hete CPI verdubbelt de kans op een Fed-verhoging, Wall Street slechtste dag sinds juli, Europa houdt stand",
+ pts:["Amerikaanse CPI september: kop +0,6% m/m en 3,7% j/j (verwacht 3,6%; augustus 3,4%); kern +0,3% m/m en 2,6% j/j (verwacht 0,2% / 2,5%) — de tweede opeenvolgende +0,3%-maand; benzine +9,1% m/m, huisvesting duwde kerndiensten ~+0,4% omhoog","CME FedWatch: kans op een verhoging op 28 oktober sprong naar ~49% (van 22%); minstens één verhoging voor jaareinde ~95%","Rente: 10-jaars ~5,30-5,32%, 2-jaars ~4,92% (hoogste sinds 29 september)","Wall Street woensdag: S&P 500 -1,1% naar 7.718,94 (slechtste dag sinds juli, vijfde verliesdag in zes sinds het record van 6 oktober); Nasdaq Composite -1,88% naar 26.692,87; Russell 2000 -1,93% naar 2.729,53; Dow -0,09% naar 51.621,48; techsector ~-3%, zorg en basisconsumptie +2%+","Europa: FTSE 100 +0,70% naar 10.724,86 (hoogste in drie weken, nog ~2,4% onder het record van 10.989 uit juli), DAX +0,15% naar 25.298,61, CAC 40 +0,58%; ASML +1,2% na cijfers; GSK +3,6%, AstraZeneca +3,4%","Goud ~$4.090 (-1,3 tot -1,8%), zilver ongeveer -6%; Fresnillo -5,1%, Endeavour -3,5%","Correctie: eerdere edities noemden de FTSE-stand van 10.656 een record en 'voor het eerst boven 10.000' — onjuist; het 52-wekenhoogtepunt is 10.989,45 (juli)","Brent ~$105,7-107 na een Houthi-raket op het hoofdkwartier van Saudi Aramco in Dhahran; Duitse groothandelsprijzen +8,7% j/j (hoogste sinds begin 2023)","Donderdag: PPI (14u30), Brits bbp (08u00), TSMC-cijfers; 28 oktober: Britse begroting + Fed, 29 oktober: ECB"],
+ trig:"~49%",st:"MET"},
+{d:"14 OKT (voor CPI)",t:"Chip-uitverkoop in Azië (Kospi -6%), gemengde bankcijfers, Williams laat een extra verhoging open — CPI om 14u30",
+ pts:["Dinsdag 13 okt: S&P 500 -0,02% naar 7.805,45; Nasdaq Composite -0,15% naar 27.204,38; Dow -0,35% naar 51.670,10 (J&J -5,7% en Caterpillar -3,5% trokken de Dow omlaag)","Banken: JPMorgan met een zeldzame misser (EPS $5,57 vs ~$5,90; omzet $50,91 mld vs $51,22 mld), maar hogere rentemarge-richtlijn voor 2026; Wells Fargo -3,1% op omzet- en rentemisser; Goldman beat (EPS $17,01) maar gaf de vroege winst terug; Citi beat (EPS $2,85) maar verhoogde voorzieningen","Azië dinsdag: Kospi -5,5 tot -6% (laagste sinds 31 juli), Nikkei tot -2,6%, ChiNext -3%; woensdagochtend herstel: Kospi +1,8%, Nikkei +0,2%, Samsung en SK Hynix +2%","Maandag 12 okt: halfgeleiderindex (SOX) -2,7%, geleid door geheugenchips","NY Fed-voorzitter Williams: nog één renteverhoging kan dit jaar passend zijn, geen in 2027; 10-jaars ~5,22% (laagste in bijna twee weken), 2-jaars ~4,80%, 30-jaars ~5,57%","Fed-kans op een verhoging in oktober ~17-22% vóór de CPI; goud ~$4.163 (-0,3%) in een range van $4.150-4.200","Olie: Brent ~$106,5 en WTI ~$95 na Saoedisch-Houthi-geweld, tankerincidenten bij Hormuz en berichten over overleg Trump-Netanyahu over Iran","Vandaag 14u30 Belgische tijd: Amerikaanse CPI (verwachting 3,6% j/j, kern +0,2% m/m); donderdag PPI en TSMC-cijfers (08u00)"],
+ trig:"~17-22%",st:"MACRO"},
+{d:"13 OKT",t:"FTSE en DAX: wat is lokaal macro- en micronieuws, en wat is gewoon de Amerikaanse rente?",
+ pts:["Amerikaanse CPI (woensdag 14 okt) is de grootste gedeelde schakelaar omdat de Amerikaanse rente de Britse gilts en Duitse Bunds meetrekt — maar niet de enige","FTSE macro: 30-jaars gilt boven 6% (voor het eerst sinds 1998), 10-jaars gilt 5,53% (hoogste sinds juli 2007); Britse begroting 28 oktober (IFS: ~£35 mld uitdaging, gerucht over hogere bankheffing); Britse inflatie 3,1%, BoE-verhoging in november gezien als waarschijnlijk; Brits bbp augustus donderdag 15 okt","FTSE micro: banken (Prudential, StanChart, HSBC -4% op 7 okt), Pennon dividendverlaging + £550m aandelenuitgifte, IG Group -25%, Unite 11-jaarslaagterecord, Vesuvius overnamebod","DAX macro: industriële productie augustus +2,0% (grootste stijging in 17 maanden) maar fabrieksorders -10,6% m/m; euro-inflatie 3,8% in september; Bund ~3,4-3,5%; Franse obligatiespread; ECB 29 oktober, ZEW 20 oktober","DAX micro: Zalando +4,7%, SAP +3,9%, Siemens +3,0% op vrijdag 9 okt; Telekom viel fors; Siemens: recordorders en €6 mld inkoop, cijfers 12 november","DAX +~3% in 2026 tegenover ~+7,7% voor de Euro Stoxx 50; FTSE 100 op een hoogste stand in weken (10.656; record 10.989 uit juli)","28 oktober wordt een zware dag: Britse begroting én Fed-besluit; de ECB volgt op 29 oktober"],
+ trig:"n/a",st:"MACRO"},
+{d:"12 OKT (slot)",t:"Russisch-Oekraïens 'energie-staakt-het-vuren' al fragiel, olie +2%, chips drukken Nasdaq, FTSE op hoogste stand in weken",
+ pts:["Trump kondigde dit weekend aan dat Rusland en Oekraïne aanvallen op elkaars energiefaciliteiten stoppen, na een Amerikaans-Russische dieseldeal; Zelenskyy zegt dat Moskou het akkoord al geschonden heeft","Brent +1,84% naar $106,65, WTI +2,06% naar ~$93,7 — de olie zakte eerst even op hoop op meer Russisch aanbod, en steeg daarna op Houthi-aanvallen op een Saoedische luchthaven; energie-ETF op een all-time high","Dow +0,38% naar 51.850,55; S&P 500 -0,06% naar 7.807,24; Nasdaq Composite -0,44% naar 27.245,90; Nasdaq 100 -0,71% naar 30.664,70; Russell 2000 -0,45%; VIX 15,21","Geheugenchips zwak: Micron -3,9%, SK Hynix-ADR ~-4%; techsector ~-1,1% bij opening","Europa hoger: DAX +0,76% naar 25.277,69; CAC 40 +0,38%; FTSE 100 +0,99% naar 10.656,28 — een hoogste stand in weken (record 10.989 uit juli)","Dollar sterker: EUR/USD op een 2026-laagterecord, USD/JPY boven het 200-daags gemiddelde; goud ~$4.195 (-0,5%), zilver ~$60,9","Amerikaanse obligatiemarkt dicht (Columbus Day) — rente reageert pas dinsdag; banken (JPM, Citi, Goldman, Wells Fargo) rapporteren dinsdag, CPI woensdag 14 oktober (14u30 Belgische tijd)","Vrijdag 9 okt: DAX +1,13% naar 25.087,27; FTSE 100 +1,06% naar 10.552,00; CAC +0,95%","Donderdag 8 okt: Nasdaq Composite -1,25% — FT meldde OpenAI's geannualiseerde omzet op ~$50 mld, onder de eerder circulerende ~$70 mld"],
+ trig:"~17%",st:"MACRO"},
+{d:"11 OKT",t:"CNN: Iran escaleert bewust om hefboom te herwinnen — en mogelijk de VS tot een tegenaanval te lokken",
+ pts:["CNN-analyse (11 okt): Iran voert aanvallen op tankers in Hormuz en de Perzische Golf op om zijn controle over de doorvaart te herstellen — en mogelijk de VS te provoceren tot een tegenreactie","Slechts 7 tankers voeren dinsdag 7 oktober door Hormuz — minder dan de helft van het zevendaags gemiddelde, het laagste aantal sinds 23 juli (Kpler)","De VAE redde zaterdag 22 bemanningsleden van een brandende tanker — een nieuw doelwit: Iran had Emiraatse scheepvaart tot nu toe bewust gespaard","Hoofd van de Iraanse Revolutionaire Garde, Ahmed Vahidi: Hormuz is Irans 'strategische rode lijn'","Iran herhaalt zijn dreiging expliciet: 'waar wij geen olie kunnen verkopen, zal niemand anders olie kunnen verkopen'","Iran noemt het Amerikaanse antwoord op zijn zeven voorwaarden voor heropening 'onvoldoende'; een parlementslid noemt heropening 'onmogelijk' zolang niet aan de eisen is voldaan","Binnenlands: meldingen van zweepslagen voor olie-arbeiders en een executie in Shiraz — tekenen van toenemende interne druk op het regime"],
+ trig:"n/a",st:"MACRO"},
+{d:"10 OKT",t:"Herstel van Hormuz-doorvaart volledig omgedraaid — Iran escaleert bewust, Trump overweegt aanvallen te hervatten",
+ pts:["Dagen nadat de VS het herstel van olie-export naar bijna vooroorlogs niveau vierde, escaleerde Iran de aanvallen op tankers naar een 'oorlogspiek' — minstens 9 schepen geraakt vorige week, het ergste geweld in maanden","IMF PortWatch registreerde slechts 4 doorvaarten door Hormuz op 4 oktober, tegenover een basislijn van 85 per dag vóór de crisis — een bijna volledige instorting, erger dan eerder in het conflict","Een supertanker raakte vandaag een zeemijn bij een poging Hormuz via een 'niet-geautoriseerde route' te verlaten; de Iraanse Revolutionaire Garde dreigt nu alle schepen die niet hun aangewezen corridor gebruiken","Trump overweegt zich aan te sluiten bij Saudische aanvallen op de Houthi's en de aanvallen op Iran te hervatten, na een aanval op de King Khalid-luchthaven in Riyad — een ommekeer van zijn eigen belofte van enkele dagen eerder om niet aan te vallen vóór de midterms","Context: Irans eigen olie-inkomsten dalen mogelijk tot nul tegen half december (Kpler); de rial staat op een recorddieptepunt, de minister van Olie is afgetreden","Olie houdt een oorlogspremie aan: WTI $91,85, Brent $102-106 — ver boven het dieptepunt van begin oktober","Neveneffecten zichtbaar elders: Irak devalueerde zijn munt met ~15%, Pakistan voerde brandstofsubsidietokens in na een prijsstijging van bijna 50% aan de pomp"],
+ trig:"n/a",st:"MACRO"},
+{d:"9 OKT (slot)",t:"Tech herstelt van donderdags AI-schrik, alle drie de indices sluiten de week hoger, cijferseizoen begint stilletjes",
+ pts:["Dow +0,83% naar 51.655,01, S&P +0,59% naar 7.811,51 (net onder het dinsdagrecord van 7.818,93), Nasdaq +0,64% naar 27.366,17 — herstelde het grootste deel van donderdags daling","Nvidia raakte vrijdag een nieuw intraday-hoogtepunt, trok de techsector mee omhoog na de chip-sell-off van donderdag","Delta Air Lines rapporteerde tegenvallende Q3-cijfers — opent informeel het cijferseizoen; grote banken (JPMorgan, Goldman Sachs, Wells Fargo, Citi) rapporteren volgende week","Goud herstelde +1,48% vrijdag, na de daling van -2,14% donderdag","Olie koelde vrijdag af, na de piek naar $104 op de scheepsaanval bij Qatar donderdag","Op weekbasis: alle drie de hoofdindices (Dow, S&P, Nasdaq) sloten de week hoger, ondanks de schrikdag van donderdag"],
+ trig:"~17%",st:"MACRO"},
+{d:"9 OKT",t:"AI-bestedingstwijfel raakt chipaandelen harder dan weken Iran-nieuws; Trump sluit aanval vóór de midterms uit; Fed-kans op verhoging zakt naar 17%",
+ pts:["Berichten dat OpenAI's omzet lager uitviel dan eerder verwacht stuurden de Nasdaq-100 naar zijn slechtste dag in zeven weken (-1,4%); de chipindex (SOX) -3,4%","Nvidia-gesteunde Australische AI-firma Firmus trok zijn beursgang terug wegens marktvolatiliteit — een concreet gevolg, geen los sentiment","Brent schoot naar $104 (+4%) nadat een schip onder vlag van Antigua en Barbuda werd beschoten voor de kust van Qatar","Trump: de VS zullen Iran niet aanvallen vóór de midterms van 3 november; stelt dat 22 miljoen vaten via Hormuz stroomden woensdag, geen enkele gelinkt aan Iran — de blokkade 'werkt'","Amerikaanse 10-jaars zakte juist naar 5,22% (-4,8bp) ondanks de olie-piek — een vlucht-naar-veiligheid-signaal richting obligaties","Fed-kans op een renteverhoging op 28 oktober daalde verder naar slechts 17,2% (van 17,7%) — een aanhouden is nu het basisscenario, niet een gok","Goud verder onder druk: $4.097,70 (-2,14%), voor het eerst onder $4.100","Correctie doorgevoerd op eerdere '~70-72% kans'-vermeldingen die nog het oude niveau toonden"],
+ trig:"~17%",st:"MACRO"},
+{d:"8 OKT",t:"Olie springt ~5% op Pentagon-Iran-berichten, aandelen voor tweede dag op rij lager, 10-jaars raakt hoogste niveau sinds april 2002",
+ pts:["Berichten dat het Witte Huis Pentagon opdracht gaf om contingentie-opties voor Iran voor te bereiden, richting de midterms — samen met hernieuwde aanvallen op scheepvaart in de Golf en Hormuz","WTI sprong ~5% naar $92,62, Brent brak terug boven $102 — maakt een groot deel van de G7-reserve-gedreven daling van begin oktober ongedaan","Dinsdag 6 okt: records over de hele linie — S&P voor het eerst boven 7.800 (7.818,93, +0,58%), Dow 51.521,28 (+0,49%), Nasdaq 27.599,89 (+0,45%)","Woensdag 7 okt: terugval vanaf de records op obligatiemarkt-onrust en de notulen van de Fed-vergadering van september — 10-jaars raakte 5,36%, het hoogste niveau sinds april 2002","Donderdag 8 okt vroeg: Dow -0,31%, S&P -0,28%, Nasdaq -0,45% — tweede rode dag op rij","Correctie doorgevoerd: eerdere edities van dit dashboard noemden de 10-jaars-piek 'hoogste sinds 2007' — naarmate de rente bleef stijgen is de juiste historische vergelijking nu april 2002","Nieuwe notitie toegevoegd aan de CME-educatiesectie: de dagelijkse onderhoudsstop (16-17u Central Time) valt op 23u-middernacht Belgische zomertijd — precies waarom spreads rond die tijd breed worden"],
+ trig:"n/a",st:"MACRO"},
+{d:"5 OKT",t:"G7 zet voorraden in om de olieprijs te drukken, Jemen lanceert volledig offensief, olie naar maanddieptepunt",
+ pts:["G7-landen kondigden vrijdag aan strategische olie- en dieselvoorraden vrij te geven om de brandstofprijzen te drukken — bewust beleid, geen marktbeweging","Olie reageerde met een daling naar een maanddieptepunt: vrijdag intraday tot $88, maandag rond $90 (-1,2%)","OPEC+ hield de productiequota voor volgende maand ongewijzigd aan — geen extra aanbod toegevoegd","Jemens erkende regering lanceerde een volledig militair offensief om alle door de Houthi's gecontroleerde gebieden te heroveren — president al-Alimi: 'tot het land bevrijd is'","Meer tankers aangevallen in wateren bij Iran en Oman; de VS haalde alle bommenwerpers weg van RAF Fairford (VK) wegens een vermeend terreurplot","Hormuz LNG-verkeer breidt zijn herstel verder uit: meerdere ladingen verlieten de doorvaart vorige week","Irans minister van Olie (Paknejad) is afgetreden; Hamid Bovard als waarnemend minister aangesteld, te midden van de nul-exportcrisis","Vrijdagse slotkoersen bevestigd: Dow +250 punten (+0,5%) naar 51.176,46, S&P +0,7% naar 7.722,72, Nasdaq +1,2% naar een nieuw intraday-record van 27.190,86","Nieuwe 'AT A GLANCE'-sectie toegevoegd aan het dashboard: macro/micro goed-slecht overzicht, grootste prijsbewegingen gerangschikt, en een 'View'-samenvatting"],
+ trig:"~28%",st:"MACRO"},
+{d:"4 OKT",t:"Iran exporteerde in september nul vaten olie, een derde Amerikaanse vliegdekschip onderweg",
+ pts:["Minister van Financiën Bessent: Iran laadde in september geen enkel vat ruwe olie op tankers — de Amerikaanse blokkade en sancties ('Economic Expulsion Operation') raken Irans eigen exportinkomsten volledig, zelfs terwijl de bredere regionale export al hersteld is tot ~98% van het niveau van vóór de oorlog","Minister van Energie Chris Wright sluit verdere militaire actie tegen Iran niet uit; een derde Amerikaans vliegdekschip (USS Theodore Roosevelt) wordt volgende maand in de regio verwacht — mogelijk getimed rond de midterms begin november","Minister Rubio: een blijvend akkoord moet zowel 'Iran de staat' als 'Iran de revolutie' tevredenstellen — twee aparte machtsblokken binnen het regime","Olie relatief kalm dit weekend: WTI ~$91, Brent ~$102","Goud blijft dalen: ~$4.171,60 (-0,73%) — het rente-concurrentieverhaal van de afgelopen weken zet door","VIX laag (15,33), dollarindex iets lager (~101,90) — geen angst ingeprijsd voor de opening van maandag"],
+ trig:"n/a",st:"MACRO"},
+{d:"3 OKT",t:"Banenrapport mist zwaar — kans op Fed-verhoging in oktober omgeslagen naar kans op aanhouden",
+ pts:["September: slechts 29.000 nieuwe banen tegen ~85.000 verwacht — een forse tegenvaller. Werkloosheid steeg naar 4,2% (van 4,1%)","Juli werd verder naar beneden herzien, naar -31.000 — onderdeel van een patroon: gemiddeld maar ~10.000 banen per maand het afgelopen jaar","Fed-kansberekening sloeg volledig om: nu ~72% kans dat de Fed de rente op 28 oktober juist aanhoudt, tegenover de eerdere inschatting van een waarschijnlijke verhoging","Amerikaanse rente op staatsobligaties daalde snel op het zwakke cijfer","Beurzen stegen vrijdag: Nasdaq naar een nieuw record (+1-1,2%), S&P en Dow allebei +0,5-0,7% — maar de week als geheel sloot per saldo nog lager (Dow ongeveer -1,7% sinds maandag)","Geen Amerikaanse 'government shutdown' dit keer: op 3 september werd stilletjes een overbruggingswet getekend die de overheid financiert tot 11 december","Let op: de Fed-beslissing van 28 oktober blijft 'open' en kan nog kantelen op de CPI- en PPI-inflatiecijfers die ervoor verschijnen"],
+ trig:"~28%",st:"MACRO"},
+{d:"30 SEP",t:"Olie kende zijn scherpste daling in een week — Midden-Oosten export terug op 98% van vooroorlogs niveau — en de Fed-tweestrijd ligt nu open",
+ pts:["Dinsdag: Brent -2,6% naar $102,59, WTI -3,5% naar $89,38 — de scherpste daling in meer dan een week, op satellietbeelden (Kpler) die een 'grote operationele herstel' tonen bij Saudische Rode Zee-terminals Yanbu en Muajjiz","JPMorgan (Natasha Kaneva): totale olie-export uit het Midden-Oosten nu rond 98% van vooroorlogs niveau, op van 77% enkele dagen eerder — het snelste herstelmoment tot nu toe","New York Fed-voorzitter John Williams pleitte ervoor te wachten tot december met een volgende renteverhoging — een directe tegenwerping tegen de markt die een verhoging op 28 oktober inprijsde","Dinsdagse slotkoersen bevestigd: Dow -0,26% naar 51.349,92, S&P rond -0,16/-0,17%, Nasdaq -0,09% naar 26.797,54 — 'een hele hoop niets,' aldus één marktcommentator, in afwachting van PCE- en bbp-cijfers","Vandaag: PCE-inflatie (de voorkeursmaatstaf van de Fed) en bbp-cijfers verschijnen, en het Amerikaanse begrotingsjaar eindigt vandaag","CBOE tekende een licentieverlenging van 25 jaar met S&P Dow Jones Indices voor exclusieve S&P 500-optiehandel tot 2051 — marktinfrastructuur, geen marktbeweging"],
+ trig:"onzeker",st:"MACRO"},
+{d:"29 SEP",t:"Saudi-pijpleiding hervat (~3,5m vaten/dag), RBA vijfde centrale bank die verhoogt, goud naar zevenwekendieptepunt",
+ pts:["Saudi-Arabië heeft de gerepareerde East-West pijpleiding hervat op ~3,5 miljoen vaten/dag — onder de capaciteit van ~7 miljoen, maar een echt gedeeltelijk herstel","Trump ontkende het Axios-bericht dat hij Iran sanctie-verlichting had aangeboden; olie bleef daardoor verhoogd ondanks de pijpleiding-heropening","Maandagse slotkoersen bevestigd: S&P 500 -0,77% naar 7.683,69, Nasdaq -0,92% naar 26.820,38 — WTI sloot op $92,60 (+0,2%), Brent op $105,28 (+0,9%), beide ver onder de intraday-piek boven $108,50","Opvallend termijnstructuur-verschil: het novembercontract van Brent noteert >$107, december zit net onder $100 — de markt prijst de huidige crisis in de voorste maand, maar verwacht normalisatie daarna","10-jaars Treasury rond 5,25-5,26%, hoogste sinds 2007, nog stijgend dinsdagochtend","Goud op een zevenwekendieptepunt, -4% over de recente periode — het havenverhaal verliest het van de renteverwachtingen","Reserve Bank of Australia verhoogde naar 4,60% — de vijfde centrale bank deze cyclus na Fed/ECB/BoJ (verhoogd) en BoE (aangehouden)","Aziatische markten dinsdagochtend lager: Nikkei -1,35%, Kospi -1,07%, Hang Seng -0,95% — chipaandelen leiden de daling","Nvidia kondigde een recordinkoopprogramma van $150 miljard aan eigen aandelen aan"],
+ trig:"~70%",st:"MET"},
+{d:"28 SEP (slot)",t:"Derde rode dag op rij — september-winst bijna helemaal weg, olie en rente blijven stijgen",
+ pts:["Dow -0,67% (~51.481), S&P -0,77% (~7.684-7.697), Nasdaq -0,92% (~26.834) — sessiedieptepunten lagen nog lager (Dow tijdelijk -400+ punten)","S&P flirt nu met een negatieve maand september, na nog +1,2% vorige week vrijdag","WTI naar $95-96,44 (sessiepiek, +2,8-4%) op het afgeblazen vredesoverleg; Brent terug richting $107-110, vrijwel de hele daling van vrijdag ongedaan gemaakt","10-jaars op 5,21% — 'hoogste in decennia,' aldus Mohamed El-Erian, die zegt dat een terugkeer naar lagere rentes niet te verwachten is","Deutsche Bank-signaal: megacap-tech +14% sinds eind juli naar recordhoogte, terwijl de rest van de S&P 500 -3% sinds toen staat en -5,5% de laatste vijf weken — de rally wordt smaller"],
+ trig:"~70%",st:"MET"},
+{d:"28 SEP",t:"Trump rejected Iran's Hormuz offer, Houthis kept hitting Saudi Arabia, and Friday's rally unwound",
+ pts:["Saturday: Trump rejected Iran's seven-day proposal (reopen Hormuz + resume nuclear talks if the US lifts its blockade, waives oil sanctions and observes a ceasefire including Lebanon); says talks resume this week; WSJ: he expects to resume bombing after the early-November midterms","Houthis fired more drones and missiles at Riyadh and southwestern Saudi Arabia and hold a long stretch of Yemen's Red Sea coast; one report says Bab el-Mandeb is effectively closed to Saudi-flagged tankers","Brent ~$107 (+2.7%, almost +18% in September), WTI ~$94, diesel at all-time highs","US 2-year 4.90% (+5bp), 10-year ~5.20% (+4bp), 30-year ~5.52% (+27bp in September); ~70% odds of a 28 Oct Fed hike; gold reported below $4,200","SNB held rates but sounded less hawkish — USD/CHF higher","Correction to the 25 Sep entry: AP's 'Brent below $98' looks like a different print — Reuters' Monday ~$107 implies a Friday settle near $104","Week ahead: Lagarde and Fed speakers, quarter-end, PCE, payrolls Friday; Trump-Amodei dinner scheduled Sunday (outcome unreported)"],
+ trig:"~70%",st:"MET"},
+{d:"26 SEP",t:"Oil broke below $98 on a naval-blockade breakthrough, the 10-year's spike to a 2008-level high reversed same-day, and the Trump-Xi summit closed with tea, not a deal",
+ pts:["Iran asked the US to return to a June memorandum of understanding to lift Gulf naval blockades and ease economic measures against Tehran — Brent fell below $98, its lowest since the crisis began","10-year Treasury had spiked to 5.18% intraday Friday, the highest since the 2008 financial crisis, before easing the same afternoon as oil fell — a reversal of Wednesday's yields-vs-oil divergence","Dow +0.93% (snapped a 3-week losing streak), S&P +0.51% (within 0.7% of its record), Nasdaq +0.5% — first winning week in three for all three","Meta rallied 16.8% for the week on its new 'Muse' AI agent, approaching a $2 trillion market cap; Akamai +3% Friday on a multiyear deal with Anthropic","Trump-Xi summit ended Friday with tea and a National Archives visit — Trump called it 'very productive' but the White House disclosed few concrete outcomes; Taiwan arms decision deferred, tariff truce clock still running, rare-earth suspension deadline (10 Nov) unchanged, no AI safety agreement confirmed","Next Trump-Xi contact expected at the G20 summit in Miami, December 2026"],
+ trig:"n/a",st:"MACRO"},
+{d:"23 SEP (avond)",t:"5-jaars Treasury op 5% voor het eerst sinds 2007, terwijl olie juist bleef zakken — en Xi is geland",
+ pts:["5-jaars Treasury-rendement raakte 5% — hoogste niveau sinds 2007 — Nasdaq en Russell 2000 daalden beide meer dan 1% erop","Brent zette de daling voort naar een zesde sessie op rij, handelend rond $98-99, ver onder de piek van ~$110 twee weken geleden","Duidelijke divergentie: normaal bewegen olie en rendementen samen; vandaag deden ze het tegenovergestelde — een signaal dat het rentermerhaal nu meer over Amerikaanse schulddynamiek gaat dan over de olie-oorlog","Minister Bessent ontmoette vicepremier He Lifeng van China op 20 september in New York — vooroverleg over tarieven, kritieke mineralen en een nieuw AI-veiligheidsspoor","Xi Jinping landde vandaag op Joint Base Andrews met een zeldzame ontvangst door Trump zelf op het tarmac — de top zelf is morgen, donderdag 24 september","Amerikaanse staatsschuld: bevestigd $40 biljoen (augustus 2026), schuld/bbp-ratio ~125% — hoger dan het WOII-piekniveau van 106%, rentelasten nu hoger dan het defensiebudget"],
+ trig:"n/a",st:"MACRO"},
+{d:"23 SEP",t:"Brent closed under $100 for the first time since the crisis began; the Nasdaq notched a second straight record; Xi lands today",
+ pts:["Brent settled near $99 Tuesday — first close under the psychological $100 level since the Hormuz crisis began — after Trump called a meeting with Iranian envoys at the UN 'very good'; he separately said a full US-Iran deal would likely come after November's midterms","Nasdaq Composite closed at 27,244, a second consecutive record, +0.45% Tuesday after Monday's +2.3% record-setting session; the S&P held Monday's +1.5% gain roughly flat; the Dow fell 0.36% as bank stocks (JPMorgan, Cisco, AmEx) dropped on rate/yield concerns even as chips rallied for a 6th straight day","Meta's new 'Muse' AI agent hit #1 on the free iPhone charts — a fresh AI-enthusiasm catalyst, a sharp contrast to two weeks ago's 'pace the frontier' selloff","Iran's foreign minister visited Beijing on 16 September signalling Tehran wants a diplomatic off-ramp; Washington is pushing China, Iran's largest oil buyer, to use that leverage — a mediation angle now running underneath the Trump-Xi summit","Official White House schedule confirmed: Trump personally greets Xi at Joint Base Andrews today; Thursday brings the State Arrival Ceremony, the summit itself, and a State Dinner with tech CEOs; Friday closes with tea and a National Archives visit"],
+ trig:"n/a",st:"MACRO"},
+{d:"22 SEP",t:"Hormuz traffic hit a six-month high, oil fell 3.4%, the Nasdaq closed at a record — and Xi lands tomorrow",
+ pts:["US Central Command reported Hormuz crude/LNG flows at a six-month high, averaging 17.1m bbl/day over 10 days — the war has not ended, but the route reopened","Brent fell 3.4% to $100.34, WTI slid below $95.50 — a fourth straight down session","S&P +1.5% (within 0.4% of its record), Dow +0.7%, Nasdaq +2.3% to a fresh all-time high on chip strength","Trump reportedly decided against striking the Houthis, confirmed direct talks with them, said the Iran war will 'end soon', and may meet Iran's president at this week's UN General Assembly","Bitcoin reclaimed $80,000 Friday; Germany-France 10-year yield spread hit a 14-year high, a separate European stress signal","Xi Jinping arrives in Washington Wednesday 23 Sept; the main summit is Thursday 24th — Taiwan, technology and trade ('the three Ts') top the agenda, with the 90-day tariff truce expiring in ~7 weeks and China's rare-earth suspension expiring 10 Nov as Beijing's leverage"],
+ trig:"n/a",st:"MACRO"},
+{d:"20 SEP",t:"BoJ hiked to a 31-year high and the yen fell anyway; oil eased three days straight as Saudi rerouted around its own broken pipeline; Xi expected in Washington this week",
+ pts:["Bank of Japan raised its policy rate 25bp to 1.25% (highest since 1995) in a 7-2 split vote — the yen weakened past 157/dollar despite the hike, on dovish dissent signals and reported pressure from the US Treasury Secretary","Quad/triple witching Friday cleared roughly $7 trillion in notional — the second-largest on record — without disorderly moves","Oil fell for a third straight day (WTI −1.19% to $100.70, Brent −1.98%) as Saudi Arabia rerouted ~20m barrels to Asian refiners via pickup points near Hormuz, using a US Navy-assisted shuttle route along Oman's coast","The underlying war is unresolved: Hormuz traffic remains near single digits a day versus a 17/day average, the Saudi East-West pipeline (4% of global supply) remains shut, and the postponed Iran-Gulf talks in Oman have not been rescheduled","Saudi Arabia's security services met Israeli counterparts (Mossad) to request help against Houthi operations — a new regional-security thread","Reporting places a Trump-Xi meeting in Washington this coming week, layered on top of tariffs now covering 54% of US imports at an average 11.8% effective rate"],
+ trig:"n/a",st:"MACRO"},
+{d:"17 SEP",t:"The Fed's press conference reversed the hike-day rally, then Thursday reversed that too — and the BoE held",
+ pts:["Wednesday's initial post-hike rally fully reversed once Chair Warsh's press conference turned hawkish: Dow closed −631pts (−1.21%), S&P −0.45%, Nasdaq essentially flat, VIX +3% to 17.71","10-year Treasury closed above 5% on the day, its highest close since 2007","Thursday reversed again: S&P +~1%, chip gauge +3%, 10-year snapped its eight-day rising streak, oil eased on reports of extra Saudi cargoes routing via Oman","Bank of England held at 3.75%, voting 6-3 with three dissents for a hike, as UK inflation hit a five-month high of 3.1% — gilt yields fell on the hold, read as dovish relief","Bank of Japan decides tomorrow (expected 1.00%→1.25%), the same day as quad witching — the fourth central bank decision in five trading days"],
+ trig:"n/a",st:"MACRO"},
+{d:"16 SEP",t:"The Fed delivered exactly what the trigger predicted — 12-0, +25bp, and a dot plot signalling more",
+ pts:["FOMC voted unanimously to raise the federal funds rate 25bp to 3.75–4.00% — first hike since July 2023, ending five straight holds","Dot plot signals at least one more hike this year — the new open question, not whether they moved today","Stocks rose on the already-priced news: S&P +0.4%, Nasdaq +0.9% (Intel +4.6%, AMD +3.8%), Dow roughly flat","Yields eased slightly across the curve on the outcome; gold jumped 1.47% to $4,396.70; WTI fell 3.3% to $102.29","Bank of England and Bank of Japan both decide tomorrow, 17 September — quad witching follows Friday"],
+ trig:"Delivered",st:"DELIVERED"},
+{d:"15 SEP",t:"10-year hits 5.04% — highest since 2007 — as the AI selloff and rate fears compound each other",
+ pts:["10-year Treasury touched 5.04% intraday, surpassing the 'since 2023' level cited a week earlier — now the highest since 2007","Dow −0.3%, S&P −0.45%, Nasdaq −0.78% — second straight down day; Oracle −3.1%, Microsoft −1.6%, Amazon −2%, Alphabet −1.3%","Dow now −2.05% month-to-date through ten trading days — worst start to a September since 2008","Senate failed a procedural vote on the Clarity Act (crypto market-structure bill); Bitcoin fell below $76,000 — a new, separate risk thread"],
+ trig:"~92%",st:"MET"},
+{d:"14 SEP",t:"Oman talks cancelled by the attack they were meant to prevent, and three AI CEOs ask for a slowdown",
+ pts:["Saudi Arabia's East-West pipeline (~7m bbl/day, ~4% of global supply) stays shut after Thursday-Friday drone strikes — Monday's Oman talks between Iran and Gulf states postponed as a direct result","A merchant vessel was struck inside the Strait of Hormuz itself, killing one crew member; Houthi forces seized Perim Island in the Bab al-Mandeb strait, a second chokepoint","Brent jumped above $108, WTI near $103 — both up 3%+ this morning on top of last week's gains","Anthropic's Amodei published \"We Must Pace the Frontier\" Saturday; Altman and Musk publicly agreed within hours; OpenAI ruled out a 2026 IPO","Nasdaq 100 futures −1.4/1.6% before the open; Samsung and SK Hynix fell sharply; Kospi closed −3.26%","Trigger unchanged at ~86% — still MET, now compounded by a fresh oil shock and an AI-sentiment shock two days before the Fed"],
+ trig:"~86%",st:"MET"},
+{d:"11 SEP",t:"CPI lands in line, core runs hot — trigger jumps to ~86% and stays there",
+ pts:["Headline CPI +0.4% m/m, 3.4% y/y — exactly as forecast","Core +0.3% m/m, one tenth hotter than expected; core y/y still eased to 2.4%, lowest since March 2021","Hike odds for 16 Sep jumped from ~60% to <b>~86%</b> within hours — and unlike 2 Sep, have not fallen back since","Dow +1.0%, S&P +0.9%, Nasdaq +1.0% — best day of the month, ending a four-day Dow losing streak","Brent −2.8% to $104.61, WTI −2.4% to $100.05, both still +9–10% on the week","10-year hit a fresh high of ~4.97–4.98%, highest since October 2023, even as equities rallied","rare-earth stocks such as MP Materials fell another 5%+ on Trump-Xi summit thaw hopes"],
+ trig:"~86%",st:"MET"},
+{d:"10 SEP",t:"Brent breaks $100, Treasury buyback fails a third time",
+ pts:["Brent above $100 on the biggest wave of shipping attacks by both sides","Treasury tripled buybacks to $6bn — 10-year rose to <b>4.857%</b> anyway","Third day of declines: Dow −405.41, S&P −0.48%, Nasdaq −0.64%","ECB decides today, +25bp to 2.50% expected"],
+ trig:"~60%",st:"NOT MET"},
+{d:"9 SEP",t:"Oil tests $100, administration split on rates, China fills a gap",
+ pts:["Dow −628.18 (−1.18%). Only 174 of 503 shares advanced","<b>China inflation +0.8%</b> — fills the biggest GAP in this dashboard","Vice-president wants cuts, Fed chair hints at rises","Trump signs proclamations <b>banning</b> Canadian alcohol, motorcycles, whey, molasses"],
+ trig:"59%",st:"NOT MET"},
+{d:"8 SEP",t:"Canada's retaliation takes effect",
+ pts:["Effective on ~$20bn — <b>announced as $27.6bn</b>","Dow fell, energy and utilities the only sectors up","Semiconductors the bright spot: Intel +9.1%"],
+ trig:"~60%",st:"NOT MET"},
+{d:"4 SEP",t:"Jobs beat massively, trigger falls back below the line",
+ pts:["<b>Payrolls +162k against ~56k expected</b>, with upward revisions","Trigger went 68% → ~50% → 61%. <b>Below your 65% threshold</b>","30-year held firm while the 2-year rose — the least bad shape"],
+ trig:"61%",st:"NOT MET"},
+{d:"2 SEP",t:"The trigger fired — and then unfired",
+ pts:["<b>Hit 68% — your written condition was met</b>","Two tankers struck exiting Hormuz","10-year at 4.814%, highest since November 2023","<b>You did not act. The number fell 18 points in two days</b>"],
+ trig:"68%",st:"MET"}
+];
+
+$("#c-lg").innerHTML=`
+<h2><b>LOG</b> · WHAT WAS WRITTEN, WHEN, AND WHETHER IT HELD</h2>
+<div class="ld">Older entries are never edited — <b>including the calls that turned out wrong.</b> That record is the point. You cannot judge a system you keep rewriting.</div>
+
+${LOG.map(l=>`<div class="c">
+ <div class="ct"><div class="cl">${l.d} · ${l.t}</div>
+  <span class="g ${l.st=='MET'?'n':'p'}">TRIGGER ${l.trig} · ${l.st}</span></div>
+ <ul style="margin:0;padding-left:18px;font-size:12.5px;line-height:1.75">
+ ${l.pts.map(p=>`<li>${p}</li>`).join("")}</ul></div>`).join("")}
+
+<h2>THE SCORECARD — WHERE THIS DASHBOARD WAS WRONG</h2>
+<div class="t" style="margin-bottom:6px"><table><thead><tr><th style="width:200px">Call</th><th>What was said</th><th style="width:290px">What happened</th></tr></thead><tbody>
+${[["Iran sanctions","Framed as an escalation risk that would raise oil","<b>The market read them as a substitute for war. Oil fell 3%</b>"],
+["The China chain","Sanctions would reach Chinese banks and worsen relations","<b>The Treasury Secretary explicitly declined:</b> \"Why would I want to blow up the global financial system?\""],
+["Yen direction","Repatriation would weaken the dollar","<b>USD/JPY rose to 159.86.</b> The rate differential won that week"],
+["FTSE vulnerability","Cheaper oil would switch off its engine","<b>Oil rose, the FTSE held flat, and Germany took the damage.</b> Mechanism right, direction wrong"],
+["Rare-earth date","Carried as 27 November","<b>It is 10 November.</b> The 27th is a separate, narrower suspension"],
+["\"China is selling\"","Stated without a source","Turned out true — <b>$659bn to $633bn</b> — but should not have been said first"]
+].map(s=>`<tr class="wr"><td><b class="ne">${s[0]}</b></td><td class="t2">${s[1]}</td><td>${s[2]}</td></tr>`).join("")}
+</tbody></table></div>
+<div class="wn g"><div class="h">Six wrong calls, zero euros lost</div>
+Every one of these was a <b>narrative</b>. You acted on none of them.<br><br>
+The one thing that did fire — <b>a written number against a written threshold on 2 September</b> — you also did not act on, because the rule said verify first. Two days later it had fallen 18 points.<br><br>
+<b>That is the entire argument for the system.</b> Narratives are interesting. Numbers are decisions.<br><br>
+<i>Je hoort het brandalarm. Je pakt je jas. Twee minuten later blijkt het de tosti van de buurman. <b>De regel zei: ga eerst kijken.</b></i></div>`;
+
+/* stamps */
+$("#stamps").innerHTML=[["FRANKRIJK","10-jaars boven 5% · hoogste sinds 2002","a"],
+["WALL ST","Dow 1-maandshoogte · S&P -0,8% van record","f"],
+["DO OCHTEND","Azië tech lager · futures -0,6 tot -1%","a"],
+["NEXT","Fed + UK-begroting 28 okt · ECB 29 okt",""]]
+.map(x=>`<span class="bd ${x[2]}">${x[0]} <b>${x[1]}</b></span>`).join("");
+</script>
+</body>
+</html>
